@@ -57,9 +57,6 @@ const Card: React.FC<{ event: EventCard; index: number }> = ({
       </div>
 
       <div className="p-8 relative text-center md:text-left">
-        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-red-600/80 mb-2">
-          {event.inspiration}
-        </p>
         <h3 className="font-cinzel text-xl md:text-2xl font-black text-white mb-4 group-hover:text-red-500 transition-colors duration-500 leading-tight">
           {event.title}
         </h3>
@@ -84,7 +81,7 @@ const EventCards: React.FC = () => {
   return (
     <section
       id="events"
-      className="py-32 px-4 max-w-7xl mx-auto relative overflow-visible bg-black"
+      className="py-2 px-4 max-w-7xl mx-auto relative overflow-visible bg-black"
     >
       <CornerStrings position="bottom-left" className="bottom-0 left-0" />
 

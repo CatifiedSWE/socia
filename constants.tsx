@@ -26,7 +26,6 @@ export const EVENTS: EventCard[] = [
   {
     id: 'heist',
     title: 'The Heist Protocol',
-    inspiration: 'Inspired by Money Heist',
     description: 'Strategy games and puzzle cracking. Execute the perfect plan.',
     image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800',
     color: 'border-red-600 shadow-red-900/50',
@@ -37,7 +36,6 @@ export const EVENTS: EventCard[] = [
   {
     id: 'redlight',
     title: 'The Red Light Trial',
-    inspiration: 'Inspired by Squid Game',
     description: 'Competitive games and high-stakes elimination rounds.',
     image: 'https://images.unsplash.com/photo-1634155581321-7076939b033d?auto=format&fit=crop&q=80&w=800',
     color: 'border-pink-600 shadow-pink-900/50',
@@ -48,7 +46,6 @@ export const EVENTS: EventCard[] = [
   {
     id: 'throne',
     title: 'The Iron Throne Challenge',
-    inspiration: 'Inspired by Game of Thrones',
     description: 'Debate, leadership, and team domination. Conquer the land.',
     image: 'https://images.unsplash.com/photo-1533107862482-0e6974b06ec4?auto=format&fit=crop&q=80&w=800',
     color: 'border-yellow-600 shadow-yellow-900/50',
@@ -59,7 +56,6 @@ export const EVENTS: EventCard[] = [
   {
     id: 'upside',
     title: 'The Upside Rift',
-    inspiration: 'Inspired by Stranger Things',
     description: 'Mystery games and escape-style challenges. Brave the rift.',
     image: 'https://images.unsplash.com/photo-1498747946579-bde604cb8f44?auto=format&fit=crop&q=80&w=800',
     color: 'border-purple-600 shadow-purple-900/50',
@@ -70,7 +66,6 @@ export const EVENTS: EventCard[] = [
   {
     id: 'blackpearl',
     title: 'The Black Pearl Quest',
-    inspiration: 'Inspired by Pirates of the Caribbean',
     description: 'A massive campus-wide treasure hunt. Follow the maps.',
     image: 'https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?auto=format&fit=crop&q=80&w=800',
     color: 'border-cyan-600 shadow-cyan-900/50',
@@ -81,7 +76,6 @@ export const EVENTS: EventCard[] = [
   {
     id: 'bluelab',
     title: 'The Blue Lab Experiment',
-    inspiration: 'Inspired by Breaking Bad',
     description: 'Logic games and science-based fun. Apply pure precision.',
     image: 'https://images.unsplash.com/photo-1532187875605-186c7131ed57?auto=format&fit=crop&q=80&w=800',
     color: 'border-blue-600 shadow-blue-900/50',

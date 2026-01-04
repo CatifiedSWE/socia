@@ -97,7 +97,7 @@ const Coordinators: React.FC = () => {
            <p className="font-oswald text-gray-500 text-[10px] uppercase tracking-[0.8em] mb-8">Follow for more update</p>
            
            <a 
-            href="https://instagram.com" 
+            href="https://www.instagram.com/zynora_26/" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="group relative p-6 transition-all duration-500"

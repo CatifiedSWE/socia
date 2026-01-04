@@ -2,7 +2,6 @@
 export interface EventCard {
   id: string;
   title: string;
-  inspiration: string;
   description: string;
   image: string;
   color: string;
