@@ -5,6 +5,7 @@ import { STATISTICS, getSectionContent, getButtonLabel } from "../constants";
 const StatsSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const sectionContent = getSectionContent('stats');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -17,13 +18,6 @@ const StatsSection: React.FC = () => {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
-  const stats = [
-    { label: "DAYS", value: "2" },
-    { label: "EVENTS", value: "13" },
-    { label: "PRIZES", value: "300+" },
-    { label: "STALLS", value: "8" },
-  ];
 
   return (
     <section
