@@ -306,26 +306,6 @@ export const useAdminDocuments = () => {
   return { data, loading, error, refetch: fetchData };
 };
 
-        .select('*')
-        .order('day', { ascending: true });
-
-      if (eventsError) throw eventsError;
-      setData(eventsData || []);
-      setError(null);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return { data, loading, error, refetch: fetchData };
-};
-
 // Hook for fetching gallery images
 export const useGalleryImages = () => {
   const [data, setData] = useState<string[]>([]);
