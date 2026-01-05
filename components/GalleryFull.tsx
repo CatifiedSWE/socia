@@ -85,7 +85,7 @@ const GalleryFull: React.FC = () => {
         <div className="flex items-center gap-4 mb-12 justify-center lg:justify-start">
           <div className="h-[2px] w-12 bg-red-600" />
           <h3 className="font-oswald text-2xl uppercase tracking-[0.4em] text-white">
-            Full Gallery
+            {sectionContent?.label}
           </h3>
         </div>
 
