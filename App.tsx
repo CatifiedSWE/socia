@@ -71,7 +71,7 @@ const App: React.FC = () => {
         hasEntered ? "bg-black" : "bg-[#f5f5f5]"
       }`}
     >
-      {!hasEntered && (
+      {!hasEntered && !isAdminPage && (
         <div
           className={`${
             isTransitioning
