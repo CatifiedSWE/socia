@@ -40,7 +40,7 @@ const GalleryFull: React.FC = () => {
       <div className="mb-32">
         <div className="max-w-7xl mx-auto px-6 mb-12">
           <h2 className="font-cinzel text-3xl md:text-4xl font-black text-white tracking-widest">
-            Zynora 2K26 Highlight
+            {sectionContent?.title}
           </h2>
           <div className="w-full h-[1px] bg-red-600/30 mt-4" />
         </div>
