@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import CornerStrings from "../components/ui/CornerStrings";
+import { STATISTICS, getSectionContent, getButtonLabel } from "../constants";
 
 const StatsSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
