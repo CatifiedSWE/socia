@@ -624,6 +624,84 @@ const Admin: React.FC = () => {
                 </section>
               </div>
             )}
+
+            {/* DOCUMENTS SECTION */}
+            {activeSection === "documents" && (
+              <div className="space-y-6" data-testid="admin-section-documents">
+                <section className="bg-white rounded-lg border border-gray-200 p-6">
+                  <div className="flex justify-between items-center mb-5">
+                    <div className="flex items-center gap-2">
+                      <FileText size={20} className="text-gray-700" />
+                      <div>
+                        <h2 className="text-lg font-semibold text-gray-900">Admin Documents</h2>
+                        <p className="text-xs text-gray-500 mt-0.5">Total: {adminDocuments.length} documents</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setDocumentUploadModal(true)}
+                      className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                      data-testid="document-add-btn"
+                    >
+                      <Plus size={16} />
+                      Upload Document
+                    </button>
+                  </div>
+
+                  {adminDocuments.length === 0 ? (
+                    <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+                      <FileText size={48} className="mx-auto text-gray-400 mb-3" />
+                      <p className="text-gray-600 font-medium">No documents uploaded yet</p>
+                      <p className="text-sm text-gray-500 mt-1">Upload PDF, DOC, or DOCX files</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {adminDocuments.map((doc, index) => (
+                        <div
+                          key={doc.id}
+                          className="bg-white rounded-lg p-4 border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all"
+                          data-testid={`document-card-${index}`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="bg-blue-50 p-2 rounded">
+                              <FileText size={24} className="text-blue-600" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="text-sm font-semibold text-gray-900 truncate">{doc.name}</h3>
+                              <p className="text-xs text-gray-500 mt-1">
+                                {(doc.size / (1024 * 1024)).toFixed(2)} MB
+                              </p>
+                              <p className="text-xs text-gray-400 mt-0.5">
+                                {new Date(doc.uploaded_at).toLocaleDateString()}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex gap-2 mt-3">
+                            <a
+                              href={doc.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 flex items-center justify-center gap-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-2 rounded text-xs font-medium transition-colors border border-blue-200"
+                              data-testid={`document-download-${index}`}
+                            >
+                              Download
+                            </a>
+                            <button
+                              onClick={() => handleDeleteDocument(doc.url, doc.name)}
+                              className="flex-1 flex items-center justify-center gap-1.5 bg-gray-50 hover:bg-red-50 text-gray-700 hover:text-red-600 px-3 py-2 rounded text-xs font-medium transition-colors border border-gray-200 hover:border-red-300"
+                              data-testid={`document-delete-${index}`}
+                            >
+                              <Trash2 size={12} />
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </section>
+              </div>
+            )}
           </>
         )}
       </main>
