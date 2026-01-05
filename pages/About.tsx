@@ -1,6 +1,7 @@
 import React from "react";
 import GalleryPreview from "../components/GalleryPreview";
 import Coordinators from "../components/ui/Coordinators";
+import { ABOUT_CONTENT } from "../constants";
 
 const About: React.FC = () => {
   return (
