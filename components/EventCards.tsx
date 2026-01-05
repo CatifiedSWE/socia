@@ -88,10 +88,10 @@ const EventCards: React.FC = () => {
 
       <div className="mb-24 text-center relative z-10">
         <span className="font-oswald text-red-600 tracking-[0.6em] text-[10px] uppercase mb-4 block animate-pulse">
-          Choose Your Legend
+          {sectionContent?.label}
         </span>
         <h2 className="font-cinzel text-4xl md:text-6xl font-black mb-12 text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-          The Competitions
+          {sectionContent?.title}
         </h2>
 
         <div className="flex justify-center items-center gap-4 md:gap-8 mb-16">
@@ -106,7 +106,7 @@ const EventCards: React.FC = () => {
               }
             `}
           >
-            Phase 01
+            {getButtonLabel('phase-01')}
           </button>
           <button
             onClick={() => setActiveDay(2)}
@@ -119,7 +119,7 @@ const EventCards: React.FC = () => {
               }
             `}
           >
-            Phase 02
+            {getButtonLabel('phase-02')}
           </button>
         </div>
       </div>
