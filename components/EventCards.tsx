@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { EVENTS } from "../constants";
+import { EVENTS, getSectionContent, getButtonLabel } from "../constants";
 import { EventCard } from "../types";
 import CornerStrings from "../components/ui/CornerStrings";
 
