@@ -117,8 +117,7 @@ const App: React.FC = () => {
 
           <footer className="py-16 px-6 border-t border-white/5 text-center text-gray-600 text-[10px] uppercase tracking-[0.5em] font-oswald bg-black relative z-10">
             <p className="mb-8">
-              &copy; {new Date().getFullYear()} ZYNORA CINEMATIC FEST. ALL
-              RIGHTS RESERVED.
+              &copy; {new Date().getFullYear()} {FOOTER_CONTENT.copyrightText}
             </p>
             <div className="flex justify-center gap-10">
               <a
@@ -130,7 +129,7 @@ const App: React.FC = () => {
             </div>
             <div className="mt-12 opacity-30 flex items-center justify-center gap-4">
               <div className="h-[1px] w-20 bg-white" />
-              <span className="font-cinzel text-white text-xl">Z</span>
+              <span className="font-cinzel text-white text-xl">{HERO_CONTENT.title.charAt(0)}</span>
               <div className="h-[1px] w-20 bg-white" />
             </div>
           </footer>
