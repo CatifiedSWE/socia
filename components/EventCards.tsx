@@ -66,7 +66,7 @@ const Card: React.FC<{ event: EventCard; index: number }> = ({
 
         <button className="relative w-full py-4 group/btn overflow-hidden rounded-md bg-black border border-red-900/40 transition-all duration-500 hover:border-red-600">
           <span className="relative z-10 font-oswald text-[10px] uppercase tracking-[0.5em] text-red-500 group-hover/btn:text-white transition-colors duration-300">
-            Secure Entry
+            {getButtonLabel('secure-entry')}
           </span>
           <div className="absolute inset-0 bg-red-600 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-out" />
         </button>
