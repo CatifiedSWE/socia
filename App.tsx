@@ -68,7 +68,7 @@ const App: React.FC = () => {
   return (
     <div
       className={`relative selection:bg-red-600 selection:text-white min-h-screen overflow-hidden ${
-        hasEntered ? "bg-black" : "bg-[#f5f5f5]"
+        hasEntered ? (isAdminPage ? "bg-gray-50" : "bg-black") : "bg-[#f5f5f5]"
       }`}
     >
       {!hasEntered && !isAdminPage && (
