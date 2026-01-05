@@ -21,6 +21,9 @@ const App: React.FC = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const location = useLocation();
 
+  // Check if current route is admin page
+  const isAdminPage = location.pathname === '/admin';
+
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 2000);
     return () => clearTimeout(timer);
@@ -29,6 +32,13 @@ const App: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  // Skip onboarding for admin page
+  useEffect(() => {
+    if (isAdminPage) {
+      setHasEntered(true);
+    }
+  }, [isAdminPage]);
 
   const handleEnterVoid = () => {
     setIsTransitioning(true);
