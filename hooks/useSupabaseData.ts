@@ -242,7 +242,25 @@ export const useEvents = () => {
       setLoading(true);
       const { data: eventsData, error: eventsError } = await supabase
         .from('events')
+        .select('*')
+        .order('date', { ascending: false });
 
+      if (eventsError) throw eventsError;
+      setData(eventsData || []);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { data, loading, error, refetch: fetchData };
+};
 
 // =============================================
 // ADMIN DOCUMENTS HOOK
