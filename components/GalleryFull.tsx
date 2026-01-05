@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { GALLERY_IMAGES, getSectionContent } from "../constants";
+import { getSectionContent } from "../constants";
+import { useGalleryImages } from "../hooks/useSupabaseData";
 
 const GalleryFull: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const sectionContent = getSectionContent('gallery-full');
+  const { data: GALLERY_IMAGES, loading, error } = useGalleryImages();
 
   useEffect(() => {
     if (selectedIndex !== null) {
