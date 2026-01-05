@@ -46,6 +46,7 @@ import type { TeamMember, Statistic, EventCard } from "../types";
 const Admin: React.FC = () => {
   const { isAdmin, isLoading: authLoading, signOut, user } = useAuth();
   const [activeSection, setActiveSection] = useState<string>("general");
+  const { deleteFromStorage } = useStorageOperations();
 
   // Fetch data from Supabase
   const { data: heroContent, loading: heroLoading, refetch: refetchHero } = useHeroContent();
@@ -55,6 +56,7 @@ const Admin: React.FC = () => {
   const { data: events, loading: eventsLoading, refetch: refetchEvents } = useEvents();
   const { data: galleryImages, loading: galleryLoading, refetch: refetchGallery } = useGalleryImages();
   const { data: footerContent, loading: footerLoading, refetch: refetchFooter } = useFooterContent();
+  const { data: adminDocuments, loading: documentsLoading, refetch: refetchDocuments } = useAdminDocuments();
 
   // Modal states
   const [editStatModal, setEditStatModal] = useState<{ isOpen: boolean; stat: Statistic | null }>({ isOpen: false, stat: null });
