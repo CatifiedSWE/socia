@@ -39,6 +39,7 @@ import { EventModal } from "../components/modals/EventModal";
 import { GalleryUploadModal } from "../components/modals/GalleryUploadModal";
 import { EditFooterModal } from "../components/modals/EditFooterModal";
 import { DeleteConfirmModal } from "../components/modals/DeleteConfirmModal";
+import { DocumentUploadModal } from "../components/modals/DocumentUploadModal";
 import { supabase } from "../lib/supabase";
 import type { TeamMember, Statistic, EventCard } from "../types";
 
