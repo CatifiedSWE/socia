@@ -5,6 +5,8 @@ import { getSectionContent, getButtonLabel, FOOTER_CONTENT } from "../constants"
 
 const RegisterSection: React.FC = () => {
   const navigate = useNavigate();
+  const sectionContent = getSectionContent('register');
+  
   return (
     <section className="relative py-32 px-4 text-center overflow-hidden">
       {/* Background Decor */}
@@ -12,23 +14,22 @@ const RegisterSection: React.FC = () => {
 
       <div className="relative z-10 max-w-4xl mx-auto">
         <h2 className="font-cinzel text-5xl md:text-6xl font-black mb-8 leading-tight">
-          THE SCREEN IS WAITING.
+          {sectionContent?.title}
           <br />
           <span className="text-red-600">ARE YOU READY?</span>
         </h2>
         <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
-          Seats are filling up in this cinematic multiverse. Secure your legacy
-          today and be part of the most talked-about night of the year.
+          {sectionContent?.description}
         </p>
 
         <div className="flex flex-col items-center gap-4">
           <CinematicButton
-            text="REGISTER NOW"
+            text={getButtonLabel('register-now')}
             onClick={() => navigate("/events")}
             className="w-full sm:w-auto"
           />
           <span className="text-xs uppercase tracking-widest text-gray-500 mt-4 animate-pulse">
-            * Limited slots available per universe
+            {FOOTER_CONTENT.note}
           </span>
         </div>
       </div>
