@@ -1,12 +1,33 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { GALLERY_IMAGES, getSectionContent, getButtonLabel } from "../constants";
+import { getSectionContent, getButtonLabel } from "../constants";
+import { useGalleryImages } from "../hooks/useSupabaseData";
 
 const GalleryPreview: React.FC = () => {
   const navigate = useNavigate();
   const sectionContent = getSectionContent('gallery-preview');
+  const { data: GALLERY_IMAGES, loading, error } = useGalleryImages();
   // Show only the first 8 images in the preview
-  const previewImages = GALLERY_IMAGES.slice(0, 8);
+  const previewImages = GALLERY_IMAGES?.slice(0, 8) || [];
+
+  // Loading state
+  if (loading) {
+    return (
+      <section className="py-24 px-4 bg-black relative overflow-hidden">
+        <div className="max-w-7xl mx-auto relative z-10 flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600 mx-auto mb-4"></div>
+            <p className="text-red-600 font-oswald tracking-widest uppercase text-xs">Loading Preview...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Error or no images state
+  if (error || !GALLERY_IMAGES || GALLERY_IMAGES.length === 0) {
+    return null; // Don't show the section if there's an error or no images
+  }
 
   return (
     <section className="py-24 px-4 bg-black relative overflow-hidden">
