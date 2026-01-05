@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { X, Loader2 } from 'lucide-react';
+import { X, Loader2, Upload } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
-import type { EventCard } from '../types';
+import { useStorageOperations } from '../../hooks/useSupabaseData';
+import type { EventCard } from '../../types';
 
 interface EventModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface EventModalProps {
 
 export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, onSuccess }) => {
   const isEdit = !!event;
+  const { uploadToStorage, deleteFromStorage } = useStorageOperations();
   const [formData, setFormData] = useState<Omit<EventCard, 'id'> & { id?: string }>({
     title: '',
     description: '',
@@ -22,6 +24,7 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
     vibe: 'action',
   });
   const [symbolsInput, setSymbolsInput] = useState('');
+  const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
