@@ -165,8 +165,7 @@ const Hero: React.FC = () => {
             {TAGLINES[taglineIndex]}
           </p>
           <p className="font-inter text-gray-400 text-sm md:text-lg max-w-xl font-light leading-relaxed tracking-wide">
-            You have entered the rift. Experience the visceral intersection of
-            cinematic mastery and dark celebration.
+            {HERO_CONTENT.subtitle}
           </p>
         </div>
 
@@ -175,14 +174,14 @@ const Hero: React.FC = () => {
             onClick={() => navigate("/gallery")}
             className="group relative px-12 py-4 bg-transparent border border-red-900/50 text-red-500 font-oswald text-xs tracking-[0.4em] uppercase overflow-hidden transition-all duration-500 hover:text-white"
           >
-            <span className="relative z-10">Explore Vault</span>
+            <span className="relative z-10">{HERO_CONTENT.secondaryButtonText}</span>
             <div className="absolute inset-0 bg-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </button>
           <button
             onClick={() => navigate("/events")}
             className="px-12 py-4 bg-red-700 text-white font-oswald text-xs tracking-[0.4em] uppercase hover:bg-white hover:text-black transition-all duration-500 shadow-[0_10px_40px_rgba(185,28,28,0.4)]"
           >
-            Secure Entry
+            {HERO_CONTENT.primaryButtonText}
           </button>
         </div>
       </div>
