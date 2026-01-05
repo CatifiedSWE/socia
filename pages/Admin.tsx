@@ -1,14 +1,27 @@
 import React, { useState } from "react";
 import {
+  LayoutDashboard,
+  Info,
+  Calendar,
+  Image,
+  Edit2,
+  Trash2,
+  Plus,
+  Star,
+  Phone,
+  Users,
+  Briefcase,
+  GraduationCap,
+  BarChart3,
+  Film,
+  FileText,
+} from "lucide-react";
+import {
   HERO_CONTENT,
-  ONBOARDING_CONTENT,
   ABOUT_CONTENT,
   STATISTICS,
   EVENTS,
   GALLERY_IMAGES,
-  SECTION_CONTENT,
-  BUTTON_LABELS,
-  TEAM_MEMBERS,
   TEAM_LABELS,
   FOOTER_CONTENT,
   getStaffMembers,
@@ -25,40 +38,48 @@ const Admin: React.FC = () => {
   const staffMembers = getStaffMembers();
   const studentMembers = getStudentMembers();
 
+  const tabs = [
+    { id: "general", label: "General", icon: LayoutDashboard, desc: "Stats & Team" },
+    { id: "about", label: "About", icon: Info, desc: "About Page" },
+    { id: "events", label: "Events", icon: Calendar, desc: "Manage Events" },
+    { id: "gallery", label: "Gallery", icon: Image, desc: "Photos" },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <h1 className="text-3xl font-bold text-gray-900">ZYNORA Admin Panel</h1>
-          <p className="text-gray-600 mt-1">Manage your event website content easily</p>
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-5">
+          <h1 className="text-2xl font-bold text-gray-900">ZYNORA Admin</h1>
+          <p className="text-sm text-gray-500 mt-1">Manage your event website</p>
         </div>
       </header>
 
       {/* Navigation Tabs */}
-      <div className="bg-white border-b border-gray-200 sticky top-[88px] z-40">
+      <div className="bg-white border-b border-gray-200 sticky top-[73px] z-40">
         <div className="max-w-7xl mx-auto px-6">
-          <nav className="flex gap-2 overflow-x-auto py-3">
-            {[
-              { id: "general", label: "📊 General", desc: "Homepage & Stats" },
-              { id: "about", label: "ℹ️ About", desc: "About Page" },
-              { id: "events", label: "🎭 Events", desc: "Manage Events" },
-              { id: "gallery", label: "🖼️ Gallery", desc: "Manage Photos" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveSection(tab.id)}
-                className={`px-6 py-3 rounded-lg font-semibold whitespace-nowrap transition-all ${
-                  activeSection === tab.id
-                    ? "bg-blue-600 text-white shadow-md"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-                data-testid={`admin-tab-${tab.id}`}
-              >
-                <div className="text-lg">{tab.label}</div>
-                <div className="text-xs opacity-80">{tab.desc}</div>
-              </button>
-            ))}
+          <nav className="flex gap-1 overflow-x-auto">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveSection(tab.id)}
+                  className={`flex items-center gap-2 px-5 py-3 border-b-2 transition-all ${
+                    activeSection === tab.id
+                      ? "border-blue-600 text-blue-600 bg-blue-50/50"
+                      : "border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+                  data-testid={`admin-tab-${tab.id}`}
+                >
+                  <Icon size={18} />
+                  <div className="text-left">
+                    <div className="font-semibold text-sm">{tab.label}</div>
+                    <div className="text-xs opacity-70">{tab.desc}</div>
+                  </div>
+                </button>
+              );
+            })}
           </nav>
         </div>
       </div>
@@ -67,33 +88,34 @@ const Admin: React.FC = () => {
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* GENERAL SECTION */}
         {activeSection === "general" && (
-          <div className="space-y-8" data-testid="admin-section-general">
+          <div className="space-y-6" data-testid="admin-section-general">
             {/* Statistics */}
-            <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">📊 Statistics</h2>
-                  <p className="text-gray-600 text-sm mt-1">Numbers shown on homepage</p>
+            <section className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex justify-between items-center mb-5">
+                <div className="flex items-center gap-2">
+                  <BarChart3 size={20} className="text-gray-700" />
+                  <h2 className="text-lg font-semibold text-gray-900">Statistics</h2>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {STATISTICS.map((stat) => (
                   <div
                     key={stat.id}
-                    className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border-2 border-blue-200"
+                    className="bg-white rounded-lg p-4 border border-gray-200 hover:border-blue-300 hover:shadow-sm transition-all group"
                     data-testid={`stat-card-${stat.id}`}
                   >
-                    <div className="text-4xl font-bold text-blue-600 mb-2">{stat.value}</div>
-                    <div className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                    <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
+                    <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
                       {stat.label}
                     </div>
                     <button
                       onClick={() => handleAction("Edit", stat.label)}
-                      className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                      className="w-full flex items-center justify-center gap-1.5 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-600 px-3 py-2 rounded text-xs font-medium transition-colors border border-gray-200 hover:border-blue-300"
                       data-testid={`stat-edit-${stat.id}`}
                     >
-                      ✏️ Edit
+                      <Edit2 size={14} />
+                      Edit
                     </button>
                   </div>
                 ))}
@@ -101,84 +123,90 @@ const Admin: React.FC = () => {
             </section>
 
             {/* Hero Content */}
-            <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">🎬 Hero Section</h2>
-                  <p className="text-gray-600 text-sm mt-1">Main banner at the top of homepage</p>
+            <section className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex justify-between items-center mb-5">
+                <div className="flex items-center gap-2">
+                  <Film size={20} className="text-gray-700" />
+                  <h2 className="text-lg font-semibold text-gray-900">Hero Section</h2>
                 </div>
                 <button
                   onClick={() => handleAction("Edit", "Hero Content")}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                  className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   data-testid="hero-edit-btn"
                 >
-                  ✏️ Edit Hero
+                  <Edit2 size={16} />
+                  Edit
                 </button>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6 space-y-4">
-                <div>
-                  <label className="text-sm font-semibold text-gray-600">Title</label>
-                  <div className="text-xl font-bold text-gray-900 mt-1">{HERO_CONTENT.title}</div>
-                </div>
-                <div>
-                  <label className="text-sm font-semibold text-gray-600">Subtitle</label>
-                  <div className="text-gray-700 mt-1">{HERO_CONTENT.subtitle}</div>
-                </div>
-                <div className="flex gap-3">
-                  <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg font-medium">
-                    {HERO_CONTENT.primaryButtonText}
+              <div className="space-y-3">
+                <div className="flex items-start gap-3 p-3 bg-gray-50 rounded border border-gray-200">
+                  <div className="flex-1">
+                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Title</label>
+                    <div className="text-base font-semibold text-gray-900 mt-1">{HERO_CONTENT.title}</div>
                   </div>
-                  <div className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-medium">
-                    {HERO_CONTENT.secondaryButtonText}
+                </div>
+                <div className="flex items-start gap-3 p-3 bg-gray-50 rounded border border-gray-200">
+                  <div className="flex-1">
+                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Subtitle</label>
+                    <div className="text-sm text-gray-700 mt-1">{HERO_CONTENT.subtitle}</div>
                   </div>
                 </div>
               </div>
             </section>
 
             {/* Team Members */}
-            <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">👥 Team Members</h2>
-                  <p className="text-gray-600 text-sm mt-1">Staff and student coordinators</p>
+            <section className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex justify-between items-center mb-5">
+                <div className="flex items-center gap-2">
+                  <Users size={20} className="text-gray-700" />
+                  <h2 className="text-lg font-semibold text-gray-900">Team Members</h2>
                 </div>
                 <button
                   onClick={() => handleAction("Add", "New Team Member")}
-                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                  className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   data-testid="team-add-btn"
                 >
-                  ➕ Add Member
+                  <Plus size={16} />
+                  Add Member
                 </button>
               </div>
 
               {/* Staff Members */}
-              <div className="mb-8">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">👔 {TEAM_LABELS.staffTitle}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Briefcase size={16} className="text-gray-600" />
+                  <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">{TEAM_LABELS.staffTitle}</h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {staffMembers.map((member) => (
                     <div
                       key={member.id}
-                      className="bg-purple-50 rounded-lg p-5 border-2 border-purple-200"
+                      className="bg-white rounded-lg p-4 border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all"
                       data-testid={`team-card-${member.id}`}
                     >
-                      <div className="font-bold text-lg text-gray-900">{member.name}</div>
-                      <div className="text-purple-600 font-medium text-sm mt-1">{member.role}</div>
-                      <div className="text-gray-600 text-sm mt-2">📞 {member.phone}</div>
-                      <div className="flex gap-2 mt-4">
+                      <div className="font-semibold text-gray-900">{member.name}</div>
+                      <div className="text-sm text-blue-600 font-medium mt-0.5">{member.role}</div>
+                      <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-2">
+                        <Phone size={12} />
+                        {member.phone}
+                      </div>
+                      <div className="flex gap-2 mt-3">
                         <button
                           onClick={() => handleAction("Edit", member.name)}
-                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                          className="flex-1 flex items-center justify-center gap-1.5 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-600 px-3 py-2 rounded text-xs font-medium transition-colors border border-gray-200 hover:border-blue-300"
                           data-testid={`team-edit-${member.id}`}
                         >
-                          ✏️ Edit
+                          <Edit2 size={12} />
+                          Edit
                         </button>
                         <button
                           onClick={() => handleAction("Delete", member.name)}
-                          className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                          className="flex-1 flex items-center justify-center gap-1.5 bg-gray-50 hover:bg-red-50 text-gray-700 hover:text-red-600 px-3 py-2 rounded text-xs font-medium transition-colors border border-gray-200 hover:border-red-300"
                           data-testid={`team-delete-${member.id}`}
                         >
-                          🗑️ Delete
+                          <Trash2 size={12} />
+                          Delete
                         </button>
                       </div>
                     </div>
@@ -188,31 +216,38 @@ const Admin: React.FC = () => {
 
               {/* Student Members */}
               <div>
-                <h3 className="text-lg font-bold text-gray-800 mb-4">🎓 {TEAM_LABELS.studentTitle}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <GraduationCap size={16} className="text-gray-600" />
+                  <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">{TEAM_LABELS.studentTitle}</h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {studentMembers.map((member) => (
                     <div
                       key={member.id}
-                      className="bg-blue-50 rounded-lg p-5 border-2 border-blue-200"
+                      className="bg-white rounded-lg p-4 border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all"
                       data-testid={`team-card-${member.id}`}
                     >
-                      <div className="font-bold text-lg text-gray-900">{member.name}</div>
-                      <div className="text-blue-600 font-medium text-sm mt-1">{member.role}</div>
-                      <div className="text-gray-600 text-sm mt-2">📞 {member.phone}</div>
-                      <div className="flex gap-2 mt-4">
+                      <div className="font-semibold text-gray-900 text-sm">{member.name}</div>
+                      <div className="text-xs text-blue-600 font-medium mt-0.5">{member.role}</div>
+                      <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-2">
+                        <Phone size={11} />
+                        {member.phone}
+                      </div>
+                      <div className="flex gap-2 mt-3">
                         <button
                           onClick={() => handleAction("Edit", member.name)}
-                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm"
+                          className="flex-1 flex items-center justify-center gap-1 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-600 px-2 py-1.5 rounded text-xs font-medium transition-colors border border-gray-200 hover:border-blue-300"
                           data-testid={`team-edit-${member.id}`}
                         >
-                          ✏️ Edit
+                          <Edit2 size={11} />
+                          Edit
                         </button>
                         <button
                           onClick={() => handleAction("Delete", member.name)}
-                          className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm"
+                          className="flex items-center justify-center gap-1 bg-gray-50 hover:bg-red-50 text-gray-700 hover:text-red-600 px-2 py-1.5 rounded text-xs font-medium transition-colors border border-gray-200 hover:border-red-300"
                           data-testid={`team-delete-${member.id}`}
                         >
-                          🗑️
+                          <Trash2 size={11} />
                         </button>
                       </div>
                     </div>
@@ -222,24 +257,25 @@ const Admin: React.FC = () => {
             </section>
 
             {/* Footer Content */}
-            <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">📄 Footer</h2>
-                  <p className="text-gray-600 text-sm mt-1">Bottom of page text</p>
+            <section className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex justify-between items-center mb-5">
+                <div className="flex items-center gap-2">
+                  <FileText size={20} className="text-gray-700" />
+                  <h2 className="text-lg font-semibold text-gray-900">Footer</h2>
                 </div>
                 <button
                   onClick={() => handleAction("Edit", "Footer")}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                  className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   data-testid="footer-edit-btn"
                 >
-                  ✏️ Edit
+                  <Edit2 size={16} />
+                  Edit
                 </button>
               </div>
-              <div className="bg-gray-50 rounded-lg p-6">
-                <div className="text-gray-700">{FOOTER_CONTENT.copyrightText}</div>
+              <div className="p-3 bg-gray-50 rounded border border-gray-200">
+                <div className="text-sm text-gray-700">{FOOTER_CONTENT.copyrightText}</div>
                 {FOOTER_CONTENT.note && (
-                  <div className="text-gray-500 text-sm mt-2">{FOOTER_CONTENT.note}</div>
+                  <div className="text-xs text-gray-500 mt-1">{FOOTER_CONTENT.note}</div>
                 )}
               </div>
             </section>
@@ -248,52 +284,55 @@ const Admin: React.FC = () => {
 
         {/* ABOUT SECTION */}
         {activeSection === "about" && (
-          <div className="space-y-8" data-testid="admin-section-about">
-            <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">ℹ️ About Page Content</h2>
-                  <p className="text-gray-600 text-sm mt-1">Information about your event</p>
+          <div className="space-y-6" data-testid="admin-section-about">
+            <section className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex justify-between items-center mb-5">
+                <div className="flex items-center gap-2">
+                  <Info size={20} className="text-gray-700" />
+                  <h2 className="text-lg font-semibold text-gray-900">About Page Content</h2>
                 </div>
                 <button
                   onClick={() => handleAction("Edit", "About Content")}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                  className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   data-testid="about-edit-btn"
                 >
-                  ✏️ Edit About
+                  <Edit2 size={16} />
+                  Edit All
                 </button>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {ABOUT_CONTENT.paragraphs.map((paragraph, index) => (
                   <div
                     key={index}
-                    className="bg-gray-50 rounded-lg p-6 border-2 border-gray-200"
+                    className="bg-white rounded-lg p-4 border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all"
                     data-testid={`about-paragraph-${index}`}
                   >
-                    <div className="flex justify-between items-start mb-3">
-                      <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-semibold">
                         Paragraph {index + 1}
                       </span>
                       <button
                         onClick={() => handleAction("Edit", `Paragraph ${index + 1}`)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm"
+                        className="flex items-center gap-1 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-600 px-3 py-1.5 rounded text-xs font-medium transition-colors border border-gray-200 hover:border-blue-300"
                         data-testid={`about-paragraph-edit-${index}`}
                       >
-                        ✏️ Edit
+                        <Edit2 size={12} />
+                        Edit
                       </button>
                     </div>
-                    <p className="text-gray-700 leading-relaxed">{paragraph}</p>
+                    <p className="text-sm text-gray-700 leading-relaxed">{paragraph}</p>
                   </div>
                 ))}
               </div>
 
               <button
                 onClick={() => handleAction("Add", "New Paragraph")}
-                className="mt-6 w-full bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-lg font-medium transition-colors"
+                className="mt-4 w-full flex items-center justify-center gap-1.5 bg-green-50 hover:bg-green-100 text-green-700 hover:text-green-800 px-4 py-3 rounded-lg text-sm font-medium transition-colors border border-green-200 hover:border-green-300"
                 data-testid="about-add-paragraph-btn"
               >
-                ➕ Add New Paragraph
+                <Plus size={16} />
+                Add New Paragraph
               </button>
             </section>
           </div>
@@ -301,55 +340,57 @@ const Admin: React.FC = () => {
 
         {/* EVENTS SECTION */}
         {activeSection === "events" && (
-          <div className="space-y-8" data-testid="admin-section-events">
-            <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">🎭 Events</h2>
-                  <p className="text-gray-600 text-sm mt-1">
-                    Manage your event competitions - Total: {EVENTS.length} events
-                  </p>
+          <div className="space-y-6" data-testid="admin-section-events">
+            <section className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex justify-between items-center mb-5">
+                <div className="flex items-center gap-2">
+                  <Calendar size={20} className="text-gray-700" />
+                  <div>
+                    <h2 className="text-lg font-semibold text-gray-900">Events</h2>
+                    <p className="text-xs text-gray-500 mt-0.5">Total: {EVENTS.length} events</p>
+                  </div>
                 </div>
                 <button
                   onClick={() => handleAction("Add", "New Event")}
-                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors shadow-md hover:shadow-lg"
+                  className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   data-testid="event-add-btn"
                 >
-                  ➕ Add New Event
+                  <Plus size={16} />
+                  Add Event
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {EVENTS.map((event) => (
                   <div
                     key={event.id}
-                    className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden border-2 border-gray-200 hover:shadow-lg transition-shadow"
+                    className="bg-white rounded-lg overflow-hidden border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
                     data-testid={`event-card-${event.id}`}
                   >
                     {/* Event Image */}
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative h-40 overflow-hidden bg-gray-100">
                       <img
                         src={event.image}
                         alt={event.title}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute top-3 right-3 bg-white px-3 py-1 rounded-full text-sm font-bold">
+                      <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded text-xs font-semibold shadow-sm">
                         Day {event.day}
                       </div>
-                      <div className="absolute top-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      <div className="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
                         {event.vibe}
                       </div>
                     </div>
 
                     {/* Event Details */}
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{event.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">{event.description}</p>
+                    <div className="p-4">
+                      <h3 className="text-base font-semibold text-gray-900 mb-1">{event.title}</h3>
+                      <p className="text-xs text-gray-600 mb-3 line-clamp-2">{event.description}</p>
 
                       {/* Symbols */}
-                      <div className="flex gap-2 mb-4">
+                      <div className="flex gap-1.5 mb-3">
                         {event.symbols.map((symbol, idx) => (
-                          <span key={idx} className="text-2xl">
+                          <span key={idx} className="text-lg">
                             {symbol}
                           </span>
                         ))}
@@ -359,17 +400,19 @@ const Admin: React.FC = () => {
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleAction("Edit", event.title)}
-                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-medium transition-colors"
+                          className="flex-1 flex items-center justify-center gap-1.5 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-600 px-3 py-2 rounded text-xs font-medium transition-colors border border-gray-200 hover:border-blue-300"
                           data-testid={`event-edit-${event.id}`}
                         >
-                          ✏️ Edit
+                          <Edit2 size={13} />
+                          Edit
                         </button>
                         <button
                           onClick={() => handleAction("Delete", event.title)}
-                          className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-medium transition-colors"
+                          className="flex-1 flex items-center justify-center gap-1.5 bg-gray-50 hover:bg-red-50 text-gray-700 hover:text-red-600 px-3 py-2 rounded text-xs font-medium transition-colors border border-gray-200 hover:border-red-300"
                           data-testid={`event-delete-${event.id}`}
                         >
-                          🗑️ Delete
+                          <Trash2 size={13} />
+                          Delete
                         </button>
                       </div>
                     </div>
@@ -382,29 +425,31 @@ const Admin: React.FC = () => {
 
         {/* GALLERY SECTION */}
         {activeSection === "gallery" && (
-          <div className="space-y-8" data-testid="admin-section-gallery">
-            <section className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">🖼️ Gallery</h2>
-                  <p className="text-gray-600 text-sm mt-1">
-                    Manage event photos - Total: {GALLERY_IMAGES.length} images
-                  </p>
+          <div className="space-y-6" data-testid="admin-section-gallery">
+            <section className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex justify-between items-center mb-5">
+                <div className="flex items-center gap-2">
+                  <Image size={20} className="text-gray-700" />
+                  <div>
+                    <h2 className="text-lg font-semibold text-gray-900">Gallery</h2>
+                    <p className="text-xs text-gray-500 mt-0.5">Total: {GALLERY_IMAGES.length} images</p>
+                  </div>
                 </div>
                 <button
                   onClick={() => handleAction("Add", "New Image")}
-                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors shadow-md hover:shadow-lg"
+                  className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   data-testid="gallery-add-btn"
                 >
-                  ➕ Upload Photo
+                  <Plus size={16} />
+                  Upload Photo
                 </button>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {GALLERY_IMAGES.map((imageUrl, index) => (
                   <div
                     key={index}
-                    className="group relative bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all"
+                    className="group relative bg-gray-100 rounded-lg overflow-hidden border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
                     data-testid={`gallery-image-${index}`}
                   >
                     {/* Image */}
@@ -417,32 +462,35 @@ const Admin: React.FC = () => {
                     </div>
 
                     {/* Hover Overlay with Actions */}
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-3">
+                    <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5 p-2">
                       <button
                         onClick={() => handleAction("Favourite", `Image ${index + 1}`)}
-                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm"
+                        className="w-full flex items-center justify-center gap-1 bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1.5 rounded text-xs font-medium transition-colors"
                         data-testid={`gallery-favourite-${index}`}
                       >
-                        ⭐ Favourite
+                        <Star size={12} />
+                        Favourite
                       </button>
                       <button
                         onClick={() => handleAction("Edit", `Image ${index + 1}`)}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm"
+                        className="w-full flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-2 py-1.5 rounded text-xs font-medium transition-colors"
                         data-testid={`gallery-edit-${index}`}
                       >
-                        ✏️ Edit
+                        <Edit2 size={12} />
+                        Edit
                       </button>
                       <button
                         onClick={() => handleAction("Remove", `Image ${index + 1}`)}
-                        className="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm"
+                        className="w-full flex items-center justify-center gap-1 bg-red-600 hover:bg-red-700 text-white px-2 py-1.5 rounded text-xs font-medium transition-colors"
                         data-testid={`gallery-remove-${index}`}
                       >
-                        🗑️ Remove
+                        <Trash2 size={12} />
+                        Remove
                       </button>
                     </div>
 
                     {/* Image Number Badge */}
-                    <div className="absolute top-2 left-2 bg-white/90 px-2 py-1 rounded-full text-xs font-bold text-gray-700">
+                    <div className="absolute top-2 left-2 bg-white/90 px-2 py-0.5 rounded text-xs font-semibold text-gray-700 shadow-sm">
                       #{index + 1}
                     </div>
                   </div>
