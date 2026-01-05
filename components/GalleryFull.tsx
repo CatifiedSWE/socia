@@ -37,6 +37,41 @@ const GalleryFull: React.FC = () => {
 
   const highlightImages = [...GALLERY_IMAGES, ...GALLERY_IMAGES];
 
+  // Loading state
+  if (loading) {
+    return (
+      <section className="bg-black pt-32 pb-20 relative min-h-screen overflow-x-hidden flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-600 mx-auto mb-4"></div>
+          <p className="text-red-600 font-oswald tracking-widest uppercase text-sm">Loading Gallery...</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <section className="bg-black pt-32 pb-20 relative min-h-screen overflow-x-hidden flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <p className="text-red-600 font-oswald tracking-widest uppercase text-sm mb-4">Failed to load gallery</p>
+          <p className="text-gray-400 text-xs">{error}</p>
+        </div>
+      </section>
+    );
+  }
+
+  // No images state
+  if (!GALLERY_IMAGES || GALLERY_IMAGES.length === 0) {
+    return (
+      <section className="bg-black pt-32 pb-20 relative min-h-screen overflow-x-hidden flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-400 font-oswald tracking-widest uppercase text-sm">No images available</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="bg-black pt-32 pb-20 relative min-h-screen overflow-x-hidden">
       <div className="mb-32">
