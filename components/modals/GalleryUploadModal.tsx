@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Loader2, Upload, Link as LinkIcon } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../../lib/supabase';
 
 interface GalleryUploadModalProps {
   isOpen: boolean;
