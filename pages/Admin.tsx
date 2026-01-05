@@ -28,6 +28,8 @@ import {
   useEvents,
   useGalleryImages,
   useFooterContent,
+  useAdminDocuments,
+  useStorageOperations,
 } from "../hooks/useSupabaseData";
 import { EditStatModal } from "../components/modals/EditStatModal";
 import { EditHeroModal } from "../components/modals/EditHeroModal";
