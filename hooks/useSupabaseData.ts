@@ -242,6 +242,52 @@ export const useEvents = () => {
       setLoading(true);
       const { data: eventsData, error: eventsError } = await supabase
         .from('events')
+
+
+// =============================================
+// ADMIN DOCUMENTS HOOK
+// =============================================
+
+export interface AdminDocument {
+  id: string;
+  name: string;
+  url: string;
+  size: number;
+  uploaded_at: string;
+}
+
+export const useAdminDocuments = () => {
+  const [data, setData] = useState<AdminDocument[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { listFiles } = useStorageOperations();
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const files = await listFiles('admin-documents');
+      setData(files.map(f => ({
+        id: f.id,
+        name: f.name,
+        url: f.url,
+        size: f.size,
+        uploaded_at: f.created_at,
+      })));
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { data, loading, error, refetch: fetchData };
+};
+
         .select('*')
         .order('day', { ascending: true });
 
