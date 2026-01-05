@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { GALLERY_IMAGES } from "../constants";
+import { GALLERY_IMAGES, getSectionContent, getButtonLabel } from "../constants";
 
 const GalleryPreview: React.FC = () => {
   const navigate = useNavigate();
