@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import CinematicButton from "../components/ui/CinematicButton";
+import { getSectionContent, getButtonLabel, FOOTER_CONTENT } from "../constants";
 
 const RegisterSection: React.FC = () => {
   const navigate = useNavigate();
