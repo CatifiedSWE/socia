@@ -1,0 +1,243 @@
+import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
+import type {
+  EventCard,
+  TeamMember,
+  Statistic,
+  HeroContent,
+  AboutContent,
+  FooterContent,
+} from '../types';
+
+// Hook for fetching hero content
+export const useHeroContent = () => {
+  const [data, setData] = useState<HeroContent | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const { data: heroData, error: heroError } = await supabase
+        .from('hero_content')
+        .select('*')
+        .single();
+
+      if (heroError) throw heroError;
+
+      setData({
+        id: heroData.id,
+        title: heroData.title,
+        subtitle: heroData.subtitle,
+        description: heroData.description,
+        primaryButtonText: heroData.primary_button_text,
+        secondaryButtonText: heroData.secondary_button_text,
+      });
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { data, loading, error, refetch: fetchData };
+};
+
+// Hook for fetching about content
+export const useAboutContent = () => {
+  const [data, setData] = useState<AboutContent | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const { data: aboutData, error: aboutError } = await supabase
+        .from('about_content')
+        .select('*')
+        .single();
+
+      if (aboutError) throw aboutError;
+      setData(aboutData);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { data, loading, error, refetch: fetchData };
+};
+
+// Hook for fetching statistics
+export const useStatistics = () => {
+  const [data, setData] = useState<Statistic[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const { data: statsData, error: statsError } = await supabase
+        .from('statistics')
+        .select('*')
+        .order('order', { ascending: true });
+
+      if (statsError) throw statsError;
+      setData(statsData || []);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { data, loading, error, refetch: fetchData };
+};
+
+// Hook for fetching team members
+export const useTeamMembers = () => {
+  const [data, setData] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const { data: teamData, error: teamError } = await supabase
+        .from('team_members')
+        .select('*')
+        .order('order', { ascending: true });
+
+      if (teamError) throw teamError;
+      setData(teamData || []);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const staffMembers = data.filter((m) => m.type === 'staff');
+  const studentMembers = data.filter((m) => m.type === 'student');
+
+  return { data, staffMembers, studentMembers, loading, error, refetch: fetchData };
+};
+
+// Hook for fetching events
+export const useEvents = () => {
+  const [data, setData] = useState<EventCard[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const { data: eventsData, error: eventsError } = await supabase
+        .from('events')
+        .select('*')
+        .order('day', { ascending: true });
+
+      if (eventsError) throw eventsError;
+      setData(eventsData || []);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { data, loading, error, refetch: fetchData };
+};
+
+// Hook for fetching gallery images
+export const useGalleryImages = () => {
+  const [data, setData] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const { data: galleryData, error: galleryError } = await supabase
+        .from('gallery_images')
+        .select('image_url')
+        .order('order', { ascending: true });
+
+      if (galleryError) throw galleryError;
+      setData(galleryData?.map((item) => item.image_url) || []);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { data, loading, error, refetch: fetchData };
+};
+
+// Hook for fetching footer content
+export const useFooterContent = () => {
+  const [data, setData] = useState<FooterContent | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const { data: footerData, error: footerError } = await supabase
+        .from('footer_content')
+        .select('*')
+        .single();
+
+      if (footerError) throw footerError;
+
+      setData({
+        id: footerData.id,
+        copyrightText: footerData.copyright_text,
+        note: footerData.note,
+      });
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { data, loading, error, refetch: fetchData };
+};
