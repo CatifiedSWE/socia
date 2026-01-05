@@ -5,6 +5,7 @@ import EventCards from "../components/EventCards";
 import Coordinators from "../components/ui/Coordinators";
 import GalleryPreview from "../components/GalleryPreview";
 import RegisterSection from "../components/RegisterSection";
+import { getSectionContent } from "../constants";
 
 const Home: React.FC = () => {
   return (
