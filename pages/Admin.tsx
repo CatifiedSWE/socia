@@ -15,6 +15,8 @@ import {
   BarChart3,
   Film,
   FileText,
+  LogOut,
+  Loader2,
 } from "lucide-react";
 import {
   HERO_CONTENT,
@@ -27,8 +29,11 @@ import {
   getStaffMembers,
   getStudentMembers,
 } from "../constants";
+import { useAuth } from "../contexts/AuthContext";
+import AdminLogin from "../components/AdminLogin";
 
 const Admin: React.FC = () => {
+  const { isAdmin, isLoading, signOut, user } = useAuth();
   const [activeSection, setActiveSection] = useState<string>("general");
 
   const handleAction = (action: string, item?: string) => {
@@ -37,6 +42,23 @@ const Admin: React.FC = () => {
 
   const staffMembers = getStaffMembers();
   const studentMembers = getStudentMembers();
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="animate-spin text-blue-600 mx-auto mb-4" size={48} />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login if not authenticated or not admin
+  if (!isAdmin) {
+    return <AdminLogin />;
+  }
 
   const tabs = [
     { id: "general", label: "General", icon: LayoutDashboard, desc: "Stats & Team" },
