@@ -17,19 +17,17 @@ const About: React.FC = () => {
           </div>
           <div className="w-32 h-1 bg-red-600 mb-12" />
           <p className="font-inter text-xl md:text-3xl text-gray-200 leading-relaxed font-light max-w-4xl">
-            Zynora is not just a{" "}
-            <span className="text-red-600 font-medium">cultural fest</span>
-            —it is a celebration of diversity and a dynamic platform for
-            self-expression.
+            {ABOUT_CONTENT.paragraphs[0].split('cultural fest').map((part, i) => 
+              i === 0 ? part : (
+                <React.Fragment key={i}>
+                  <span className="text-red-600 font-medium">cultural fest</span>
+                  {part}
+                </React.Fragment>
+              )
+            )}
           </p>
           <p className="font-inter text-lg md:text-xl text-gray-400 leading-relaxed font-light max-w-4xl mt-10">
-            Zynora is not just a cultural fest—it is a celebration of diversity
-            and a dynamic platform for self-expression. It brings together the
-            brightest talents from colleges near and far, offering students the
-            opportunity to shine across dance, music, theatre, fine arts, and
-            literary competitions. Each event is thoughtfully designed to
-            inspire creativity, highlight individual skills, and bring out the
-            best in every participant.
+            {ABOUT_CONTENT.paragraphs[1]}
           </p>
         </div>
       </div>
