@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { GALLERY_IMAGES } from "../constants";
+import { GALLERY_IMAGES, getSectionContent } from "../constants";
 
 const GalleryFull: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
