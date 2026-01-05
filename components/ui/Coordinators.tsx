@@ -42,19 +42,19 @@ const Coordinators: React.FC = () => {
 
       <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="text-center mb-24">
-          <span className="font-oswald text-red-600 tracking-[0.5em] text-xs uppercase mb-2 block animate-pulse">Summon the Kraken</span>
-          <h2 className="font-cinzel text-4xl md:text-6xl font-black mb-4">Coordinators</h2>
+          <span className="font-oswald text-red-600 tracking-[0.5em] text-xs uppercase mb-2 block animate-pulse">{sectionContent?.label}</span>
+          <h2 className="font-cinzel text-4xl md:text-6xl font-black mb-4">{sectionContent?.title}</h2>
           <div className="w-24 h-[2px] bg-red-600 mx-auto shadow-[0_0_10px_rgba(220,38,38,0.5)]" />
         </div>
 
         <div className="grid md:grid-cols-2 gap-16 lg:gap-24 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <h3 className="font-oswald text-3xl text-white uppercase tracking-widest mb-10 flex items-center gap-4">
-               <span className="hidden md:block w-8 h-[2px] bg-red-600" /> Staff Support
+               <span className="hidden md:block w-8 h-[2px] bg-red-600" /> {TEAM_LABELS.staffTitle}
             </h3>
             <div className="space-y-12 w-full">
-              {staff.map((p, i) => (
-                <div key={i} className={`group relative transition-all duration-700`}>
+              {staff.map((p) => (
+                <div key={p.id} className={`group relative transition-all duration-700`}>
                   <div className="absolute -left-6 top-0 bottom-0 w-[1px] bg-red-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top hidden md:block" />
                   <p className="font-cinzel font-bold text-2xl text-white group-hover:text-red-500 transition-colors">{p.name}</p>
                   <p className="text-gray-500 font-oswald text-[10px] uppercase tracking-[0.4em] mb-3">{p.role}</p>
@@ -68,11 +68,11 @@ const Coordinators: React.FC = () => {
 
           <div className="flex flex-col items-center md:items-start">
             <h3 className="font-oswald text-3xl text-white uppercase tracking-widest mb-10 flex items-center gap-4">
-               <span className="hidden md:block w-8 h-[2px] bg-red-600" /> Student Leads
+               <span className="hidden md:block w-8 h-[2px] bg-red-600" /> {TEAM_LABELS.studentTitle}
             </h3>
             <div className="space-y-12 w-full">
-              {students.map((p, i) => (
-                <div key={i} className={`group relative transition-all duration-700`}>
+              {students.map((p) => (
+                <div key={p.id} className={`group relative transition-all duration-700`}>
                   <div className="absolute -left-6 top-0 bottom-0 w-[1px] bg-red-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top hidden md:block" />
                   <p className="font-cinzel font-bold text-2xl text-white group-hover:text-red-500 transition-colors">{p.name}</p>
                   <p className="text-gray-500 font-oswald text-[10px] uppercase tracking-[0.4em] mb-3">{p.role}</p>
@@ -87,7 +87,7 @@ const Coordinators: React.FC = () => {
 
         <div className="mt-32 flex flex-col items-center justify-center">
            <div className="w-full h-[1px] bg-white/5 mb-12" />
-           <p className="font-oswald text-gray-500 text-[10px] uppercase tracking-[0.8em] mb-8">Follow for more update</p>
+           <p className="font-oswald text-gray-500 text-[10px] uppercase tracking-[0.8em] mb-8">{sectionContent?.description}</p>
            
            <a 
             href="https://www.instagram.com/zynora_26/" 
