@@ -106,16 +106,21 @@ const App: React.FC = () => {
               : "opacity-100 scale-100"
           }`}
         >
-          <div className="fixed inset-0 pointer-events-none z-[-1]">
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-900/10 blur-[150px] rounded-full" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/5 blur-[150px] rounded-full" />
-          </div>
+          {/* Background effects - hidden on admin page */}
+          {!isAdminPage && (
+            <>
+              <div className="fixed inset-0 pointer-events-none z-[-1]">
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-900/10 blur-[150px] rounded-full" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/5 blur-[150px] rounded-full" />
+              </div>
 
-          <div className="grain" />
-          <LightningOverlay />
-          <Navbar />
+              <div className="grain" />
+              <LightningOverlay />
+              <Navbar />
+            </>
+          )}
 
-          <main className="overflow-hidden bg-black">
+          <main className={`overflow-hidden ${!isAdminPage ? 'bg-black' : 'bg-gray-50'}`}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
@@ -127,29 +132,37 @@ const App: React.FC = () => {
             </Routes>
           </main>
 
-          <footer className="py-16 px-6 border-t border-white/5 text-center text-gray-600 text-[10px] uppercase tracking-[0.5em] font-oswald bg-black relative z-10">
-            <p className="mb-8">
-              &copy; {new Date().getFullYear()} {FOOTER_CONTENT.copyrightText}
-            </p>
-            <div className="flex justify-center gap-10">
-              <a
-                href="https://www.instagram.com/zynora_26/"
-                className="hover:text-red-600 transition-all transform hover:scale-110"
-              >
-                Instagram
-              </a>
-            </div>
-            <div className="mt-12 opacity-30 flex items-center justify-center gap-4">
-              <div className="h-[1px] w-20 bg-white" />
-              <span className="font-cinzel text-white text-xl">{HERO_CONTENT.title.charAt(0)}</span>
-              <div className="h-[1px] w-20 bg-white" />
-            </div>
-          </footer>
+          {/* Footer - hidden on admin page */}
+          {!isAdminPage && (
+            <footer className="py-16 px-6 border-t border-white/5 text-center text-gray-600 text-[10px] uppercase tracking-[0.5em] font-oswald bg-black relative z-10">
+              <p className="mb-8">
+                &copy; {new Date().getFullYear()} {FOOTER_CONTENT.copyrightText}
+              </p>
+              <div className="flex justify-center gap-10">
+                <a
+                  href="https://www.instagram.com/zynora_26/"
+                  className="hover:text-red-600 transition-all transform hover:scale-110"
+                >
+                  Instagram
+                </a>
+              </div>
+              <div className="mt-12 opacity-30 flex items-center justify-center gap-4">
+                <div className="h-[1px] w-20 bg-white" />
+                <span className="font-cinzel text-white text-xl">{HERO_CONTENT.title.charAt(0)}</span>
+                <div className="h-[1px] w-20 bg-white" />
+              </div>
+            </footer>
+          )}
         </div>
       )}
 
-      <SoundManager hasEntered={hasEntered} />
-      <FloatingRegisterButton /> 
+      {/* Sound Manager and Register Button - hidden on admin page */}
+      {!isAdminPage && (
+        <>
+          <SoundManager hasEntered={hasEntered} />
+          <FloatingRegisterButton />
+        </>
+      )} 
 
       <style>{`
         @keyframes accretionSpin {
