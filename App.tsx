@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 import Onboarding from "./components/Onboarding";
 import LightningOverlay from "./components/ui/LightningOverlay";
 import SoundManager from "./components/ui/SoundManager";
