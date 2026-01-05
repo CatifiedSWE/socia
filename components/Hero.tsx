@@ -148,7 +148,7 @@ const Hero: React.FC = () => {
         >
           <div className="absolute inset-0 bg-red-600/20 blur-[60px] animate-pulse" />
           <h1 className="font-cinzel text-7xl md:text-9xl font-black tracking-[-0.05em] text-transparent bg-clip-text bg-gradient-to-b from-red-500 to-red-900 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] animate-[neonFlicker_4s_infinite]">
-            ZYNORA
+            {HERO_CONTENT.title}
           </h1>
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-red-600 to-transparent mt-[-10px] animate-pulse" />
         </div>
