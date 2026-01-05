@@ -10,6 +10,7 @@ import Onboarding from "./components/Onboarding";
 import LightningOverlay from "./components/ui/LightningOverlay";
 import SoundManager from "./components/ui/SoundManager";
 import FloatingRegisterButton from "./components/ui/FloatingRegisterButton";
+import { FOOTER_CONTENT, HERO_CONTENT } from "./constants";
 
 type Page = "home" | "about" | "events" | "gallery" | "contact";
 
