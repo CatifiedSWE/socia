@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CornerStrings from "../components/ui/CornerStrings";
-import { TAGLINES } from "../constants";
+import { TAGLINES, HERO_CONTENT, getButtonLabel } from "../constants";
 
 const Hero: React.FC = () => {
   const navigate = useNavigate();
