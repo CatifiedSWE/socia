@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Loader2, Upload } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useStorageOperations } from '../../hooks/useSupabaseData';
-import type { EventCard } from '../../types';
+import type { EventCard } from '../types';
 
 interface EventModalProps {
   isOpen: boolean;
