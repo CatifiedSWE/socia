@@ -763,6 +763,12 @@ const Admin: React.FC = () => {
         onSuccess={refetchGallery}
       />
 
+      <DocumentUploadModal
+        isOpen={documentUploadModal}
+        onClose={() => setDocumentUploadModal(false)}
+        onSuccess={refetchDocuments}
+      />
+
       <DeleteConfirmModal
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ ...deleteModal, isOpen: false })}
