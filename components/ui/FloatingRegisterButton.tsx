@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useNavigate } from "react-router-dom";
+import { getButtonLabel } from "../../constants";
 
 const FloatingRegisterButton: React.FC = () => {
     const navigate = useNavigate();
