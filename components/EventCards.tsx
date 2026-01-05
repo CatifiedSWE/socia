@@ -79,6 +79,37 @@ const Card: React.FC<{ event: EventCard; index: number }> = ({
 const EventCards: React.FC = () => {
   const [activeDay, setActiveDay] = useState<1 | 2>(1);
   const sectionContent = getSectionContent('events');
+  const { data: EVENTS, loading, error } = useEvents();
+
+  // Loading state
+  if (loading) {
+    return (
+      <section
+        id="events"
+        className="py-20 px-4 max-w-7xl mx-auto relative overflow-visible bg-black min-h-screen flex items-center justify-center"
+      >
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-600 mx-auto mb-4"></div>
+          <p className="text-red-600 font-oswald tracking-widest uppercase text-sm">Loading Events...</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <section
+        id="events"
+        className="py-20 px-4 max-w-7xl mx-auto relative overflow-visible bg-black min-h-screen flex items-center justify-center"
+      >
+        <div className="text-center max-w-md">
+          <p className="text-red-600 font-oswald tracking-widest uppercase text-sm mb-4">Failed to load events</p>
+          <p className="text-gray-400 text-xs">{error}</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
