@@ -5,6 +5,9 @@ import { getStaffMembers, getStudentMembers, getSectionContent, TEAM_LABELS } fr
 const Coordinators: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const sectionContent = getSectionContent('coordinators');
+  const staff = getStaffMembers();
+  const students = getStudentMembers();
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -14,17 +17,6 @@ const Coordinators: React.FC = () => {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
-  const staff = [
-    { name: "Prof. Sarah Miller", role: "Faculty Head", phone: "+91 98765 43210" },
-    { name: "Dr. James Wilson", role: "Cultural Advisor", phone: "+91 87654 32109" }
-  ];
-
-  const students = [
-    { name: "Alex Johnson", role: "General Secretary", phone: "+91 76543 21098" },
-    { name: "Elena Gilbert", role: "Event Lead", phone: "+91 65432 10987" },
-    { name: "Stefan Salvatore", role: "Technical Head", phone: "+91 54321 09876" }
-  ];
 
   return (
     <section id="contact" ref={sectionRef} className="py-32 px-4 bg-black relative border-t border-white/5 overflow-hidden">
