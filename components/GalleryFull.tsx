@@ -3,6 +3,7 @@ import { GALLERY_IMAGES, getSectionContent } from "../constants";
 
 const GalleryFull: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const sectionContent = getSectionContent('gallery-full');
 
   useEffect(() => {
     if (selectedIndex !== null) {
