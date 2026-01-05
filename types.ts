@@ -1,4 +1,3 @@
-
 export interface EventCard {
   id: string;
   title: string;
@@ -11,3 +10,63 @@ export interface EventCard {
 }
 
 export type Tagline = string;
+
+// Team member types - Supabase ready
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  phone: string;
+  type: 'staff' | 'student';
+  order?: number;
+}
+
+// Statistics types - Supabase ready
+export interface Statistic {
+  id: string;
+  label: string;
+  value: string;
+  order: number;
+}
+
+// UI Text content types - Supabase ready
+export interface HeroContent {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  primaryButtonText: string;
+  secondaryButtonText: string;
+}
+
+export interface OnboardingContent {
+  id: string;
+  title: string;
+  subtitle: string;
+  buttonText: string;
+}
+
+export interface SectionContent {
+  id: string;
+  sectionKey: string;
+  label: string;
+  title: string;
+  description?: string;
+}
+
+export interface ButtonLabel {
+  id: string;
+  key: string;
+  text: string;
+}
+
+export interface AboutContent {
+  id: string;
+  paragraphs: string[];
+}
+
+export interface FooterContent {
+  id: string;
+  copyrightText: string;
+  note?: string;
+}
