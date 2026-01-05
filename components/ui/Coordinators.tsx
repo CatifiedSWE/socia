@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState, useRef } from 'react';
+import { getStaffMembers, getStudentMembers, getSectionContent, TEAM_LABELS } from '../constants';
 
 const Coordinators: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
