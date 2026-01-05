@@ -119,6 +119,15 @@ const Admin: React.FC = () => {
       title: 'Delete Event',
       message: `Are you sure you want to delete "${event.title}"? This action cannot be undone.`,
       onConfirm: async () => {
+        // Delete image from storage first
+        if (event.image) {
+          try {
+            await deleteFromStorage('event-posters', event.image);
+          } catch (err) {
+            console.warn('Failed to delete event poster from storage:', err);
+          }
+        }
+        
         const { error } = await supabase.from('events').delete().eq('id', event.id);
         if (error) throw error;
         refetchEvents();
@@ -132,9 +141,28 @@ const Admin: React.FC = () => {
       title: 'Delete Image',
       message: `Are you sure you want to delete image #${index + 1}? This action cannot be undone.`,
       onConfirm: async () => {
+        // Delete from storage first
+        try {
+          await deleteFromStorage('gallery', imageUrl);
+        } catch (err) {
+          console.warn('Failed to delete image from storage:', err);
+        }
+
         const { error } = await supabase.from('gallery_images').delete().eq('image_url', imageUrl);
         if (error) throw error;
         refetchGallery();
+      },
+    });
+  };
+
+  const handleDeleteDocument = (documentUrl: string, documentName: string) => {
+    setDeleteModal({
+      isOpen: true,
+      title: 'Delete Document',
+      message: `Are you sure you want to delete "${documentName}"? This action cannot be undone.`,
+      onConfirm: async () => {
+        await deleteFromStorage('admin-documents', documentUrl);
+        refetchDocuments();
       },
     });
   };
