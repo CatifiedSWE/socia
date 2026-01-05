@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { EVENTS, getSectionContent, getButtonLabel } from "../constants";
+import { getSectionContent, getButtonLabel } from "../constants";
 import { EventCard } from "../types";
 import CornerStrings from "../components/ui/CornerStrings";
+import { useEvents } from "../hooks/useSupabaseData";
 
 const Card: React.FC<{ event: EventCard; index: number }> = ({
   event,
