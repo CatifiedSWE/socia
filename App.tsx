@@ -50,7 +50,7 @@ const App: React.FC = () => {
     }, 3500);
   };
 
-  if (isLoading) {
+  if (isLoading && !isAdminPage) {
     return (
       <div className="fixed inset-0 bg-black z-[300] flex items-center justify-center">
         <div className="text-center">
