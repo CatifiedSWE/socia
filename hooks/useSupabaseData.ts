@@ -9,6 +9,93 @@ import type {
   FooterContent,
 } from '../types';
 
+// =============================================
+// STORAGE BUCKET OPERATIONS
+// =============================================
+
+export interface StorageFile {
+  id: string;
+  name: string;
+  url: string;
+  size: number;
+  created_at: string;
+}
+
+// Helper function to extract file path from Supabase URL
+const extractPathFromUrl = (url: string, bucketName: string): string | null => {
+  try {
+    const urlObj = new URL(url);
+    const pathMatch = urlObj.pathname.match(new RegExp(`/storage/v1/object/public/${bucketName}/(.+)$`));
+    return pathMatch ? pathMatch[1] : null;
+  } catch {
+    return null;
+  }
+};
+
+// Generic Storage Operations Hook
+export const useStorageOperations = () => {
+  const uploadToStorage = async (bucket: string, file: File): Promise<string> => {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+    const filePath = fileName;
+
+    const { error: uploadError } = await supabase.storage
+      .from(bucket)
+      .upload(filePath, file);
+
+    if (uploadError) throw uploadError;
+
+    const { data: urlData } = supabase.storage
+      .from(bucket)
+      .getPublicUrl(filePath);
+
+    return urlData.publicUrl;
+  };
+
+  const deleteFromStorage = async (bucket: string, url: string): Promise<void> => {
+    const filePath = extractPathFromUrl(url, bucket);
+    if (!filePath) {
+      console.warn('Could not extract file path from URL:', url);
+      return;
+    }
+
+    const { error } = await supabase.storage
+      .from(bucket)
+      .remove([filePath]);
+
+    if (error) throw error;
+  };
+
+  const listFiles = async (bucket: string): Promise<StorageFile[]> => {
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .list('', {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: 'created_at', order: 'desc' },
+      });
+
+    if (error) throw error;
+
+    return data.map((file) => {
+      const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(file.name);
+      return {
+        id: file.id,
+        name: file.name,
+        url: urlData.publicUrl,
+        size: file.metadata?.size || 0,
+        created_at: file.created_at || new Date().toISOString(),
+      };
+    });
+  };
+
+  return {
+    uploadToStorage,
+    deleteFromStorage,
+    listFiles,
+  };
+};
+
 // Hook for fetching hero content
 export const useHeroContent = () => {
   const [data, setData] = useState<HeroContent | null>(null);
