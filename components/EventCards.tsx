@@ -77,6 +77,7 @@ const Card: React.FC<{ event: EventCard; index: number }> = ({
 
 const EventCards: React.FC = () => {
   const [activeDay, setActiveDay] = useState<1 | 2>(1);
+  const sectionContent = getSectionContent('events');
 
   return (
     <section
