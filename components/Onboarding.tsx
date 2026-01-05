@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { ONBOARDING_CONTENT } from '../constants';
 
 interface Props {
   onEnter: () => void;
