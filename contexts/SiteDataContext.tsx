@@ -87,7 +87,7 @@ export interface SiteData {
   staffMembers: TeamMember[];
   studentMembers: TeamMember[];
   events: EventCard[];
-  galleryImages: string[];
+  galleryImages: GalleryImage[];
   sectionContent: RawSectionContent[];
   buttonLabels: RawButtonLabel[];
 }
