@@ -3,10 +3,9 @@ export interface EventCard {
   title: string;
   description: string;
   image: string;
-  color: string;
-  symbols: string[];
   day: 1 | 2;
   vibe: 'thriller' | 'fantasy' | 'action' | 'horror' | 'adventure' | 'crime';
+  google_forms?: string | null;
 }
 
 export type Tagline = string;
