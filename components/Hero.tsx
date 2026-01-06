@@ -11,6 +11,15 @@ const Hero: React.FC = () => {
   const [fadeStatus, setFadeStatus] = useState(true);
   const { data: heroContent, loading, error } = useHeroContent();
 
+  // Use fallback content to prevent blocking on mobile
+  const content = heroContent || {
+    title: 'ZYNORA',
+    subtitle: 'Enter the Legends',
+    description: 'Experience the ultimate cinematic event',
+    primaryButtonText: 'Register Now',
+    secondaryButtonText: 'Learn More'
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setFadeStatus(false);
@@ -27,29 +36,6 @@ const Hero: React.FC = () => {
     setIsGlitching(true);
     setTimeout(() => setIsGlitching(false), 1200);
   };
-
-  // Loading state
-  if (loading) {
-    return (
-      <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden pt-20 bg-black">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <p className="text-red-600 font-oswald tracking-widest uppercase text-sm">Loading...</p>
-        </div>
-      </section>
-    );
-  }
-
-  // Error or no data - fallback
-  if (error || !heroContent) {
-    return (
-      <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden pt-20 bg-black">
-        <div className="text-center">
-          <p className="text-red-600 font-oswald tracking-widest uppercase text-sm">Failed to load content</p>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden pt-20 bg-black">
