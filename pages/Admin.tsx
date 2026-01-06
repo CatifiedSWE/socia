@@ -42,7 +42,7 @@ import { EditFooterModal } from "../components/modals/EditFooterModal";
 import { DeleteConfirmModal } from "../components/modals/DeleteConfirmModal";
 import { DocumentUploadModal } from "../components/modals/DocumentUploadModal";
 import { supabase } from "../lib/supabase";
-import type { TeamMember, Statistic, EventCard } from "../types";
+import type { TeamMember, Statistic, EventCard, GalleryImage } from "../types";
 
 const Admin: React.FC = () => {
   const { isAdmin, isLoading: authLoading, signOut, user } = useAuth();
