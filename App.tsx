@@ -11,7 +11,7 @@ import Onboarding from "./components/Onboarding";
 import LightningOverlay from "./components/ui/LightningOverlay";
 import SoundManager from "./components/ui/SoundManager";
 import FloatingRegisterButton from "./components/ui/FloatingRegisterButton";
-import { FOOTER_CONTENT, HERO_CONTENT } from "./constants";
+import { useHeroContent, useFooterContent } from "./hooks/useSupabaseData";
 
 type Page = "home" | "about" | "events" | "gallery" | "contact";
 
@@ -20,6 +20,8 @@ const App: React.FC = () => {
   const [hasEntered, setHasEntered] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const location = useLocation();
+  const { data: heroContent } = useHeroContent();
+  const { data: footerContent } = useFooterContent();
 
   // Check if current route is admin page
   const isAdminPage = location.pathname === '/admin';
