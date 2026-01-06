@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Loader2, Upload, FileText } from 'lucide-react';
 import { useStorageOperations } from '../../hooks/useSupabaseData';
 
@@ -13,6 +13,19 @@ export const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({ isOpen
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { uploadToStorage } = useStorageOperations();
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
