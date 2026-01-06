@@ -98,7 +98,7 @@ const StatsSection: React.FC = () => {
         </h2>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-24">
-          {STATISTICS.sort((a, b) => a.order - b.order).map((stat, idx) => (
+          {statistics.sort((a, b) => a.order - b.order).map((stat, idx) => (
             <div
               key={stat.id}
               className={`flex flex-col items-center transition-all duration-700 ${
