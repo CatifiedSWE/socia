@@ -113,6 +113,10 @@ const EventCards: React.FC = () => {
     );
   }
 
+  const secureEntryText = getButtonByKey('secure-entry') || 'Secure Entry';
+  const phase01Text = getButtonByKey('phase-01') || 'Phase 01';
+  const phase02Text = getButtonByKey('phase-02') || 'Phase 02';
+
   return (
     <section
       id="events"
