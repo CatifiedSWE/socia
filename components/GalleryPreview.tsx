@@ -64,7 +64,7 @@ const GalleryPreview: React.FC = () => {
             onClick={() => navigate("/gallery")}
             className="px-12 py-4 bg-transparent border-2 border-red-600 text-red-600 font-oswald uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all transform hover:scale-105 active:scale-95"
           >
-            {getButtonLabel('view-full-gallery')}
+            {getButtonByKey('view-full-gallery') || 'View Full Gallery'}
           </button>
         </div>
       </div>
