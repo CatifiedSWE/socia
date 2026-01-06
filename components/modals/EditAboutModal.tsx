@@ -61,15 +61,17 @@ export const EditAboutModal: React.FC<EditAboutModalProps> = ({ isOpen, onClose,
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full p-6 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-900">Edit About Content</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
-            <X size={24} />
-          </button>
+      <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="sticky top-0 bg-white p-6 pb-4 border-b border-gray-100 z-10">
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold text-gray-900">Edit About Content</h2>
+            <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+              <X size={24} />
+            </button>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {paragraphs.map((paragraph, index) => (
             <div key={index} className="space-y-2">
               <div className="flex justify-between items-center">
@@ -113,7 +115,7 @@ export const EditAboutModal: React.FC<EditAboutModalProps> = ({ isOpen, onClose,
             </div>
           )}
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 pt-2">
             <button
               type="button"
               onClick={onClose}
