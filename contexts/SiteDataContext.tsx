@@ -239,21 +239,15 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
     }
   }, []);
 
-  // Fallback: Fetch all data with Promise.all (still optimized - parallel)
+  // Fallback: Fetch all data with Promise.all (still optimized - parallel) with timeout
   const fetchWithParallelQueries = async () => {
     try {
-      const [
-        heroRes,
-        aboutRes,
-        onboardingRes,
-        footerRes,
-        statsRes,
-        teamRes,
-        eventsRes,
-        galleryRes,
-        sectionsRes,
-        buttonsRes,
-      ] = await Promise.all([
+      // Add timeout for mobile - max 6 seconds for parallel queries
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Parallel queries timeout')), 6000);
+      });
+
+      const fetchPromise = Promise.all([
         supabase.from('hero_content').select('*').single(),
         supabase.from('about_content').select('*').single(),
         supabase.from('onboarding_content').select('*').single(),
@@ -265,6 +259,21 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
         supabase.from('section_content').select('*'),
         supabase.from('button_labels').select('*'),
       ]);
+
+      const results = await Promise.race([fetchPromise, timeoutPromise]) as any[];
+
+      const [
+        heroRes,
+        aboutRes,
+        onboardingRes,
+        footerRes,
+        statsRes,
+        teamRes,
+        eventsRes,
+        galleryRes,
+        sectionsRes,
+        buttonsRes,
+      ] = results;
 
       const rawData: RawSiteData = {
         hero_content: heroRes.data,
@@ -284,6 +293,7 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
     } catch (err: any) {
       console.error('Fallback fetch failed:', err);
       setError(err.message);
+      throw err; // Re-throw to trigger fallback data in parent
     }
   };
 
