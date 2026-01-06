@@ -54,6 +54,8 @@ interface RawGalleryImage {
   id: string;
   image_url: string;
   order?: number;
+  is_featured?: boolean;
+  created_at: string;
 }
 
 interface RawSiteData {
