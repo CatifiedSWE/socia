@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Loader2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
-import type { TeamMember } from '../types';
+import type { TeamMember } from '../../types';
 
 interface TeamMemberModalProps {
   isOpen: boolean;
