@@ -99,7 +99,7 @@ const GalleryFull: React.FC = () => {
               <div
                 key={idx}
                 className="relative w-64 md:w-80 h-[400px] flex-shrink-0 group/card preserve-3d cursor-pointer"
-                onClick={() => setSelectedIndex(idx % GALLERY_IMAGES.length)}
+                onClick={() => setSelectedIndex(idx % carouselImages.length)}
               >
                 <div className="relative w-full h-full transition-transform duration-[800ms] preserve-3d group-hover/card:[transform:rotateY(180deg)]">
                   <div className="absolute inset-0 backface-hidden bg-[#0a0a0a] rounded-2xl flex flex-col items-center justify-center border border-red-900/30 shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden">
