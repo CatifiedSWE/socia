@@ -337,6 +337,103 @@ export const useGalleryImages = () => {
   return { data, loading, error, refetch: fetchData };
 };
 
+// Hook for fetching onboarding content
+export const useOnboardingContent = () => {
+  const [data, setData] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const { data: onboardingData, error: onboardingError } = await supabase
+        .from('onboarding_content')
+        .select('*')
+        .single();
+
+      if (onboardingError) throw onboardingError;
+      setData(onboardingData);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return { data, loading, error, refetch: fetchData };
+};
+
+// Hook for fetching section content
+export const useSectionContent = () => {
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const { data: sectionData, error: sectionError } = await supabase
+        .from('section_content')
+        .select('*');
+
+      if (sectionError) throw sectionError;
+      setData(sectionData || []);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // Helper function to get section by key
+  const getSectionByKey = (key: string) => data.find(section => section.section_key === key);
+
+  return { data, getSectionByKey, loading, error, refetch: fetchData };
+};
+
+// Hook for fetching button labels
+export const useButtonLabels = () => {
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const { data: buttonData, error: buttonError } = await supabase
+        .from('button_labels')
+        .select('*');
+
+      if (buttonError) throw buttonError;
+      setData(buttonData || []);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // Helper function to get button label by key
+  const getButtonByKey = (key: string) => data.find(btn => btn.key === key)?.text || '';
+
+  return { data, getButtonByKey, loading, error, refetch: fetchData };
+};
+
 // Hook for fetching footer content
 export const useFooterContent = () => {
   const [data, setData] = useState<FooterContent | null>(null);
