@@ -198,4 +198,6 @@ export const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ isOpen, onClos
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
