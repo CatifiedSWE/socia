@@ -156,4 +156,6 @@ export const EditAboutModal: React.FC<EditAboutModalProps> = ({ isOpen, onClose,
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
