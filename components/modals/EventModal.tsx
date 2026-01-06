@@ -70,8 +70,6 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
     setIsLoading(true);
     setError('');
 
-    const symbols = symbolsInput.split(',').map(s => s.trim()).filter(s => s);
-
     try {
       let imageUrl = formData.image;
 
@@ -102,10 +100,9 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
             title: formData.title,
             description: formData.description,
             image: imageUrl,
-            color: formData.color,
-            symbols,
             day: formData.day,
             vibe: formData.vibe,
+            google_forms: formData.google_forms || null,
             updated_at: new Date().toISOString(),
           })
           .eq('id', event.id);
@@ -117,10 +114,9 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
           title: formData.title,
           description: formData.description,
           image: imageUrl,
-          color: formData.color,
-          symbols,
           day: formData.day,
           vibe: formData.vibe,
+          google_forms: formData.google_forms || null,
         });
 
         if (insertError) throw insertError;
