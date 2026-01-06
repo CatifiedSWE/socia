@@ -288,4 +288,6 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
