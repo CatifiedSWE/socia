@@ -83,15 +83,17 @@ export const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({ isOpen, 
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6" onClick={(e) => e.stopPropagation()}>
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-900">Add Gallery Image</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
-            <X size={24} />
-          </button>
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="sticky top-0 bg-white p-6 pb-4 border-b border-gray-100">
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold text-gray-900">Add Gallery Image</h2>
+            <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+              <X size={24} />
+            </button>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* Upload Method Toggle */}
           <div className="flex gap-2 bg-gray-100 p-1 rounded-lg">
             <button
@@ -160,7 +162,7 @@ export const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({ isOpen, 
             </div>
           )}
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 pt-2">
             <button
               type="button"
               onClick={onClose}
