@@ -119,11 +119,11 @@ const StatsSection: React.FC = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
           <button className="relative group/btn px-14 py-5 border-2 border-red-900/40 rounded-sm font-oswald font-bold text-sm uppercase tracking-[0.4em] overflow-hidden transition-all hover:border-red-600">
-            <span className="relative z-10">{getButtonLabel('claim-throne')}</span>
+            <span className="relative z-10">{getButtonByKey('claim-throne') || 'Claim Your Throne'}</span>
             <div className="absolute inset-0 bg-red-600 translate-x-[-101%] group-hover/btn:translate-x-0 transition-transform duration-300" />
           </button>
           <button className="relative group/btn2 px-14 py-5 bg-red-700 text-white rounded-sm font-oswald font-bold text-sm uppercase tracking-[0.4em] overflow-hidden transition-all hover:scale-105 shadow-[0_15px_30px_rgba(185,28,28,0.4)]">
-            <span className="relative z-10">{getButtonLabel('join-battle')}</span>
+            <span className="relative z-10">{getButtonByKey('join-battle') || 'Join the Battle'}</span>
             <div className="absolute inset-0 bg-black opacity-0 group-hover/btn2:opacity-20 transition-opacity" />
           </button>
         </div>
