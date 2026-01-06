@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useGalleryImages, useSectionContent } from "../hooks/useSupabaseData";
 import type { GalleryImage } from "../types";
 
