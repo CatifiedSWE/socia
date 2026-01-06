@@ -190,6 +190,23 @@ export const useGalleryImages = () => {
   };
 };
 
+// Hook for fetching featured gallery images only
+export const useFeaturedGalleryImages = () => {
+  const { data: siteData, loading, error, refetchSection } = useSiteData();
+
+  const refetch = useCallback(() => refetchSection('galleryImages'), [refetchSection]);
+
+  // Filter featured images from the gallery
+  const featuredImages = siteData?.galleryImages?.filter((img: GalleryImage) => img.is_featured) || [];
+
+  return {
+    data: featuredImages,
+    loading,
+    error,
+    refetch,
+  };
+};
+
 // Hook for fetching onboarding content
 export const useOnboardingContent = () => {
   const { data: siteData, loading, error, refetchSection } = useSiteData();
