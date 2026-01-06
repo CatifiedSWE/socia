@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getSectionContent } from "../constants";
-import { useGalleryImages } from "../hooks/useSupabaseData";
+import { useGalleryImages, useSectionContent } from "../hooks/useSupabaseData";
 
 const GalleryFull: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const sectionContent = getSectionContent('gallery-full');
+  const { getSectionByKey } = useSectionContent();
+  const sectionContent = getSectionByKey('gallery-full');
   const { data: GALLERY_IMAGES, loading, error } = useGalleryImages();
 
   useEffect(() => {
