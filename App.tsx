@@ -57,7 +57,7 @@ const App: React.FC = () => {
       <div className="fixed inset-0 bg-black z-[300] flex items-center justify-center">
         <div className="text-center">
           <h2 className="font-cinzel text-5xl animate-[pulse_2s_infinite] tracking-[0.5em] text-red-600 drop-shadow-[0_0_20px_rgba(220,38,38,0.5)]">
-            {HERO_CONTENT.title}
+            {heroContent?.title || 'ZYNORA'}
           </h2>
           <div className="w-64 h-[2px] bg-red-900/30 mt-6 mx-auto overflow-hidden rounded-full">
             <div className="w-full h-full bg-red-600 animate-[loading_2s_infinite]" />
