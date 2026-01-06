@@ -541,15 +541,21 @@ const Admin: React.FC = () => {
                         {/* Event Details */}
                         <div className="p-4">
                           <h3 className="text-base font-semibold text-gray-900 mb-1">{event.title}</h3>
-                          <p className="text-xs text-gray-600 mb-3 line-clamp-2">{event.description}</p>
+                          <p className="text-xs text-gray-600 mb-2 line-clamp-2">{event.description}</p>
 
-                          {/* Symbols */}
-                          <div className="flex gap-1.5 mb-3">
-                            {event.symbols.map((symbol, idx) => (
-                              <span key={idx} className="text-lg">
-                                {symbol}
-                              </span>
-                            ))}
+                          {/* Google Forms Link Status */}
+                          <div className="mb-3">
+                            {event.google_forms ? (
+                              <div className="flex items-center gap-1.5 text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
+                                <span className="w-1.5 h-1.5 bg-green-600 rounded-full"></span>
+                                Registration Link Added
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-1.5 text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded">
+                                <span className="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
+                                No Registration Link
+                              </div>
+                            )}
                           </div>
 
                           {/* Action Buttons */}
