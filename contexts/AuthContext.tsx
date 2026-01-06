@@ -37,20 +37,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Initialize auth state
+  // Initialize auth state with timeout for mobile
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user?.email) {
-        const adminStatus = await checkAdminStatus(session.user.email);
-        setIsAdmin(adminStatus);
+    const initAuth = async () => {
+      try {
+        // Add timeout for mobile - max 5 seconds
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Auth timeout')), 5000);
+        });
+
+        const sessionPromise = supabase.auth.getSession();
+        
+        const { data: { session } } = await Promise.race([
+          sessionPromise,
+          timeoutPromise
+        ]) as any;
+
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user?.email) {
+          const adminStatus = await checkAdminStatus(session.user.email);
+          setIsAdmin(adminStatus);
+        }
+      } catch (error) {
+        console.error('Auth initialization error:', error);
+        // Continue with no session
+        setSession(null);
+        setUser(null);
+        setIsAdmin(false);
+      } finally {
+        setIsLoading(false);
       }
-      
-      setIsLoading(false);
-    });
+    };
+
+    initAuth();
 
     // Listen for auth changes
     const {
