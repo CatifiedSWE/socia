@@ -67,7 +67,7 @@ const Card: React.FC<{ event: EventCard; index: number; secureEntryText: string 
 
         <button className="relative w-full py-4 group/btn overflow-hidden rounded-md bg-black border border-red-900/40 transition-all duration-500 hover:border-red-600">
           <span className="relative z-10 font-oswald text-[10px] uppercase tracking-[0.5em] text-red-500 group-hover/btn:text-white transition-colors duration-300">
-            {getButtonLabel('secure-entry')}
+            {secureEntryText}
           </span>
           <div className="absolute inset-0 bg-red-600 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-out" />
         </button>
@@ -78,7 +78,9 @@ const Card: React.FC<{ event: EventCard; index: number; secureEntryText: string 
 
 const EventCards: React.FC = () => {
   const [activeDay, setActiveDay] = useState<1 | 2>(1);
-  const sectionContent = getSectionContent('events');
+  const { getSectionByKey } = useSectionContent();
+  const { getButtonByKey } = useButtonLabels();
+  const sectionContent = getSectionByKey('events');
   const { data: EVENTS, loading, error } = useEvents();
 
   // Loading state
