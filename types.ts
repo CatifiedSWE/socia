@@ -70,3 +70,10 @@ export interface FooterContent {
   copyrightText: string;
   note?: string;
 }
+
+// Taglines (can remain as simple array)
+export type TaglineData = {
+  id: string;
+  text: string;
+  order: number;
+};
