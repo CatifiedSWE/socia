@@ -306,7 +306,13 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
         }
         case 'galleryImages': {
           const { data: galleryData } = await supabase.from('gallery_images').select('*').order('order', { ascending: true });
-          updatedData.galleryImages = (galleryData || []).map(img => img.image_url);
+          updatedData.galleryImages = (galleryData || []).map(img => ({
+            id: img.id,
+            image_url: img.image_url,
+            order: img.order,
+            is_featured: img.is_featured || false,
+            created_at: img.created_at,
+          }));
           break;
         }
         case 'sectionContent': {
