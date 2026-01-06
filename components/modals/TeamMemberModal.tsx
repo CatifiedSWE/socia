@@ -98,7 +98,7 @@ export const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ isOpen, onClos
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             />
           </div>
 
@@ -109,7 +109,7 @@ export const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ isOpen, onClos
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             />
           </div>
 
@@ -120,7 +120,7 @@ export const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ isOpen, onClos
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             />
           </div>
 
@@ -130,7 +130,7 @@ export const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ isOpen, onClos
               value={formData.type}
               onChange={(e) => setFormData({ ...formData, type: e.target.value as 'staff' | 'student' })}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             >
               <option value="staff">Staff</option>
               <option value="student">Student</option>
@@ -145,7 +145,7 @@ export const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ isOpen, onClos
               onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
               required
               min="1"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             />
           </div>
 
