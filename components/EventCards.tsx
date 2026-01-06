@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getSectionContent, getButtonLabel } from "../constants";
 import { EventCard } from "../types";
 import CornerStrings from "../components/ui/CornerStrings";
-import { useEvents } from "../hooks/useSupabaseData";
+import { useEvents, useSectionContent, useButtonLabels } from "../hooks/useSupabaseData";
 
-const Card: React.FC<{ event: EventCard; index: number }> = ({
+const Card: React.FC<{ event: EventCard; index: number; secureEntryText: string }> = ({
   event,
   index,
+  secureEntryText,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
