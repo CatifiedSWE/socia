@@ -1,12 +1,13 @@
 
 import React, { useEffect, useState, useRef } from 'react';
-import { getSectionContent, TEAM_LABELS } from '../../constants';
-import { useTeamMembers } from '../../hooks/useSupabaseData';
+import { TEAM_LABELS } from '../../constants';
+import { useTeamMembers, useSectionContent } from '../../hooks/useSupabaseData';
 
 const Coordinators: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const sectionContent = getSectionContent('coordinators');
+  const { getSectionByKey } = useSectionContent();
+  const sectionContent = getSectionByKey('coordinators');
   const { staffMembers, studentMembers, loading, error } = useTeamMembers();
 
   useEffect(() => {
