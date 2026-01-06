@@ -161,12 +161,14 @@ const GalleryFull: React.FC = () => {
 
       {selectedIndex !== null && (
         <div
-          className="fixed h-screen inset-0 z-[100] flex items-start justify-center bg-black/98 backdrop-blur-2xl"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/98 backdrop-blur-2xl"
           onClick={() => setSelectedIndex(null)}
+          data-testid="gallery-preview-modal"
         >
           <button
             className="absolute top-6 right-6 md:top-10 md:right-10 text-white text-4xl font-light hover:text-red-500 transition-all z-[110]"
             onClick={() => setSelectedIndex(null)}
+            data-testid="gallery-modal-close"
           >
             ✕
           </button>
@@ -174,6 +176,7 @@ const GalleryFull: React.FC = () => {
           <button
             className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 text-white/40 hover:text-red-600 text-4xl md:text-6xl font-light transition-all z-[110] p-2 md:p-4"
             onClick={handlePrev}
+            data-testid="gallery-prev-btn"
           >
             ‹
           </button>
@@ -181,16 +184,18 @@ const GalleryFull: React.FC = () => {
           <button
             className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 text-white/40 hover:text-red-600 text-4xl md:text-6xl font-light transition-all z-[110] p-2 md:p-4"
             onClick={handleNext}
+            data-testid="gallery-next-btn"
           >
             ›
           </button>
 
-          <div className="relative w-full h-full flex items-center justify-center p-4">
+          <div className="relative flex items-center justify-center w-full h-full p-4 md:p-8">
             <img
               src={GALLERY_IMAGES[selectedIndex]}
               alt="Fullscreen"
-              className="max-w-[95vw] max-h-[95vh] object-contain rounded-lg shadow-[0_0_100px_rgba(220,38,38,0.3)] animate-[scaleIn_0.3s_ease-out]"
+              className="max-w-[90vw] max-h-[85vh] md:max-w-[85vw] md:max-h-[80vh] object-contain rounded-lg shadow-[0_0_100px_rgba(220,38,38,0.3)] animate-[scaleIn_0.3s_ease-out]"
               onClick={(e) => e.stopPropagation()}
+              data-testid="gallery-modal-image"
             />
           </div>
 
