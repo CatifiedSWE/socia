@@ -74,8 +74,8 @@ export const EditAboutModal: React.FC<EditAboutModalProps> = ({ isOpen, onClose,
   };
 
   const modalContent = (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4 overflow-y-auto" onClick={onClose}>
-      <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4" onClick={onClose}>
+      <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto my-auto" onClick={(e) => e.stopPropagation()}>
         <div className="sticky top-0 bg-white p-6 pb-4 border-b border-gray-100 z-10">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold text-gray-900">Edit About Content</h2>
