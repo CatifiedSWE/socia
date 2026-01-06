@@ -173,7 +173,7 @@ const Hero: React.FC = () => {
         >
           <div className="absolute inset-0 bg-red-600/20 blur-[60px] animate-pulse" />
           <h1 className="font-cinzel text-7xl md:text-9xl font-black tracking-[-0.05em] text-transparent bg-clip-text bg-gradient-to-b from-red-500 to-red-900 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] animate-[neonFlicker_4s_infinite]">
-            {HERO_CONTENT.title}
+            {heroContent.title}
           </h1>
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-red-600 to-transparent mt-[-10px] animate-pulse" />
         </div>
@@ -190,7 +190,7 @@ const Hero: React.FC = () => {
             {TAGLINES[taglineIndex]}
           </p>
           <p className="font-inter text-gray-400 text-sm md:text-lg max-w-xl font-light leading-relaxed tracking-wide">
-            {HERO_CONTENT.subtitle}
+            {heroContent.subtitle}
           </p>
         </div>
 
@@ -199,14 +199,14 @@ const Hero: React.FC = () => {
             onClick={() => navigate("/gallery")}
             className="group relative px-12 py-4 bg-transparent border border-red-900/50 text-red-500 font-oswald text-xs tracking-[0.4em] uppercase overflow-hidden transition-all duration-500 hover:text-white"
           >
-            <span className="relative z-10">{HERO_CONTENT.secondaryButtonText}</span>
+            <span className="relative z-10">{heroContent.secondaryButtonText}</span>
             <div className="absolute inset-0 bg-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </button>
           <button
             onClick={() => navigate("/events")}
             className="px-12 py-4 bg-red-700 text-white font-oswald text-xs tracking-[0.4em] uppercase hover:bg-white hover:text-black transition-all duration-500 shadow-[0_10px_40px_rgba(185,28,28,0.4)]"
           >
-            {HERO_CONTENT.primaryButtonText}
+            {heroContent.primaryButtonText}
           </button>
         </div>
       </div>
