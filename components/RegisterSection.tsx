@@ -1,11 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import CinematicButton from "../components/ui/CinematicButton";
-import { getSectionContent, getButtonLabel, FOOTER_CONTENT } from "../constants";
+import { getSectionContent, getButtonLabel } from "../constants";
+import { useFooterContent } from "../hooks/useSupabaseData";
 
 const RegisterSection: React.FC = () => {
   const navigate = useNavigate();
   const sectionContent = getSectionContent('register');
+  const { data: footerContent } = useFooterContent();
   
   return (
     <section className="relative py-32 px-4 text-center overflow-hidden">
@@ -28,9 +30,11 @@ const RegisterSection: React.FC = () => {
             onClick={() => navigate("/events")}
             className="w-full sm:w-auto"
           />
-          <span className="text-xs uppercase tracking-widest text-gray-500 mt-4 animate-pulse">
-            {FOOTER_CONTENT.note}
-          </span>
+          {footerContent?.note && (
+            <span className="text-xs uppercase tracking-widest text-gray-500 mt-4 animate-pulse">
+              {footerContent.note}
+            </span>
+          )}
         </div>
       </div>
 
