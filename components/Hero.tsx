@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CornerStrings from "../components/ui/CornerStrings";
-import { TAGLINES, HERO_CONTENT, getButtonLabel } from "../constants";
+import { TAGLINES } from "../constants";
+import { useHeroContent } from "../hooks/useSupabaseData";
 
 const Hero: React.FC = () => {
   const navigate = useNavigate();
   const [isGlitching, setIsGlitching] = useState(false);
   const [taglineIndex, setTaglineIndex] = useState(0);
   const [fadeStatus, setFadeStatus] = useState(true);
+  const { data: heroContent, loading, error } = useHeroContent();
 
   useEffect(() => {
     const interval = setInterval(() => {
