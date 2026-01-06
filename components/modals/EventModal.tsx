@@ -191,7 +191,7 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
               onChange={(e) => setSymbolsInput(e.target.value)}
               required
               placeholder="🎭, 💰, ⏰"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             />
           </div>
 
@@ -202,7 +202,7 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
                 value={formData.day}
                 onChange={(e) => setFormData({ ...formData, day: parseInt(e.target.value) as 1 | 2 })}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
               >
                 <option value={1}>Day 1</option>
                 <option value={2}>Day 2</option>
@@ -215,7 +215,7 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
                 value={formData.vibe}
                 onChange={(e) => setFormData({ ...formData, vibe: e.target.value as EventCard['vibe'] })}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
               >
                 <option value="thriller">Thriller</option>
                 <option value="fantasy">Fantasy</option>
@@ -235,7 +235,7 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
               onChange={(e) => setFormData({ ...formData, color: e.target.value })}
               required
               placeholder="border-blue-600 shadow-blue-900/50"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             />
           </div>
 
