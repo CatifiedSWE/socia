@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Loader2, Upload, FileText } from 'lucide-react';
 import { useStorageOperations } from '../../hooks/useSupabaseData';
 
@@ -74,7 +75,7 @@ export const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({ isOpen
     return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
   };
 
-  return (
+  const modalContent = (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4" onClick={onClose}>
       <div className="bg-white rounded-xl shadow-2xl max-w-md w-full my-auto" onClick={(e) => e.stopPropagation()}>
         <div className="bg-white p-6 pb-4 border-b border-gray-100">
@@ -151,4 +152,6 @@ export const DocumentUploadModal: React.FC<DocumentUploadModalProps> = ({ isOpen
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
