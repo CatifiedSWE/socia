@@ -74,7 +74,7 @@ export const EditHeroModal: React.FC<EditHeroModalProps> = ({ isOpen, onClose, h
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             />
           </div>
 
@@ -85,7 +85,7 @@ export const EditHeroModal: React.FC<EditHeroModalProps> = ({ isOpen, onClose, h
               onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
               required
               rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             />
           </div>
 
@@ -96,7 +96,7 @@ export const EditHeroModal: React.FC<EditHeroModalProps> = ({ isOpen, onClose, h
               value={formData.primaryButtonText}
               onChange={(e) => setFormData({ ...formData, primaryButtonText: e.target.value })}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             />
           </div>
 
@@ -107,7 +107,7 @@ export const EditHeroModal: React.FC<EditHeroModalProps> = ({ isOpen, onClose, h
               value={formData.secondaryButtonText}
               onChange={(e) => setFormData({ ...formData, secondaryButtonText: e.target.value })}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             />
           </div>
 
