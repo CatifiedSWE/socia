@@ -588,7 +588,9 @@ const Admin: React.FC = () => {
                       <Image size={20} className="text-gray-700" />
                       <div>
                         <h2 className="text-lg font-semibold text-gray-900">Gallery</h2>
-                        <p className="text-xs text-gray-500 mt-0.5">Total: {galleryImages.length} images</p>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          Total: {galleryImages.length} images ({galleryImages.filter((img: GalleryImage) => img.is_featured).length} featured)
+                        </p>
                       </div>
                     </div>
                     <button
@@ -602,16 +604,16 @@ const Admin: React.FC = () => {
                   </div>
 
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                    {galleryImages.map((imageUrl, index) => (
+                    {galleryImages.map((image: GalleryImage, index) => (
                       <div
-                        key={index}
+                        key={image.id}
                         className="group relative bg-gray-100 rounded-lg overflow-hidden border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
                         data-testid={`gallery-image-${index}`}
                       >
                         {/* Image */}
                         <div className="aspect-square">
                           <img
-                            src={imageUrl}
+                            src={image.image_url}
                             alt={`Gallery ${index + 1}`}
                             className="w-full h-full object-cover"
                           />
@@ -620,7 +622,19 @@ const Admin: React.FC = () => {
                         {/* Hover Overlay with Actions */}
                         <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5 p-2">
                           <button
-                            onClick={() => handleDeleteGalleryImage(imageUrl, index)}
+                            onClick={() => handleToggleFeatured(image)}
+                            className={`w-full flex items-center justify-center gap-1 px-2 py-1.5 rounded text-xs font-medium transition-colors ${
+                              image.is_featured
+                                ? 'bg-yellow-600 hover:bg-yellow-700 text-white'
+                                : 'bg-gray-600 hover:bg-gray-700 text-white'
+                            }`}
+                            data-testid={`gallery-feature-${index}`}
+                          >
+                            <Star size={12} fill={image.is_featured ? 'currentColor' : 'none'} />
+                            {image.is_featured ? 'Unfeature' : 'Feature'}
+                          </button>
+                          <button
+                            onClick={() => handleDeleteGalleryImage(image.image_url, image.id, index)}
                             className="w-full flex items-center justify-center gap-1 bg-red-600 hover:bg-red-700 text-white px-2 py-1.5 rounded text-xs font-medium transition-colors"
                             data-testid={`gallery-remove-${index}`}
                           >
@@ -633,6 +647,14 @@ const Admin: React.FC = () => {
                         <div className="absolute top-2 left-2 bg-white/90 px-2 py-0.5 rounded text-xs font-semibold text-gray-700 shadow-sm">
                           #{index + 1}
                         </div>
+                        
+                        {/* Featured Badge */}
+                        {image.is_featured && (
+                          <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-0.5 rounded text-xs font-semibold shadow-sm flex items-center gap-1">
+                            <Star size={10} fill="currentColor" />
+                            Featured
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
