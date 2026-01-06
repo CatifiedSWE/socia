@@ -179,14 +179,24 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Main fetch function using RPC
+  // Main fetch function using RPC with timeout
   const fetchAllData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
+      // Add timeout for mobile - max 8 seconds total
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Request timeout')), 8000);
+      });
+
       // Try RPC first (single API call)
-      const { data: rpcData, error: rpcError } = await supabase.rpc('get_all_site_content');
+      const fetchPromise = supabase.rpc('get_all_site_content');
+      
+      const { data: rpcData, error: rpcError } = await Promise.race([
+        fetchPromise,
+        timeoutPromise
+      ]) as any;
 
       if (rpcError) {
         console.warn('RPC not available, falling back to parallel queries:', rpcError.message);
@@ -201,8 +211,29 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
     } catch (err: any) {
       console.error('Error fetching site data:', err);
       setError(err.message);
-      // Try fallback
-      await fetchWithParallelQueries();
+      // Try fallback with timeout
+      try {
+        await fetchWithParallelQueries();
+      } catch (fallbackErr) {
+        console.error('Fallback also failed:', fallbackErr);
+        // Set loading to false even on complete failure
+        setLoading(false);
+        // Provide minimal fallback data
+        setData({
+          heroContent: { id: '1', title: 'ZYNORA', subtitle: 'Enter the Legends', description: '', primaryButtonText: 'Register Now', secondaryButtonText: 'Learn More' },
+          aboutContent: null,
+          onboardingContent: { id: '1', title: 'ZYNORA', subtitle: 'Enter the Legends', buttonText: 'ENTER THE VOID' },
+          footerContent: { id: '1', copyrightText: 'ZYNORA CINEMATIC FEST. ALL RIGHTS RESERVED.', note: null },
+          statistics: [],
+          teamMembers: [],
+          staffMembers: [],
+          studentMembers: [],
+          events: [],
+          galleryImages: [],
+          sectionContent: [],
+          buttonLabels: [],
+        });
+      }
     } finally {
       setLoading(false);
     }
