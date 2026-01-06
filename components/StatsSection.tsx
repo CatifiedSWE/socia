@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import CornerStrings from "../components/ui/CornerStrings";
-import { getSectionContent, getButtonLabel } from "../constants";
-import { useStatistics } from "../hooks/useSupabaseData";
+import { useStatistics, useSectionContent, useButtonLabels } from "../hooks/useSupabaseData";
 
 const StatsSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const sectionContent = getSectionContent('stats');
+  const { getSectionByKey } = useSectionContent();
+  const { getButtonByKey } = useButtonLabels();
+  const sectionContent = getSectionByKey('stats');
   const { data: statistics, loading, error } = useStatistics();
 
   useEffect(() => {
