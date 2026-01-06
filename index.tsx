@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import { SiteDataProvider } from "./contexts/SiteDataContext";
 import App from "./App";
 
 const rootElement = document.getElementById("root");
@@ -14,7 +15,9 @@ root.render(
   <React.StrictMode>
     <Router>
       <AuthProvider>
-        <App />
+        <SiteDataProvider>
+          <App />
+        </SiteDataProvider>
       </AuthProvider>
     </Router>
   </React.StrictMode>
