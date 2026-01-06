@@ -8,6 +8,7 @@ import type {
   HeroContent,
   AboutContent,
   FooterContent,
+  GalleryImage,
 } from '../types';
 
 // =============================================
