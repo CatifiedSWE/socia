@@ -70,7 +70,7 @@ const Coordinators: React.FC = () => {
                <span className="hidden md:block w-8 h-[2px] bg-red-600" /> {TEAM_LABELS.staffTitle}
             </h3>
             <div className="space-y-12 w-full">
-              {staff.map((p) => (
+              {staffMembers.map((p) => (
                 <div key={p.id} className={`group relative transition-all duration-700`}>
                   <div className="absolute -left-6 top-0 bottom-0 w-[1px] bg-red-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top hidden md:block" />
                   <p className="font-cinzel font-bold text-2xl text-white group-hover:text-red-500 transition-colors">{p.name}</p>
@@ -88,7 +88,7 @@ const Coordinators: React.FC = () => {
                <span className="hidden md:block w-8 h-[2px] bg-red-600" /> {TEAM_LABELS.studentTitle}
             </h3>
             <div className="space-y-12 w-full">
-              {students.map((p) => (
+              {studentMembers.map((p) => (
                 <div key={p.id} className={`group relative transition-all duration-700`}>
                   <div className="absolute -left-6 top-0 bottom-0 w-[1px] bg-red-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top hidden md:block" />
                   <p className="font-cinzel font-bold text-2xl text-white group-hover:text-red-500 transition-colors">{p.name}</p>
