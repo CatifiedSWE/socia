@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { EventCard } from "../types";
 import CornerStrings from "../components/ui/CornerStrings";
 import { useEvents, useSectionContent, useButtonLabels } from "../hooks/useSupabaseData";
+import { EventDetailsModal } from "./modals/EventDetailsModal";
 
-const Card: React.FC<{ event: EventCard; index: number; secureEntryText: string }> = ({
+const Card: React.FC<{ event: EventCard; index: number; secureEntryText: string; onSecureClick: () => void }> = ({
   event,
   index,
   secureEntryText,
+  onSecureClick,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -29,7 +31,7 @@ const Card: React.FC<{ event: EventCard; index: number; secureEntryText: string 
       className={`
         relative group overflow-hidden rounded-2xl bg-black border border-red-900/20
         transition-all duration-[600ms] cubic-bezier(0.23, 1, 0.32, 1)
-        hover:scale-[1.03] hover:z-20
+        hover:scale-[1.03] hover:z-20 hover:border-red-600/50 hover:shadow-[0_0_40px_rgba(220,38,38,0.3)]
         ${
           isVisible
             ? "animate-[fadeInUp_0.8s_ease-out_forwards]"
@@ -37,6 +39,7 @@ const Card: React.FC<{ event: EventCard; index: number; secureEntryText: string 
         }
       `}
       style={{ animationDelay: `${index * 100}ms` }}
+      data-testid={`event-card-${event.id}`}
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         <img
@@ -52,8 +55,10 @@ const Card: React.FC<{ event: EventCard; index: number; secureEntryText: string 
           </span>
         </div>
 
-        <div className="absolute bottom-4 right-4 text-4xl opacity-10 group-hover:opacity-60 group-hover:scale-125 transition-all duration-700 pointer-events-none">
-          {event.symbols[0]}
+        <div className="absolute top-4 right-4 z-10">
+          <span className="bg-black/80 text-white text-xs font-bold uppercase tracking-wide px-3 py-1.5 rounded-sm border border-red-600/50">
+            Day {event.day}
+          </span>
         </div>
       </div>
 
@@ -65,7 +70,11 @@ const Card: React.FC<{ event: EventCard; index: number; secureEntryText: string 
           {event.description}
         </p>
 
-        <button className="relative w-full py-4 group/btn overflow-hidden rounded-md bg-black border border-red-900/40 transition-all duration-500 hover:border-red-600">
+        <button 
+          onClick={onSecureClick}
+          className="relative w-full py-4 group/btn overflow-hidden rounded-md bg-black border border-red-900/40 transition-all duration-500 hover:border-red-600"
+          data-testid={`secure-spot-btn-${event.id}`}
+        >
           <span className="relative z-10 font-oswald text-[10px] uppercase tracking-[0.5em] text-red-500 group-hover/btn:text-white transition-colors duration-300">
             {secureEntryText}
           </span>
