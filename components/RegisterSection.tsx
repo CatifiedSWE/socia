@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import CinematicButton from "../components/ui/CinematicButton";
-import { getSectionContent, getButtonLabel } from "../constants";
-import { useFooterContent } from "../hooks/useSupabaseData";
+import { useFooterContent, useSectionContent, useButtonLabels } from "../hooks/useSupabaseData";
 
 const RegisterSection: React.FC = () => {
   const navigate = useNavigate();
-  const sectionContent = getSectionContent('register');
+  const { getSectionByKey } = useSectionContent();
+  const { getButtonByKey } = useButtonLabels();
+  const sectionContent = getSectionByKey('register');
   const { data: footerContent } = useFooterContent();
   
   return (
@@ -16,17 +17,17 @@ const RegisterSection: React.FC = () => {
 
       <div className="relative z-10 max-w-4xl mx-auto">
         <h2 className="font-cinzel text-5xl md:text-6xl font-black mb-8 leading-tight">
-          {sectionContent?.title}
+          {sectionContent?.title || 'THE SCREEN IS WAITING.'}
           <br />
           <span className="text-red-600">ARE YOU READY?</span>
         </h2>
         <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
-          {sectionContent?.description}
+          {sectionContent?.description || 'Seats are filling up in this cinematic multiverse.'}
         </p>
 
         <div className="flex flex-col items-center gap-4">
           <CinematicButton
-            text={getButtonLabel('register-now')}
+            text={getButtonByKey('register-now') || 'REGISTER NOW'}
             onClick={() => navigate("/events")}
             className="w-full sm:w-auto"
           />
