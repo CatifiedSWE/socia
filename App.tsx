@@ -27,7 +27,7 @@ const App: React.FC = () => {
   const isAdminPage = location.pathname === '/admin';
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
+    const timer = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
