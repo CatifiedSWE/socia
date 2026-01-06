@@ -144,7 +144,7 @@ const EventCards: React.FC = () => {
               }
             `}
           >
-            {getButtonLabel('phase-01')}
+            {phase01Text}
           </button>
           <button
             onClick={() => setActiveDay(2)}
@@ -157,14 +157,14 @@ const EventCards: React.FC = () => {
               }
             `}
           >
-            {getButtonLabel('phase-02')}
+            {phase02Text}
           </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-14 justify-items-center">
         {EVENTS.filter((e) => e.day === activeDay).map((event, index) => (
-          <Card key={event.id} event={event} index={index} />
+          <Card key={event.id} event={event} index={index} secureEntryText={secureEntryText} />
         ))}
       </div>
 
