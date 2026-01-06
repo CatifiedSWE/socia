@@ -1,15 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useGalleryImages, useSectionContent, useButtonLabels } from "../hooks/useSupabaseData";
+import type { GalleryImage } from "../types";
 
 const GalleryPreview: React.FC = () => {
   const navigate = useNavigate();
   const { getSectionByKey } = useSectionContent();
   const { getButtonByKey } = useButtonLabels();
   const sectionContent = getSectionByKey('gallery-preview');
-  const { data: GALLERY_IMAGES, loading, error } = useGalleryImages();
-  // Show only the first 8 images in the preview
-  const previewImages = GALLERY_IMAGES?.slice(0, 8) || [];
+  const { data: galleryImages, loading, error } = useGalleryImages();
+  
+  // Extract image URLs and show only the first 8 images in the preview
+  const previewImages = galleryImages.slice(0, 8).map((img: GalleryImage) => img.image_url);
 
   // Loading state
   if (loading) {
