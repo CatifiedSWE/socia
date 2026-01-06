@@ -19,12 +19,10 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
     title: '',
     description: '',
     image: '',
-    color: 'border-blue-600 shadow-blue-900/50',
-    symbols: [],
     day: 1,
     vibe: 'action',
+    google_forms: '',
   });
-  const [symbolsInput, setSymbolsInput] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -32,19 +30,16 @@ export const EventModal: React.FC<EventModalProps> = ({ isOpen, onClose, event, 
   useEffect(() => {
     if (event) {
       setFormData(event);
-      setSymbolsInput(event.symbols.join(', '));
       setFile(null);
     } else {
       setFormData({
         title: '',
         description: '',
         image: '',
-        color: 'border-blue-600 shadow-blue-900/50',
-        symbols: [],
         day: 1,
         vibe: 'action',
+        google_forms: '',
       });
-      setSymbolsInput('');
       setFile(null);
     }
   }, [event, isOpen]);
