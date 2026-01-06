@@ -515,7 +515,7 @@ const Admin: React.FC = () => {
                             alt={event.title}
                             className="w-full h-full object-cover"
                           />
-                          <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded text-xs font-semibold shadow-sm">
+                          <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded text-xs font-semibold shadow-sm text-gray-900">
                             Day {event.day}
                           </div>
                           <div className="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium">
