@@ -28,7 +28,7 @@ const GalleryPreview: React.FC = () => {
   }
 
   // Error or no images state
-  if (error || !GALLERY_IMAGES || GALLERY_IMAGES.length === 0) {
+  if (error || !galleryImages || galleryImages.length === 0) {
     return null; // Don't show the section if there's an error or no images
   }
 
