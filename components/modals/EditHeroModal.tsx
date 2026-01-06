@@ -160,4 +160,6 @@ export const EditHeroModal: React.FC<EditHeroModalProps> = ({ isOpen, onClose, h
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
