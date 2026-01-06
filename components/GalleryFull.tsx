@@ -48,8 +48,6 @@ const GalleryFull: React.FC = () => {
     );
   };
 
-  const highlightImages = [...GALLERY_IMAGES, ...GALLERY_IMAGES];
-
   // Loading state
   if (loading) {
     return (
