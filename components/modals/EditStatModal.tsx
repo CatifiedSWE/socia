@@ -34,29 +34,7 @@ export const EditStatModal: React.FC<EditStatModalProps> = ({ isOpen, onClose, s
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
-    try {
-      const { error: updateError } = await supabase
-        .from('statistics')
-        .update({ value, updated_at: new Date().toISOString() })
-        .eq('id', stat.id);
-
-      if (updateError) throw updateError;
-
-      onSuccess();
-      onClose();
-    } catch (err: any) {
-      setError(err.message || 'Failed to update statistic');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
+  const modalContent = (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4" onClick={onClose}>
       <div className="bg-white rounded-xl shadow-2xl max-w-md w-full my-auto" onClick={(e) => e.stopPropagation()}>
         <div className="bg-white p-6 pb-4 border-b border-gray-100">
@@ -125,4 +103,6 @@ export const EditStatModal: React.FC<EditStatModalProps> = ({ isOpen, onClose, s
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
