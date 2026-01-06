@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useGalleryImages, useSectionContent } from "../hooks/useSupabaseData";
+import type { GalleryImage } from "../types";
 
 const GalleryFull: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const { getSectionByKey } = useSectionContent();
   const sectionContent = getSectionByKey('gallery-full');
-  const { data: GALLERY_IMAGES, loading, error } = useGalleryImages();
+  const { data: galleryImages, loading, error } = useGalleryImages();
+
+  // Extract image URLs for display and filter featured images for carousel
+  const GALLERY_IMAGES = galleryImages.map((img: GalleryImage) => img.image_url);
+  const featuredImages = galleryImages.filter((img: GalleryImage) => img.is_featured);
+  
+  // Use featured images for carousel if available, otherwise use all images
+  const carouselImages = featuredImages.length > 0 
+    ? featuredImages.map((img: GalleryImage) => img.image_url)
+    : GALLERY_IMAGES;
+  
+  // Duplicate for infinite scroll effect
+  const highlightImages = [...carouselImages, ...carouselImages];
 
   useEffect(() => {
     if (selectedIndex !== null) {
