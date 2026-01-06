@@ -154,7 +154,13 @@ const transformRawData = (raw: RawSiteData): SiteData => {
     staffMembers: teamMembers.filter(m => m.type === 'staff'),
     studentMembers: teamMembers.filter(m => m.type === 'student'),
     events: raw.events || [],
-    galleryImages: (raw.gallery_images || []).map(img => img.image_url),
+    galleryImages: (raw.gallery_images || []).map(img => ({
+      id: img.id,
+      image_url: img.image_url,
+      order: img.order,
+      is_featured: img.is_featured || false,
+      created_at: img.created_at,
+    })),
     sectionContent: raw.section_content || [],
     buttonLabels: raw.button_labels || [],
   };
