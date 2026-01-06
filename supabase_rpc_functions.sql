@@ -49,6 +49,11 @@ BEGIN
       SELECT COALESCE(json_agg(g.* ORDER BY g."order"), '[]'::json)
       FROM gallery_images g
     ),
+    'featured_gallery_images', (
+      SELECT COALESCE(json_agg(g.* ORDER BY g."order"), '[]'::json)
+      FROM gallery_images g
+      WHERE g.is_featured = TRUE
+    ),
     'section_content', (
       SELECT COALESCE(json_agg(sc.*), '[]'::json)
       FROM section_content sc
