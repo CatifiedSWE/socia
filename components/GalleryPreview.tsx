@@ -1,11 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { getSectionContent, getButtonLabel } from "../constants";
-import { useGalleryImages } from "../hooks/useSupabaseData";
+import { useGalleryImages, useSectionContent, useButtonLabels } from "../hooks/useSupabaseData";
 
 const GalleryPreview: React.FC = () => {
   const navigate = useNavigate();
-  const sectionContent = getSectionContent('gallery-preview');
+  const { getSectionByKey } = useSectionContent();
+  const { getButtonByKey } = useButtonLabels();
+  const sectionContent = getSectionByKey('gallery-preview');
   const { data: GALLERY_IMAGES, loading, error } = useGalleryImages();
   // Show only the first 8 images in the preview
   const previewImages = GALLERY_IMAGES?.slice(0, 8) || [];
