@@ -92,7 +92,7 @@ export const EditAboutModal: React.FC<EditAboutModalProps> = ({ isOpen, onClose,
                 onChange={(e) => updateParagraph(index, e.target.value)}
                 required
                 rows={4}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 placeholder="Enter paragraph text..."
               />
             </div>
