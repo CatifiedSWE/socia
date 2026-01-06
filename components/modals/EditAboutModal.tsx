@@ -18,6 +18,19 @@ export const EditAboutModal: React.FC<EditAboutModalProps> = ({ isOpen, onClose,
     setParagraphs(about.paragraphs);
   }, [about]);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
