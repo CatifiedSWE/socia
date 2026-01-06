@@ -21,6 +21,26 @@ const StatsSection: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Loading state
+  if (loading) {
+    return (
+      <section
+        ref={sectionRef}
+        className="relative py-32 bg-black overflow-hidden group flex items-center justify-center"
+      >
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600 mx-auto mb-4"></div>
+          <p className="text-red-600 font-oswald tracking-widest uppercase text-xs">Loading Statistics...</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Error state
+  if (error || !statistics || statistics.length === 0) {
+    return null; // Don't show section if there's an error or no data
+  }
+
   return (
     <section
       ref={sectionRef}
