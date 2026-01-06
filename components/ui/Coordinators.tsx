@@ -1,13 +1,13 @@
 
 import React, { useEffect, useState, useRef } from 'react';
-import { getStaffMembers, getStudentMembers, getSectionContent, TEAM_LABELS } from '../../constants';
+import { getSectionContent, TEAM_LABELS } from '../../constants';
+import { useTeamMembers } from '../../hooks/useSupabaseData';
 
 const Coordinators: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const sectionContent = getSectionContent('coordinators');
-  const staff = getStaffMembers();
-  const students = getStudentMembers();
+  const { staffMembers, studentMembers, loading, error } = useTeamMembers();
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
