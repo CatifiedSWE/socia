@@ -136,7 +136,7 @@ const Admin: React.FC = () => {
     });
   };
 
-  const handleDeleteGalleryImage = (imageUrl: string, index: number) => {
+  const handleDeleteGalleryImage = (imageUrl: string, imageId: string, index: number) => {
     setDeleteModal({
       isOpen: true,
       title: 'Delete Image',
@@ -149,11 +149,25 @@ const Admin: React.FC = () => {
           console.warn('Failed to delete image from storage:', err);
         }
 
-        const { error } = await supabase.from('gallery_images').delete().eq('image_url', imageUrl);
+        const { error } = await supabase.from('gallery_images').delete().eq('id', imageId);
         if (error) throw error;
         refetchGallery();
       },
     });
+  };
+
+  const handleToggleFeatured = async (image: GalleryImage) => {
+    try {
+      const { error } = await supabase
+        .from('gallery_images')
+        .update({ is_featured: !image.is_featured })
+        .eq('id', image.id);
+      
+      if (error) throw error;
+      refetchGallery();
+    } catch (err) {
+      console.error('Failed to toggle featured status:', err);
+    }
   };
 
   const handleDeleteDocument = (documentUrl: string, documentName: string) => {
