@@ -203,4 +203,6 @@ export const GalleryUploadModal: React.FC<GalleryUploadModalProps> = ({ isOpen, 
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
