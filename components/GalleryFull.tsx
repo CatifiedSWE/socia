@@ -160,7 +160,7 @@ const GalleryFull: React.FC = () => {
         </div>
       </div>
 
-      {selectedIndex !== null && (
+      {selectedIndex !== null && createPortal(
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/98 backdrop-blur-2xl"
           onClick={() => setSelectedIndex(null)}
@@ -203,7 +203,8 @@ const GalleryFull: React.FC = () => {
           <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 text-white/30 font-oswald tracking-[0.5em] uppercase text-xs md:text-sm">
             FRAME {selectedIndex + 1} / {GALLERY_IMAGES.length}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       <style>{`
