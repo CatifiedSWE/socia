@@ -77,3 +77,12 @@ export type TaglineData = {
   text: string;
   order: number;
 };
+
+// Gallery Image type
+export interface GalleryImage {
+  id: string;
+  image_url: string;
+  order?: number;
+  is_featured?: boolean;
+  created_at: string;
+}
