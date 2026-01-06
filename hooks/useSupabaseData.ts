@@ -243,7 +243,7 @@ export const useEvents = () => {
       const { data: eventsData, error: eventsError } = await supabase
         .from('events')
         .select('*')
-        .order('date', { ascending: false });
+        .order('day', { ascending: true });
 
       if (eventsError) throw eventsError;
       setData(eventsData || []);
