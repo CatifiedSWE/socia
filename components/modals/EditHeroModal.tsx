@@ -70,7 +70,7 @@ export const EditHeroModal: React.FC<EditHeroModalProps> = ({ isOpen, onClose, h
     }
   };
 
-  return (
+  const modalContent = (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4" onClick={onClose}>
       <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full my-auto max-h-[85vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="sticky top-0 bg-white p-6 pb-4 border-b border-gray-100 z-10">
