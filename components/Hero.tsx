@@ -12,6 +12,8 @@ const Hero: React.FC = () => {
   const [taglineIndex, setTaglineIndex] = useState(0);
   const [fadeStatus, setFadeStatus] = useState(true);
   const { data: heroContent, loading, error } = useHeroContent();
+  const isMobile = useIsMobile();
+  const prefersReducedMotion = useReducedMotion();
 
   // Use fallback content to prevent blocking on mobile
   const content = heroContent || {
