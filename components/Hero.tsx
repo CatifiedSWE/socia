@@ -67,9 +67,9 @@ const Hero: React.FC = () => {
 
         {/* Mind Flayer Shadow Monster */}
         {isMobile ? (
-          // Mobile: Simple radial gradient with subtle pulse
+          // Mobile: Static gradient (no animation)
           <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.12] flex items-center justify-center">
-            <div className="w-[200%] h-[200%] bg-gradient-radial from-red-800/30 via-red-900/10 to-transparent animate-[mobileGradientPulse_8s_ease-in-out_infinite]" />
+            <div className="w-[200%] h-[200%] bg-gradient-radial from-red-800/30 via-red-900/10 to-transparent" />
           </div>
         ) : (
           // Desktop: Complex SVG monster
