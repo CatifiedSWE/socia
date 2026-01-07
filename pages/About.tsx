@@ -35,7 +35,7 @@ const About: React.FC = () => {
         <div className="flex flex-col items-center text-center">
           <div className="mb-12 relative animate-[logoIn_1.5s_ease-out]">
             <img
-              src="../assets/logo.png"
+              src="/assets/logo.png"
               alt="Zynora Logo"
               className="w-64 md:w-96 drop-shadow-[0_0_30px_rgba(220,38,38,0.4)]"
             />
