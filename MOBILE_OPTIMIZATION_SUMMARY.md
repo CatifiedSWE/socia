@@ -66,15 +66,7 @@ This document outlines all the mobile-specific optimizations implemented for the
 - Smooth full-screen circle wipe transition
 - 2 circles (red, then black) for elegant page transition effect
 
-### Mobile Gradient Pulse (Hero Background)
-```css
-@keyframes mobileGradientPulse {
-  0%, 100% { transform: scale(1); opacity: 0.12; }
-  50% { transform: scale(1.1); opacity: 0.18; }
-}
-```
-- Subtle breathing effect for hero background
-- Replaces complex monster SVG animation
+**Note:** Hero section background on mobile is completely static (no animations) for maximum performance.
 
 ## Technical Implementation
 
