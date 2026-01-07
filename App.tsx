@@ -122,11 +122,12 @@ const App: React.FC = () => {
           {!isAdminPage && (
             <>
               <div className="fixed inset-0 pointer-events-none z-[-1]">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-900/10 blur-[150px] rounded-full" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/5 blur-[150px] rounded-full" />
+                <div className={`absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-900/10 rounded-full ${isMobile ? 'blur-[60px]' : 'blur-[150px]'}`} />
+                <div className={`absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/5 rounded-full ${isMobile ? 'blur-[60px]' : 'blur-[150px]'}`} />
               </div>
 
-              <div className="grain" />
+              {/* Grain texture - removed on mobile */}
+              {!isMobile && <div className="grain" />}
               <LightningOverlay />
               <Navbar />
             </>
