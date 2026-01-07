@@ -49,104 +49,112 @@ const Hero: React.FC = () => {
 
       {/* Visceral Liquid & Monster Environment */}
       <div className="absolute inset-0 z-0 bg-[#050000]">
-        {/* Deep Red Fog Layers */}
+        {/* Deep Red Fog Layers - Simplified on mobile */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
-          <div className="absolute -inset-[50%] opacity-30 mix-blend-screen animate-[fogDrift_40s_linear_infinite]">
-            <div className="w-full h-full bg-gradient-to-br from-red-900 via-transparent to-red-950 blur-[100px]" />
+          <div className={`absolute -inset-[50%] opacity-30 mix-blend-screen ${!isMobile && !prefersReducedMotion ? 'animate-[fogDrift_40s_linear_infinite]' : ''}`}>
+            <div className={`w-full h-full bg-gradient-to-br from-red-900 via-transparent to-red-950 ${isMobile ? 'blur-[30px]' : 'blur-[100px]'}`} />
           </div>
-          <div className="absolute bottom-0 w-full h-[70%] bg-gradient-to-t from-[#200000] to-transparent blur-3xl opacity-60" />
+          <div className={`absolute bottom-0 w-full h-[70%] bg-gradient-to-t from-[#200000] to-transparent ${isMobile ? 'blur-xl' : 'blur-3xl'} opacity-60`} />
         </div>
 
-        {/* Mind Flayer Shadow Monster (Stranger Things Reference) */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08] flex items-center justify-center scale-150 animate-[monsterPulse_25s_ease-in-out_infinite]">
-          <svg
-            viewBox="0 0 1000 1000"
-            className="w-full h-full fill-red-800 blur-3xl"
-          >
-            <path
-              d="M500,300 Q200,-100 -200,400"
-              stroke="currentColor"
-              strokeWidth="60"
-              fill="none"
-            />
-            <path
-              d="M500,300 Q100,200 -300,800"
-              stroke="currentColor"
-              strokeWidth="60"
-              fill="none"
-            />
-            <path
-              d="M500,300 Q800,-100 1200,400"
-              stroke="currentColor"
-              strokeWidth="60"
-              fill="none"
-            />
-            <path
-              d="M500,300 Q900,200 1300,800"
-              stroke="currentColor"
-              strokeWidth="60"
-              fill="none"
-            />
-            <ellipse cx="500" cy="350" rx="100" ry="150" />
-            <path
-              d="M500,300 Q500,0 300,-200"
-              stroke="currentColor"
-              strokeWidth="40"
-              fill="none"
-            />
-            <path
-              d="M500,300 Q500,0 700,-200"
-              stroke="currentColor"
-              strokeWidth="40"
-              fill="none"
-            />
-          </svg>
-        </div>
-
-        {/* SVG Liquid Simulation Layer (Viscous Blood) */}
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none opacity-50 z-0"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <filter id="bloodViscosity">
-              <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.015"
-                numOctaves="3"
-                seed="2"
-              >
-                <animate
-                  attributeName="baseFrequency"
-                  values="0.015;0.018;0.015"
-                  dur="10s"
-                  repeatCount="indefinite"
-                />
-              </feTurbulence>
-              <feDisplacementMap in="SourceGraphic" scale="50" />
-            </filter>
-            <linearGradient id="bloodStream" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#4a0000" />
-              <stop offset="50%" stopColor="#800000" />
-              <stop offset="100%" stopColor="#200000" />
-            </linearGradient>
-          </defs>
-          <g filter="url(#bloodViscosity)">
-            {Array.from({ length: 5 }).map((_, i) => (
+        {/* Mind Flayer Shadow Monster - Static gradient on mobile */}
+        {isMobile ? (
+          <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08] flex items-center justify-center scale-150">
+            <div className="w-full h-full bg-gradient-radial from-red-800/20 via-transparent to-transparent blur-3xl" />
+          </div>
+        ) : (
+          <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08] flex items-center justify-center scale-150 animate-[monsterPulse_25s_ease-in-out_infinite]">
+            <svg
+              viewBox="0 0 1000 1000"
+              className="w-full h-full fill-red-800 blur-3xl"
+            >
               <path
-                key={i}
-                d={`M${-10 + i * 25}%,-10% Q${i * 20}%,50% ${
-                  -10 + i * 25
-                }%,110% L${20 + i * 25}%,110% Q${40 + i * 20}%,50% ${
-                  20 + i * 25
-                }%,-10% Z`}
-                fill="url(#bloodStream)"
-                className="animate-[fluidFlow_35s_linear_infinite]"
-                style={{ animationDelay: `-${i * 6}s`, opacity: 0.35 }}
+                d="M500,300 Q200,-100 -200,400"
+                stroke="currentColor"
+                strokeWidth="60"
+                fill="none"
               />
-            ))}
-          </g>
-        </svg>
+              <path
+                d="M500,300 Q100,200 -300,800"
+                stroke="currentColor"
+                strokeWidth="60"
+                fill="none"
+              />
+              <path
+                d="M500,300 Q800,-100 1200,400"
+                stroke="currentColor"
+                strokeWidth="60"
+                fill="none"
+              />
+              <path
+                d="M500,300 Q900,200 1300,800"
+                stroke="currentColor"
+                strokeWidth="60"
+                fill="none"
+              />
+              <ellipse cx="500" cy="350" rx="100" ry="150" />
+              <path
+                d="M500,300 Q500,0 300,-200"
+                stroke="currentColor"
+                strokeWidth="40"
+                fill="none"
+              />
+              <path
+                d="M500,300 Q500,0 700,-200"
+                stroke="currentColor"
+                strokeWidth="40"
+                fill="none"
+              />
+            </svg>
+          </div>
+        )}
+
+        {/* SVG Liquid Simulation Layer - Disabled on mobile */}
+        {!isMobile && (
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none opacity-50 z-0"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <filter id="bloodViscosity">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.015"
+                  numOctaves="3"
+                  seed="2"
+                >
+                  <animate
+                    attributeName="baseFrequency"
+                    values="0.015;0.018;0.015"
+                    dur="10s"
+                    repeatCount="indefinite"
+                  />
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" scale="50" />
+              </filter>
+              <linearGradient id="bloodStream" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="#4a0000" />
+                <stop offset="50%" stopColor="#800000" />
+                <stop offset="100%" stopColor="#200000" />
+              </linearGradient>
+            </defs>
+            <g filter="url(#bloodViscosity)">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <path
+                  key={i}
+                  d={`M${-10 + i * 25}%,-10% Q${i * 20}%,50% ${
+                    -10 + i * 25
+                  }%,110% L${20 + i * 25}%,110% Q${40 + i * 20}%,50% ${
+                    20 + i * 25
+                  }%,-10% Z`}
+                  fill="url(#bloodStream)"
+                  className="animate-[fluidFlow_35s_linear_infinite]"
+                  style={{ animationDelay: `-${i * 6}s`, opacity: 0.35 }}
+                />
+              ))}
+            </g>
+          </svg>
+        )}
 
         {/* Depth Fog & Vignette */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/80 pointer-events-none" />
