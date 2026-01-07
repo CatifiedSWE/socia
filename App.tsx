@@ -94,14 +94,14 @@ const App: React.FC = () => {
       {isTransitioning && (
         <div className="fixed inset-0 z-[250] pointer-events-none flex items-center justify-center overflow-hidden">
           {isMobile ? (
-            // Simple 2D circle transition for mobile
+            // Optimized fast 2D transition for mobile - prevents black screen
             <>
               <div className="absolute inset-0 bg-[#f5f5f5]">
-                {/* Expanding circles animation */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-red-600/20 animate-[mobileCircleExpand_1.5s_ease-out_forwards]" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-black animate-[mobileCircleExpand_1.5s_ease-out_0.3s_forwards]" />
+                {/* Single expanding circle with faster animation */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-black animate-[mobileCircleExpandFast_0.8s_ease-out_forwards]" />
               </div>
-              <div className="absolute inset-0 bg-black opacity-0 animate-[mobileFadeToBlack_1.5s_ease-out_0.5s_forwards]" />
+              {/* Faster fade to black */}
+              <div className="absolute inset-0 bg-black opacity-0 animate-[mobileFadeToBlackFast_0.8s_ease-out_0.2s_forwards]" />
             </>
           ) : (
             // Full singularity effect for desktop
