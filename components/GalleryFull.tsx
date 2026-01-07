@@ -211,6 +211,7 @@ const GalleryFull: React.FC = () => {
             <img
               src={GALLERY_IMAGES[selectedIndex]}
               alt="Fullscreen"
+              loading="lazy"
               className="max-w-[90vw] max-h-[85vh] md:max-w-[85vw] md:max-h-[80vh] object-contain rounded-lg shadow-[0_0_100px_rgba(220,38,38,0.3)] animate-[scaleIn_0.3s_ease-out]"
               onClick={(e) => e.stopPropagation()}
               data-testid="gallery-modal-image"
