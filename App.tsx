@@ -19,21 +19,27 @@ const Admin = lazy(() => import("./pages/Admin"));
 type Page = "home" | "about" | "events" | "gallery" | "contact";
 
 const App: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const isMobile = useIsMobile();
+  // Skip loading state entirely on mobile for instant display
+  const [isLoading, setIsLoading] = useState(!isMobile);
   const [hasEntered, setHasEntered] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const location = useLocation();
   const { data: heroContent } = useHeroContent();
   const { data: footerContent } = useFooterContent();
-  const isMobile = useIsMobile();
 
   // Check if current route is admin page
   const isAdminPage = location.pathname === '/admin';
 
   useEffect(() => {
+    // Skip loading animation on mobile for instant display
+    if (isMobile) {
+      setIsLoading(false);
+      return;
+    }
     const timer = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -47,10 +53,15 @@ const App: React.FC = () => {
   }, [isAdminPage]);
 
   const handleEnterVoid = () => {
+    // On mobile, skip all transition effects - go directly to content
+    if (isMobile) {
+      setHasEntered(true);
+      return;
+    }
+    
     setIsTransitioning(true);
-    // Faster transition on mobile to prevent black screen
-    const transitionDelay = isMobile ? 800 : 1500;
-    const transitionEnd = isMobile ? 1800 : 3500;
+    const transitionDelay = 1500;
+    const transitionEnd = 3500;
     
     setTimeout(() => {
       setHasEntered(true);
@@ -96,57 +107,44 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {isTransitioning && (
+      {/* Desktop-only transition effects - completely skipped on mobile */}
+      {isTransitioning && !isMobile && (
         <div className="fixed inset-0 z-[250] pointer-events-none flex items-center justify-center overflow-hidden">
-          {isMobile ? (
-            // Optimized fast 2D transition for mobile - prevents black screen
-            <>
-              <div className="absolute inset-0 bg-[#f5f5f5]">
-                {/* Single expanding circle with faster animation */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-black animate-[mobileCircleExpandFast_0.8s_ease-out_forwards]" />
-              </div>
-              {/* Faster fade to black */}
-              <div className="absolute inset-0 bg-black opacity-0 animate-[mobileFadeToBlackFast_0.8s_ease-out_0.2s_forwards]" />
-            </>
-          ) : (
-            // Full singularity effect for desktop
-            <>
-              <div className="absolute w-[150vw] h-[150vw] animate-[accretionSpin_4s_linear_infinite]">
-                <div className="absolute inset-0 rounded-full border-[100px] border-white/5 blur-3xl" />
-                <div className="absolute inset-0 rounded-full border-[20px] border-red-600/20 blur-xl scale-95" />
-                <div className="absolute inset-0 rounded-full border-[2px] border-white/40 blur-[2px] scale-90" />
-              </div>
-              <div className="absolute w-2 h-2 bg-white rounded-full animate-[singularityPulse_2s_ease-out_forwards]" />
-              <div className="absolute w-20 h-20 border border-white/10 rounded-full animate-[lensingRipple_1.5s_linear_infinite]" />
-              <div className="absolute w-40 h-40 border border-white/5 rounded-full animate-[lensingRipple_2s_linear_infinite]" />
-              <div className="absolute w-0 h-0 bg-black rounded-full shadow-[0_0_100px_white] animate-[singularityExpand_3s_ease-in_forwards]" />
-              <div className="absolute inset-0 bg-white opacity-0 animate-[finalBurst_3.5s_ease-out_forwards]" />
-            </>
-          )}
+          <div className="absolute w-[150vw] h-[150vw] animate-[accretionSpin_4s_linear_infinite]">
+            <div className="absolute inset-0 rounded-full border-[100px] border-white/5 blur-3xl" />
+            <div className="absolute inset-0 rounded-full border-[20px] border-red-600/20 blur-xl scale-95" />
+            <div className="absolute inset-0 rounded-full border-[2px] border-white/40 blur-[2px] scale-90" />
+          </div>
+          <div className="absolute w-2 h-2 bg-white rounded-full animate-[singularityPulse_2s_ease-out_forwards]" />
+          <div className="absolute w-20 h-20 border border-white/10 rounded-full animate-[lensingRipple_1.5s_linear_infinite]" />
+          <div className="absolute w-40 h-40 border border-white/5 rounded-full animate-[lensingRipple_2s_linear_infinite]" />
+          <div className="absolute w-0 h-0 bg-black rounded-full shadow-[0_0_100px_white] animate-[singularityExpand_3s_ease-in_forwards]" />
+          <div className="absolute inset-0 bg-white opacity-0 animate-[finalBurst_3.5s_ease-out_forwards]" />
         </div>
       )}
 
       {hasEntered && (
         <div
-          className={`relative transition-all duration-[3000ms] ${
-            isTransitioning
-              ? isMobile 
-                ? "animate-[emergeFromSingularityFast_1.8s_cubic-bezier(0.15,0.85,0.35,1)_forwards]"
-                : "animate-[emergeFromSingularity_3s_cubic-bezier(0.15,0.85,0.35,1)_forwards]"
+          className={`relative ${
+            isTransitioning && !isMobile
+              ? "transition-all duration-[3000ms] animate-[emergeFromSingularity_3s_cubic-bezier(0.15,0.85,0.35,1)_forwards]"
               : "opacity-100 scale-100"
           }`}
         >
-          {/* Background effects - hidden on admin page */}
+          {/* Background effects - hidden on admin page and simplified on mobile */}
           {!isAdminPage && (
             <>
-              <div className="fixed inset-0 pointer-events-none z-[-1]">
-                <div className={`absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-900/10 rounded-full ${isMobile ? 'blur-[40px]' : 'blur-[150px]'}`} />
-                <div className={`absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/5 rounded-full ${isMobile ? 'blur-[40px]' : 'blur-[150px]'}`} />
-              </div>
+              {/* Desktop only: Background gradient blobs */}
+              {!isMobile && (
+                <div className="fixed inset-0 pointer-events-none z-[-1]">
+                  <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-900/10 rounded-full blur-[150px]" />
+                  <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/5 rounded-full blur-[150px]" />
+                </div>
+              )}
 
-              {/* Grain texture - removed on mobile */}
+              {/* Grain texture - desktop only */}
               {!isMobile && <div className="grain" />}
-              {/* Lightning overlay - removed on mobile for performance */}
+              {/* Lightning overlay - desktop only */}
               {!isMobile && <LightningOverlay />}
               <Navbar />
             </>
