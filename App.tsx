@@ -89,16 +89,24 @@ const App: React.FC = () => {
 
       {isTransitioning && (
         <div className="fixed inset-0 z-[250] pointer-events-none flex items-center justify-center overflow-hidden">
-          <div className="absolute w-[150vw] h-[150vw] animate-[accretionSpin_4s_linear_infinite]">
-            <div className="absolute inset-0 rounded-full border-[100px] border-white/5 blur-3xl" />
-            <div className="absolute inset-0 rounded-full border-[20px] border-red-600/20 blur-xl scale-95" />
-            <div className="absolute inset-0 rounded-full border-[2px] border-white/40 blur-[2px] scale-90" />
-          </div>
-          <div className="absolute w-2 h-2 bg-white rounded-full animate-[singularityPulse_2s_ease-out_forwards]" />
-          <div className="absolute w-20 h-20 border border-white/10 rounded-full animate-[lensingRipple_1.5s_linear_infinite]" />
-          <div className="absolute w-40 h-40 border border-white/5 rounded-full animate-[lensingRipple_2s_linear_infinite]" />
-          <div className="absolute w-0 h-0 bg-black rounded-full shadow-[0_0_100px_white] animate-[singularityExpand_3s_ease-in_forwards]" />
-          <div className="absolute inset-0 bg-white opacity-0 animate-[finalBurst_3.5s_ease-out_forwards]" />
+          {isMobile ? (
+            // Simple fade transition for mobile
+            <div className="absolute inset-0 bg-black animate-[simpleFadeOut_2s_ease-out_forwards]" />
+          ) : (
+            // Full singularity effect for desktop
+            <>
+              <div className="absolute w-[150vw] h-[150vw] animate-[accretionSpin_4s_linear_infinite]">
+                <div className="absolute inset-0 rounded-full border-[100px] border-white/5 blur-3xl" />
+                <div className="absolute inset-0 rounded-full border-[20px] border-red-600/20 blur-xl scale-95" />
+                <div className="absolute inset-0 rounded-full border-[2px] border-white/40 blur-[2px] scale-90" />
+              </div>
+              <div className="absolute w-2 h-2 bg-white rounded-full animate-[singularityPulse_2s_ease-out_forwards]" />
+              <div className="absolute w-20 h-20 border border-white/10 rounded-full animate-[lensingRipple_1.5s_linear_infinite]" />
+              <div className="absolute w-40 h-40 border border-white/5 rounded-full animate-[lensingRipple_2s_linear_infinite]" />
+              <div className="absolute w-0 h-0 bg-black rounded-full shadow-[0_0_100px_white] animate-[singularityExpand_3s_ease-in_forwards]" />
+              <div className="absolute inset-0 bg-white opacity-0 animate-[finalBurst_3.5s_ease-out_forwards]" />
+            </>
+          )}
         </div>
       )}
 
