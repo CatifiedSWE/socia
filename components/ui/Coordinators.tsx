@@ -55,7 +55,7 @@ const Coordinators: React.FC = () => {
           </svg>
         </div>
         {/* Oceanic Deep Blue/Mist */}
-        <div className="absolute bottom-0 w-full h-[60%] bg-gradient-to-t from-blue-950/20 to-transparent blur-[100px]" />
+        <div className={`absolute bottom-0 w-full h-[60%] bg-gradient-to-t from-blue-950/20 to-transparent ${isMobile ? 'blur-[40px]' : 'blur-[100px]'}`} />
       </div>
 
       <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
