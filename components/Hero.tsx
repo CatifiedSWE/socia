@@ -206,6 +206,7 @@ const Hero: React.FC = () => {
           <button
             onClick={() => navigate("/gallery")}
             className="group relative px-12 py-4 bg-transparent border border-red-900/50 text-red-500 font-oswald text-xs tracking-[0.4em] uppercase overflow-hidden transition-all duration-500 hover:text-white"
+            data-testid="hero-gallery-button"
           >
             <span className="relative z-10">{content.secondaryButtonText}</span>
             <div className="absolute inset-0 bg-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
@@ -213,6 +214,7 @@ const Hero: React.FC = () => {
           <button
             onClick={() => navigate("/events")}
             className="px-12 py-4 bg-red-700 text-white font-oswald text-xs tracking-[0.4em] uppercase hover:bg-white hover:text-black transition-all duration-500 shadow-[0_10px_40px_rgba(185,28,28,0.4)]"
+            data-testid="hero-events-button"
           >
             {content.primaryButtonText}
           </button>
