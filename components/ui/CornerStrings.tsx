@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 interface Props {
   position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
@@ -7,12 +8,18 @@ interface Props {
 }
 
 const CornerStrings: React.FC<Props> = ({ position, className = "" }) => {
+  const isMobile = useIsMobile();
   const rotationMap = {
     'top-left': 'rotate-0',
     'top-right': 'rotate-90',
     'bottom-right': 'rotate-180',
     'bottom-left': 'rotate-270'
   };
+
+  // On mobile, render simpler version or hide completely
+  if (isMobile) {
+    return null; // Remove corner strings on mobile for better performance
+  }
 
   return (
     <div className={`absolute pointer-events-none z-20 w-48 h-48 md:w-64 md:h-64 opacity-40 ${className} ${rotationMap[position]}`}>
