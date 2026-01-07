@@ -23,9 +23,9 @@ const Onboarding: React.FC<Props> = ({ onEnter }) => {
       {/* Light Grain Overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
       
-      {/* Subtle Light Particles */}
+      {/* Subtle Light Particles - Reduced on mobile */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
-        {Array.from({ length: 20 }).map((_, i) => (
+        {Array.from({ length: isMobile ? 5 : 20 }).map((_, i) => (
           <div 
             key={i}
             className="absolute bg-gray-400 rounded-full blur-[1px] animate-[float_10s_linear_infinite]"
