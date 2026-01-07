@@ -125,7 +125,9 @@ const App: React.FC = () => {
         <div
           className={`relative transition-all duration-[3000ms] ${
             isTransitioning
-              ? "animate-[emergeFromSingularity_3s_cubic-bezier(0.15,0.85,0.35,1)_forwards]"
+              ? isMobile 
+                ? "animate-[emergeFromSingularityFast_1.8s_cubic-bezier(0.15,0.85,0.35,1)_forwards]"
+                : "animate-[emergeFromSingularity_3s_cubic-bezier(0.15,0.85,0.35,1)_forwards]"
               : "opacity-100 scale-100"
           }`}
         >
