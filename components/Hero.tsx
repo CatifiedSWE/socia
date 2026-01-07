@@ -75,7 +75,7 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Mind Flayer Shadow Monster */}
-        {isMobile ? (
+        {heavyContentLoaded && (isMobile ? (
           // Mobile: Static gradient (no animation)
           <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.12] flex items-center justify-center">
             <div className="w-[200%] h-[200%] bg-gradient-radial from-red-800/30 via-red-900/10 to-transparent" />
@@ -126,7 +126,7 @@ const Hero: React.FC = () => {
               />
             </svg>
           </div>
-        )}
+        ))}
 
         {/* SVG Liquid Simulation Layer - Desktop only */}
         {!isMobile && (
