@@ -9,6 +9,7 @@ const GalleryFull: React.FC = () => {
   const { getSectionByKey } = useSectionContent();
   const sectionContent = getSectionByKey('gallery-full');
   const { data: galleryImages, loading, error } = useGalleryImages();
+  const isMobile = useIsMobile();
 
   // Extract image URLs for display and filter featured images for carousel
   const GALLERY_IMAGES = galleryImages.map((img: GalleryImage) => img.image_url);
