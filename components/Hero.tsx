@@ -49,20 +49,30 @@ const Hero: React.FC = () => {
 
       {/* Visceral Liquid & Monster Environment */}
       <div className="absolute inset-0 z-0 bg-[#050000]">
-        {/* Deep Red Fog Layers - Simplified on mobile */}
+        {/* Deep Red Fog Layers */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
-          <div className={`absolute -inset-[50%] opacity-30 mix-blend-screen ${!isMobile && !prefersReducedMotion ? 'animate-[fogDrift_40s_linear_infinite]' : ''}`}>
-            <div className={`w-full h-full bg-gradient-to-br from-red-900 via-transparent to-red-950 ${isMobile ? 'blur-[30px]' : 'blur-[100px]'}`} />
-          </div>
-          <div className={`absolute bottom-0 w-full h-[70%] bg-gradient-to-t from-[#200000] to-transparent ${isMobile ? 'blur-xl' : 'blur-3xl'} opacity-60`} />
+          {isMobile ? (
+            // Mobile: Simple gradient overlay
+            <div className="absolute inset-0 bg-gradient-to-b from-red-900/20 via-transparent to-red-950/30" />
+          ) : (
+            // Desktop: Animated fog
+            <>
+              <div className="absolute -inset-[50%] opacity-30 mix-blend-screen animate-[fogDrift_40s_linear_infinite]">
+                <div className="w-full h-full bg-gradient-to-br from-red-900 via-transparent to-red-950 blur-[100px]" />
+              </div>
+              <div className="absolute bottom-0 w-full h-[70%] bg-gradient-to-t from-[#200000] to-transparent blur-3xl opacity-60" />
+            </>
+          )}
         </div>
 
-        {/* Mind Flayer Shadow Monster - Static gradient on mobile */}
+        {/* Mind Flayer Shadow Monster */}
         {isMobile ? (
-          <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08] flex items-center justify-center scale-150">
-            <div className="w-full h-full bg-gradient-radial from-red-800/20 via-transparent to-transparent blur-3xl" />
+          // Mobile: Simple radial gradient with subtle pulse
+          <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.12] flex items-center justify-center">
+            <div className="w-[200%] h-[200%] bg-gradient-radial from-red-800/30 via-red-900/10 to-transparent animate-[mobileGradientPulse_8s_ease-in-out_infinite]" />
           </div>
         ) : (
+          // Desktop: Complex SVG monster
           <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08] flex items-center justify-center scale-150 animate-[monsterPulse_25s_ease-in-out_infinite]">
             <svg
               viewBox="0 0 1000 1000"
@@ -109,7 +119,7 @@ const Hero: React.FC = () => {
           </div>
         )}
 
-        {/* SVG Liquid Simulation Layer - Disabled on mobile */}
+        {/* SVG Liquid Simulation Layer - Desktop only */}
         {!isMobile && (
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none opacity-50 z-0"
