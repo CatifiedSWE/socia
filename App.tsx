@@ -289,6 +289,10 @@ const App: React.FC = () => {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
         }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
         .text-glow { text-shadow: 0 0 10px rgba(220,38,38,0.5); }
         html { scroll-behavior: smooth; }
       `}</style>
