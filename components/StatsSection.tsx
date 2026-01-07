@@ -49,44 +49,58 @@ const StatsSection: React.FC = () => {
       ref={sectionRef}
       className="relative py-32 bg-black overflow-hidden group"
     >
-      <CornerStrings
-        position="bottom-right"
-        className="bottom-0 right-0 !opacity-40"
-      />
-      <CornerStrings position="top-left" className="top-0 left-0 !opacity-40" />
+      {/* Corner Strings - Desktop only */}
+      {!isMobile && (
+        <>
+          <CornerStrings
+            position="bottom-right"
+            className="bottom-0 right-0 !opacity-40"
+          />
+          <CornerStrings position="top-left" className="top-0 left-0 !opacity-40" />
+        </>
+      )}
 
-      {/* Game of Thrones Reference: Iron Throne silhouette & Fire Embers */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[500px] opacity-[0.06] flex items-end justify-center">
-          <svg
-            viewBox="0 0 500 500"
-            className="w-full max-w-4xl h-full fill-white"
-          >
-            {/* Silhouette of Iron Throne */}
-            <path d="M100,500 L150,400 L120,350 L140,300 L160,350 L180,280 L200,320 L220,250 L250,300 L280,250 L300,320 L320,280 L340,350 L360,300 L380,350 L350,400 L400,500 Z" />
-            <path d="M200,500 L220,420 L240,400 L260,420 L300,500 Z" />
-            <path d="M180,450 L160,400 L170,380 L190,400 L200,360 L210,400 Z" />
-          </svg>
-        </div>
+      {/* Game of Thrones Reference - Desktop only */}
+      {!isMobile && (
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[500px] opacity-[0.06] flex items-end justify-center">
+            <svg
+              viewBox="0 0 500 500"
+              className="w-full max-w-4xl h-full fill-white"
+            >
+              {/* Silhouette of Iron Throne */}
+              <path d="M100,500 L150,400 L120,350 L140,300 L160,350 L180,280 L200,320 L220,250 L250,300 L280,250 L300,320 L320,280 L340,350 L360,300 L380,350 L350,400 L400,500 Z" />
+              <path d="M200,500 L220,420 L240,400 L260,420 L300,500 Z" />
+              <path d="M180,450 L160,400 L170,380 L190,400 L200,360 L210,400 Z" />
+            </svg>
+          </div>
 
-        {/* Dragon Fire Embers Overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(185,28,28,0.15)_0%,transparent_70%)]" />
-        <div className="absolute inset-0">
-          {Array.from({ length: isMobile ? 5 : 30 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-red-500 rounded-full animate-pulse blur-[1px]"
-              style={{
-                left: Math.random() * 100 + "%",
-                bottom: -5 + Math.random() * 50 + "%",
-                animationDelay: Math.random() * 10 + "s",
-                animationDuration: 3 + Math.random() * 5 + "s",
-                opacity: 0.2 + Math.random() * 0.5,
-              }}
-            />
-          ))}
+          {/* Dragon Fire Embers Overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(185,28,28,0.15)_0%,transparent_70%)]" />
+          <div className="absolute inset-0">
+            {Array.from({ length: 30 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-red-500 rounded-full animate-pulse blur-[1px]"
+                style={{
+                  left: Math.random() * 100 + "%",
+                  bottom: -5 + Math.random() * 50 + "%",
+                  animationDelay: Math.random() * 10 + "s",
+                  animationDuration: 3 + Math.random() * 5 + "s",
+                  opacity: 0.2 + Math.random() * 0.5,
+                }}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Mobile: Simple gradient background */}
+      {isMobile && (
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(185,28,28,0.1)_0%,transparent_60%)]" />
+        </div>
+      )}
 
       <div
         className={`relative z-10 max-w-6xl mx-auto px-6 text-center text-white transition-all duration-1000 ${
