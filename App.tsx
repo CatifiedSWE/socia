@@ -12,6 +12,7 @@ import LightningOverlay from "./components/ui/LightningOverlay";
 import SoundManager from "./components/ui/SoundManager";
 import FloatingRegisterButton from "./components/ui/FloatingRegisterButton";
 import { useHeroContent, useFooterContent } from "./hooks/useSupabaseData";
+import { useIsMobile } from "./hooks/useIsMobile";
 
 type Page = "home" | "about" | "events" | "gallery" | "contact";
 
