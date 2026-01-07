@@ -10,6 +10,9 @@ const LightningOverlay: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    // Skip lightning if user prefers reduced motion
+    if (prefersReducedMotion) return;
+
     const triggerLightning = () => {
       // Create a random lightning path starting from top
       const startX = Math.random() * 100;
@@ -36,14 +39,16 @@ const LightningOverlay: React.FC = () => {
       setTimeout(() => setActiveBolt(prev => prev ? { ...prev, opacity: 0 } : null), 400);
       setTimeout(() => setActiveBolt(null), 800);
 
-      // Next strike
-      const nextDelay = Math.random() * 15000 + 7000;
+      // Next strike - longer delay on mobile (30-60s instead of 7-15s)
+      const nextDelay = isMobile 
+        ? Math.random() * 30000 + 30000  // 30-60 seconds on mobile
+        : Math.random() * 15000 + 7000;   // 7-15 seconds on desktop
       setTimeout(triggerLightning, nextDelay);
     };
 
     const initialTimeout = setTimeout(triggerLightning, 5000);
     return () => clearTimeout(initialTimeout);
-  }, []);
+  }, [isMobile, prefersReducedMotion]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[100] overflow-hidden">
