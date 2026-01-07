@@ -139,7 +139,8 @@ const App: React.FC = () => {
 
               {/* Grain texture - removed on mobile */}
               {!isMobile && <div className="grain" />}
-              <LightningOverlay />
+              {/* Lightning overlay - removed on mobile for performance */}
+              {!isMobile && <LightningOverlay />}
               <Navbar />
             </>
           )}
