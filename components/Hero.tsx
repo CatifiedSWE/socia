@@ -177,23 +177,24 @@ const Hero: React.FC = () => {
         <div
           onClick={handleLogoClick}
           className={`relative mb-6 cursor-pointer select-none transition-transform duration-500 hover:scale-105 ${
-            isGlitching ? "animate-[dimensionalRift_1s_ease-out]" : ""
+            isGlitching && !isMobile ? "animate-[dimensionalRift_1s_ease-out]" : ""
           }`}
         >
-          <div className="absolute inset-0 bg-red-600/20 blur-[60px] animate-pulse" />
-          <h1 className="font-cinzel text-7xl md:text-9xl font-black tracking-[-0.05em] text-transparent bg-clip-text bg-gradient-to-b from-red-500 to-red-900 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] animate-[neonFlicker_4s_infinite]">
+          {/* Glow effect - simplified on mobile */}
+          {!isMobile && <div className="absolute inset-0 bg-red-600/20 blur-[60px] animate-pulse" />}
+          <h1 className={`font-cinzel text-7xl md:text-9xl font-black tracking-[-0.05em] text-transparent bg-clip-text bg-gradient-to-b from-red-500 to-red-900 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] ${!isMobile ? 'animate-[neonFlicker_4s_infinite]' : ''}`}>
             {content.title}
           </h1>
-          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-red-600 to-transparent mt-[-10px] animate-pulse" />
+          <div className={`h-[2px] w-full bg-gradient-to-r from-transparent via-red-600 to-transparent mt-[-10px] ${!isMobile ? 'animate-pulse' : ''}`} />
         </div>
 
-        <div className="space-y-4 animate-[fadeInUp_2s_ease-out]">
-          {/* Dynamic Tagline Transition */}
+        <div className={`space-y-4 ${!isMobile ? 'animate-[fadeInUp_2s_ease-out]' : ''}`}>
+          {/* Dynamic Tagline - Static on mobile */}
           <p
-            className={`font-oswald text-red-500 text-xs md:text-sm tracking-[0.8em] uppercase opacity-80 animate-pulse text-glow transition-all duration-1000 ${
-              fadeStatus
-                ? "opacity-80 translate-y-0"
-                : "opacity-0 translate-y-2"
+            className={`font-oswald text-red-500 text-xs md:text-sm tracking-[0.8em] uppercase opacity-80 text-glow ${
+              isMobile 
+                ? '' 
+                : `animate-pulse transition-all duration-1000 ${fadeStatus ? "opacity-80 translate-y-0" : "opacity-0 translate-y-2"}`
             }`}
           >
             {TAGLINES[taglineIndex]}
@@ -203,7 +204,7 @@ const Hero: React.FC = () => {
           </p>
         </div>
 
-        <div className="mt-12 flex flex-col sm:flex-row gap-6 animate-[fadeInUp_2.5s_ease-out]">
+        <div className={`mt-12 flex flex-col sm:flex-row gap-6 ${!isMobile ? 'animate-[fadeInUp_2.5s_ease-out]' : ''}`}>
           <button
             onClick={() => navigate("/gallery")}
             className="group relative px-12 py-4 bg-transparent border border-red-900/50 text-red-500 font-oswald text-xs tracking-[0.4em] uppercase overflow-hidden transition-all duration-500 hover:text-white"
