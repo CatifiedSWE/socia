@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { TEAM_LABELS } from '../../constants';
 import { useTeamMembers, useSectionContent } from '../../hooks/useSupabaseData';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 const Coordinators: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -9,6 +10,7 @@ const Coordinators: React.FC = () => {
   const { getSectionByKey } = useSectionContent();
   const sectionContent = getSectionByKey('coordinators');
   const { staffMembers, studentMembers, loading, error } = useTeamMembers();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
