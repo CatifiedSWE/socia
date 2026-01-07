@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import CornerStrings from "../components/ui/CornerStrings";
 import { useStatistics, useSectionContent, useButtonLabels } from "../hooks/useSupabaseData";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const StatsSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
