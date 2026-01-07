@@ -164,6 +164,7 @@ const GalleryFull: React.FC = () => {
               <img
                 src={img}
                 alt={`Gallery ${idx}`}
+                loading="lazy"
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 grayscale hover:grayscale-0"
               />
               <div className="absolute inset-0 bg-red-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
