@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/ui/Navbar";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Events from "./pages/Events";
-import Gallery from "./pages/Gallery";
-import Contact from "./pages/Contact";
-import Admin from "./pages/Admin";
 import Onboarding from "./components/Onboarding";
 import LightningOverlay from "./components/ui/LightningOverlay";
 import SoundManager from "./components/ui/SoundManager";
 import FloatingRegisterButton from "./components/ui/FloatingRegisterButton";
 import { useHeroContent, useFooterContent } from "./hooks/useSupabaseData";
 import { useIsMobile } from "./hooks/useIsMobile";
+
+// Lazy load pages for better performance
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Events = lazy(() => import("./pages/Events"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Admin = lazy(() => import("./pages/Admin"));
 
 type Page = "home" | "about" | "events" | "gallery" | "contact";
 
