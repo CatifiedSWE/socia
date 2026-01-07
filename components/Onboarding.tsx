@@ -20,25 +20,41 @@ const Onboarding: React.FC<Props> = ({ onEnter }) => {
 
   return (
     <div className="fixed inset-0 z-[200] bg-[#f5f5f5] flex flex-col items-center justify-center text-center overflow-hidden">
-      {/* Light Grain Overlay */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      {/* Light Grain Overlay - Desktop only */}
+      {!isMobile && <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />}
       
-      {/* Subtle Light Particles - Reduced on mobile */}
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        {Array.from({ length: isMobile ? 5 : 20 }).map((_, i) => (
-          <div 
-            key={i}
-            className="absolute bg-gray-400 rounded-full blur-[1px] animate-[float_10s_linear_infinite]"
-            style={{
-              width: Math.random() * 2 + 'px',
-              height: Math.random() * 2 + 'px',
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
-              animationDelay: `-${Math.random() * 10}s`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Mobile: Simple 2D Circle Animation */}
+      {isMobile ? (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Animated circles */}
+          {[...Array(3)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-gray-300/30 animate-[circleExpand_3s_ease-out_infinite]"
+              style={{
+                animationDelay: `${i * 1}s`,
+              }}
+            />
+          ))}
+        </div>
+      ) : (
+        /* Desktop: Original Particles */
+        <div className="absolute inset-0 pointer-events-none opacity-20">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div 
+              key={i}
+              className="absolute bg-gray-400 rounded-full blur-[1px] animate-[float_10s_linear_infinite]"
+              style={{
+                width: Math.random() * 2 + 'px',
+                height: Math.random() * 2 + 'px',
+                left: Math.random() * 100 + '%',
+                top: Math.random() * 100 + '%',
+                animationDelay: `-${Math.random() * 10}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="relative z-10 max-w-4xl px-6 flex flex-col items-center animate-[fadeIn_1.5s_ease-out]">
         <h1 className="font-cinzel text-7xl md:text-9xl font-black tracking-[-0.05em] text-gray-900 mb-4">
@@ -52,6 +68,7 @@ const Onboarding: React.FC<Props> = ({ onEnter }) => {
         <button 
           onClick={onEnter}
           className="group relative px-16 py-5 bg-white border border-gray-300 text-gray-900 font-oswald text-sm tracking-[0.5em] uppercase transition-all duration-500 hover:border-red-600 hover:text-red-600 hover:shadow-[0_0_40px_rgba(0,0,0,0.05)] active:scale-95"
+          data-testid="onboarding-enter-button"
         >
           <span className="relative z-10">{content.buttonText}</span>
           <div className="absolute inset-0 bg-gray-50 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
@@ -59,6 +76,18 @@ const Onboarding: React.FC<Props> = ({ onEnter }) => {
       </div>
 
       <style>{`
+        @keyframes circleExpand {
+          0% {
+            width: 50px;
+            height: 50px;
+            opacity: 1;
+          }
+          100% {
+            width: 800px;
+            height: 800px;
+            opacity: 0;
+          }
+        }
         @keyframes float {
           0% { transform: translate(0, 0); }
           100% { transform: translate(20px, -20px); }
