@@ -10,6 +10,7 @@ const StatsSection: React.FC = () => {
   const { getButtonByKey } = useButtonLabels();
   const sectionContent = getSectionByKey('stats');
   const { data: statistics, loading, error } = useStatistics();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
