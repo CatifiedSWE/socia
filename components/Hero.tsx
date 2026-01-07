@@ -129,7 +129,7 @@ const Hero: React.FC = () => {
         ))}
 
         {/* SVG Liquid Simulation Layer - Desktop only */}
-        {!isMobile && (
+        {heavyContentLoaded && !isMobile && (
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none opacity-50 z-0"
             preserveAspectRatio="none"
