@@ -11,7 +11,6 @@ const Hero: React.FC = () => {
   const [isGlitching, setIsGlitching] = useState(false);
   const [taglineIndex, setTaglineIndex] = useState(0);
   const [fadeStatus, setFadeStatus] = useState(true);
-  const [heavyContentLoaded, setHeavyContentLoaded] = useState(false);
   const { data: heroContent, loading, error } = useHeroContent();
   const isMobile = useIsMobile();
   const prefersReducedMotion = useReducedMotion();
@@ -25,24 +24,19 @@ const Hero: React.FC = () => {
     secondaryButtonText: 'Learn More'
   };
 
-  // Defer heavy content loading for better initial paint
+  // Skip tagline animation on mobile to reduce CPU usage
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setHeavyContentLoaded(true);
-    }, 100); // Load heavy animations after initial render
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
+    if (isMobile) return;
+    
     const interval = setInterval(() => {
       setFadeStatus(false);
       setTimeout(() => {
         setTaglineIndex((prev) => (prev + 1) % TAGLINES.length);
         setFadeStatus(true);
-      }, 1000); // Transition out before switching text
+      }, 1000);
     }, 6000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobile]);
 
   const handleLogoClick = () => {
     if (isGlitching) return;
@@ -52,17 +46,21 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden pt-20 bg-black">
-      {/* Corner Strings */}
-      <CornerStrings position="top-left" className="top-0 left-0" />
-      <CornerStrings position="top-right" className="top-0 right-0" />
+      {/* Corner Strings - Desktop only */}
+      {!isMobile && (
+        <>
+          <CornerStrings position="top-left" className="top-0 left-0" />
+          <CornerStrings position="top-right" className="top-0 right-0" />
+        </>
+      )}
 
       {/* Visceral Liquid & Monster Environment */}
       <div className="absolute inset-0 z-0 bg-[#050000]">
         {/* Deep Red Fog Layers */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
           {isMobile ? (
-            // Mobile: Simple gradient overlay
-            <div className="absolute inset-0 bg-gradient-to-b from-red-900/20 via-transparent to-red-950/30" />
+            // Mobile: Simple static gradient - no animations
+            <div className="absolute inset-0 bg-gradient-to-b from-red-900/15 via-transparent to-red-950/20" />
           ) : (
             // Desktop: Animated fog
             <>
@@ -74,14 +72,8 @@ const Hero: React.FC = () => {
           )}
         </div>
 
-        {/* Mind Flayer Shadow Monster */}
-        {heavyContentLoaded && (isMobile ? (
-          // Mobile: Static gradient (no animation)
-          <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.12] flex items-center justify-center">
-            <div className="w-[200%] h-[200%] bg-gradient-radial from-red-800/30 via-red-900/10 to-transparent" />
-          </div>
-        ) : (
-          // Desktop: Complex SVG monster
+        {/* Mind Flayer Shadow Monster - Desktop only */}
+        {!isMobile && (
           <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08] flex items-center justify-center scale-150 animate-[monsterPulse_25s_ease-in-out_infinite]">
             <svg
               viewBox="0 0 1000 1000"
@@ -126,10 +118,10 @@ const Hero: React.FC = () => {
               />
             </svg>
           </div>
-        ))}
+        )}
 
         {/* SVG Liquid Simulation Layer - Desktop only */}
-        {heavyContentLoaded && !isMobile && (
+        {!isMobile && (
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none opacity-50 z-0"
             preserveAspectRatio="none"
@@ -175,8 +167,8 @@ const Hero: React.FC = () => {
           </svg>
         )}
 
-        {/* Depth Fog & Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/80 pointer-events-none" />
+        {/* Depth Fog & Vignette - Simplified on mobile */}
+        <div className={`absolute inset-0 pointer-events-none ${isMobile ? 'bg-gradient-to-t from-black via-transparent to-black/60' : 'bg-gradient-to-t from-black via-transparent to-black/80'}`} />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(0,0,0,0.9)_100%)] pointer-events-none" />
       </div>
 
