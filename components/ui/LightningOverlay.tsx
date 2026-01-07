@@ -1,9 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
+import { useIsMobile } from '../../hooks/useIsMobile';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 const LightningOverlay: React.FC = () => {
   const [activeBolt, setActiveBolt] = useState<{ d: string; opacity: number } | null>(null);
   const [flash, setFlash] = useState(false);
+  const isMobile = useIsMobile();
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const triggerLightning = () => {
