@@ -23,6 +23,7 @@ const App: React.FC = () => {
   const location = useLocation();
   const { data: heroContent } = useHeroContent();
   const { data: footerContent } = useFooterContent();
+  const isMobile = useIsMobile();
 
   // Check if current route is admin page
   const isAdminPage = location.pathname === '/admin';
