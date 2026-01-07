@@ -260,6 +260,11 @@ const App: React.FC = () => {
           50% { transform: scale(0.95) rotate(-2deg); filter: brightness(2) blur(10px); opacity: 1; }
           100% { transform: scale(1) rotate(0deg); filter: brightness(1) blur(0); opacity: 1; }
         }
+        @keyframes emergeFromSingularityFast {
+          0% { transform: scale(1.2); filter: brightness(5) blur(20px); opacity: 0; }
+          50% { transform: scale(0.98); filter: brightness(1.5) blur(5px); opacity: 1; }
+          100% { transform: scale(1); filter: brightness(1) blur(0); opacity: 1; }
+        }
         @keyframes pageFadeIn {
           from { opacity: 0; transform: scale(0.98); }
           to { opacity: 1; transform: scale(1); }
