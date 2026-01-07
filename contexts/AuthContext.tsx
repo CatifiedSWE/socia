@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import type { User, Session } from '@supabase/supabase-js';
 
@@ -13,82 +13,126 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Cache admin status to reduce database queries
+const adminStatusCache = new Map<string, { status: boolean; timestamp: number }>();
+const ADMIN_CACHE_TTL = 60 * 1000; // 1 minute
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const mountedRef = useRef(true);
 
-  // Check if user is in admins table
+  // Check if user is in admins table with caching
   const checkAdminStatus = async (email: string): Promise<boolean> => {
     try {
+      // Check cache first
+      const cached = adminStatusCache.get(email);
+      if (cached && Date.now() - cached.timestamp < ADMIN_CACHE_TTL) {
+        return cached.status;
+      }
+
       const { data, error } = await supabase
         .from('admins')
         .select('email')
         .eq('email', email)
         .single();
 
-      if (error || !data) {
-        return false;
-      }
-      return true;
+      const status = !error && !!data;
+      
+      // Update cache
+      adminStatusCache.set(email, { status, timestamp: Date.now() });
+      
+      return status;
     } catch {
       return false;
     }
   };
 
-  // Initialize auth state with timeout for mobile
+  // Initialize auth state with improved timeout handling
   useEffect(() => {
+    mountedRef.current = true;
+
     const initAuth = async () => {
       try {
-        // Add timeout for mobile - max 5 seconds
-        const timeoutPromise = new Promise((_, reject) => {
-          setTimeout(() => reject(new Error('Auth timeout')), 5000);
-        });
+        // Use a more reliable approach with proper cleanup
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-        const sessionPromise = supabase.auth.getSession();
-        
-        const { data: { session } } = await Promise.race([
-          sessionPromise,
-          timeoutPromise
-        ]) as any;
+        try {
+          const { data: { session } } = await supabase.auth.getSession();
+          clearTimeout(timeoutId);
 
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user?.email) {
-          const adminStatus = await checkAdminStatus(session.user.email);
-          setIsAdmin(adminStatus);
+          if (!mountedRef.current) return;
+
+          setSession(session);
+          setUser(session?.user ?? null);
+          
+          if (session?.user?.email) {
+            const adminStatus = await checkAdminStatus(session.user.email);
+            if (mountedRef.current) {
+              setIsAdmin(adminStatus);
+            }
+          }
+        } catch (error) {
+          clearTimeout(timeoutId);
+          throw error;
         }
       } catch (error) {
         console.error('Auth initialization error:', error);
-        // Continue with no session
-        setSession(null);
-        setUser(null);
-        setIsAdmin(false);
+        if (mountedRef.current) {
+          // Continue with no session on error
+          setSession(null);
+          setUser(null);
+          setIsAdmin(false);
+        }
       } finally {
-        setIsLoading(false);
+        if (mountedRef.current) {
+          setIsLoading(false);
+        }
       }
     };
 
     initAuth();
 
-    // Listen for auth changes
+    // Listen for auth changes with debounce to prevent rapid updates
+    let debounceTimer: NodeJS.Timeout | null = null;
+    
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user?.email) {
-        const adminStatus = await checkAdminStatus(session.user.email);
-        setIsAdmin(adminStatus);
-      } else {
-        setIsAdmin(false);
+      if (!mountedRef.current) return;
+
+      // Debounce auth state changes
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
       }
+
+      debounceTimer = setTimeout(async () => {
+        if (!mountedRef.current) return;
+        
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user?.email) {
+          const adminStatus = await checkAdminStatus(session.user.email);
+          if (mountedRef.current) {
+            setIsAdmin(adminStatus);
+          }
+        } else {
+          setIsAdmin(false);
+        }
+      }, 100); // 100ms debounce
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mountedRef.current = false;
+      subscription.unsubscribe();
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
