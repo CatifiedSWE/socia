@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import CornerStrings from "../components/ui/CornerStrings";
 import { TAGLINES } from "../constants";
 import { useHeroContent } from "../hooks/useSupabaseData";
+import { useIsMobile } from "../hooks/useIsMobile";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 
 const Hero: React.FC = () => {
   const navigate = useNavigate();
