@@ -153,15 +153,26 @@ const App: React.FC = () => {
           )}
 
           <main className={`overflow-hidden ${!isAdminPage ? 'bg-black' : 'bg-gray-50'}`}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/gallery" element={<Gallery />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/admin" element={<Admin />} />
-            </Routes>
+            <Suspense fallback={
+              <div className="min-h-screen bg-black flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-16 h-16 border-2 border-red-600/30 border-t-red-600 rounded-full animate-spin mx-auto mb-4" />
+                  <p className="font-oswald text-gray-500 text-xs tracking-[0.5em] uppercase">
+                    LOADING THE EXPERIENCE
+                  </p>
+                </div>
+              </div>
+            }>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/gallery" element={<Gallery />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/admin" element={<Admin />} />
+              </Routes>
+            </Suspense>
           </main>
 
           {/* Footer - hidden on admin page */}
