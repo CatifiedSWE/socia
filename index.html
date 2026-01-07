@@ -21,7 +21,7 @@
       .font-cinzel { font-family: 'Cinzel', serif; }
       .font-oswald { font-family: 'Oswald', sans-serif; }
       
-      /* Grain Effect */
+      /* Grain Effect - Desktop only */
       .grain {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
@@ -31,19 +31,39 @@
         z-index: 50;
       }
 
-      /* Fog Animation */
-      @keyframes drift {
-        from { transform: translateX(-10%); }
-        to { transform: translateX(10%); }
+      /* Disable grain on mobile */
+      @media (max-width: 768px) {
+        .grain {
+          display: none !important;
+        }
+        /* Reduce animation complexity on mobile */
+        *, *::before, *::after {
+          animation-duration: 0.001s !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.2s !important;
+        }
+        /* Re-enable essential animations */
+        .animate-spin {
+          animation-duration: 1s !important;
+          animation-iteration-count: infinite !important;
+        }
       }
-      .fog {
-        position: absolute;
-        width: 200%;
-        height: 100%;
-        background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-        filter: blur(50px);
-        animation: drift 20s ease-in-out infinite alternate;
-        pointer-events: none;
+
+      /* Fog Animation - Desktop only */
+      @media (min-width: 769px) {
+        @keyframes drift {
+          from { transform: translateX(-10%); }
+          to { transform: translateX(10%); }
+        }
+        .fog {
+          position: absolute;
+          width: 200%;
+          height: 100%;
+          background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+          filter: blur(50px);
+          animation: drift 20s ease-in-out infinite alternate;
+          pointer-events: none;
+        }
       }
 
       /* Custom Scrollbar */
