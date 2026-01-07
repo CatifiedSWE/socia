@@ -41,24 +41,26 @@ const Coordinators: React.FC = () => {
   return (
     <section id="contact" ref={sectionRef} className="py-32 px-4 bg-black relative border-t border-white/5 overflow-hidden">
       
-      {/* Pirates of the Caribbean Reference: Black Pearl silhouette & Ocean Mist */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -bottom-10 right-[5%] w-[600px] h-[450px] opacity-[0.08] animate-[shipSway_18s_ease-in-out_infinite]">
-          <svg viewBox="0 0 500 400" className="w-full h-full fill-white">
-            {/* Simple Ship Silhouette (Black Pearl style) */}
-            <path d="M50,300 L450,300 Q400,350 250,350 Q100,350 50,300 Z" />
-            <rect x="150" y="50" width="8" height="250" />
-            <rect x="250" y="20" width="10" height="280" />
-            <rect x="350" y="80" width="8" height="220" />
-            <path d="M160,70 L240,70 Q200,120 160,180 Z" opacity="0.6" />
-            <path d="M260,40 L340,40 Q300,100 260,160 Z" opacity="0.6" />
-            <path d="M360,100 L430,100 Q400,150 360,200 Z" opacity="0.6" />
-            <path d="M100,280 L400,280" stroke="white" strokeWidth="2" />
-          </svg>
+      {/* Pirates of the Caribbean Reference - Desktop only */}
+      {!isMobile && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -bottom-10 right-[5%] w-[600px] h-[450px] opacity-[0.08] animate-[shipSway_18s_ease-in-out_infinite]">
+            <svg viewBox="0 0 500 400" className="w-full h-full fill-white">
+              {/* Simple Ship Silhouette (Black Pearl style) */}
+              <path d="M50,300 L450,300 Q400,350 250,350 Q100,350 50,300 Z" />
+              <rect x="150" y="50" width="8" height="250" />
+              <rect x="250" y="20" width="10" height="280" />
+              <rect x="350" y="80" width="8" height="220" />
+              <path d="M160,70 L240,70 Q200,120 160,180 Z" opacity="0.6" />
+              <path d="M260,40 L340,40 Q300,100 260,160 Z" opacity="0.6" />
+              <path d="M360,100 L430,100 Q400,150 360,200 Z" opacity="0.6" />
+              <path d="M100,280 L400,280" stroke="white" strokeWidth="2" />
+            </svg>
+          </div>
+          {/* Oceanic Deep Blue/Mist */}
+          <div className="absolute bottom-0 w-full h-[60%] bg-gradient-to-t from-blue-950/20 to-transparent blur-[100px]" />
         </div>
-        {/* Oceanic Deep Blue/Mist */}
-        <div className={`absolute bottom-0 w-full h-[60%] bg-gradient-to-t from-blue-950/20 to-transparent ${isMobile ? 'blur-[40px]' : 'blur-[100px]'}`} />
-      </div>
+      )}
 
       <div className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="text-center mb-24">
