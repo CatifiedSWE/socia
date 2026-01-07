@@ -70,6 +70,9 @@ const App: React.FC = () => {
           <div className="w-64 h-[2px] bg-red-900/30 mt-6 mx-auto overflow-hidden rounded-full">
             <div className="w-full h-full bg-red-600 animate-[loading_2s_infinite]" />
           </div>
+          <p className="font-oswald text-gray-500 text-xs tracking-[0.5em] uppercase mt-8 animate-[fadeIn_1s_ease-out]">
+            LOADING THE EXPERIENCE
+          </p>
         </div>
       </div>
     );
