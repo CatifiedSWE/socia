@@ -565,6 +565,13 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
   // Initial fetch on mount
   useEffect(() => {
     fetchAllData();
+    
+    // Cleanup: abort any pending requests on unmount
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
   }, [fetchAllData]);
 
   const value: SiteDataContextValue = {
@@ -573,6 +580,7 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
     error,
     refetch: fetchAllData,
     refetchSection,
+    clearCache,
   };
 
   return (
