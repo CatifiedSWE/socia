@@ -90,8 +90,15 @@ const App: React.FC = () => {
       {isTransitioning && (
         <div className="fixed inset-0 z-[250] pointer-events-none flex items-center justify-center overflow-hidden">
           {isMobile ? (
-            // Simple fade transition for mobile
-            <div className="absolute inset-0 bg-black animate-[simpleFadeOut_2s_ease-out_forwards]" />
+            // Simple 2D circle transition for mobile
+            <>
+              <div className="absolute inset-0 bg-[#f5f5f5]">
+                {/* Expanding circles animation */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-red-600/20 animate-[mobileCircleExpand_1.5s_ease-out_forwards]" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-black animate-[mobileCircleExpand_1.5s_ease-out_0.3s_forwards]" />
+              </div>
+              <div className="absolute inset-0 bg-black opacity-0 animate-[mobileFadeToBlack_1.5s_ease-out_0.5s_forwards]" />
+            </>
           ) : (
             // Full singularity effect for desktop
             <>
