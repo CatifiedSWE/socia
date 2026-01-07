@@ -96,26 +96,36 @@ const GalleryFull: React.FC = () => {
           <div className="w-full h-[1px] bg-red-600/30 mt-4" />
         </div>
 
-        <div className="relative h-[500px] overflow-hidden cursor-pointer perspective-[1500px]">
-          <div className="flex gap-10 absolute animate-[carousel_60s_linear_infinite] hover:[animation-play-state:paused] py-12 px-4">
-            {highlightImages.map((img, idx) => (
-              <div
-                key={idx}
-                className={`relative w-64 md:w-80 h-[400px] flex-shrink-0 group/card ${!isMobile ? 'preserve-3d' : ''} cursor-pointer`}
-                onClick={() => setSelectedIndex(idx % carouselImages.length)}
-              >
-                {isMobile ? (
-                  // Simple 2D version for mobile
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden border border-red-900/30 shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
-                    <img
-                      src={img}
-                      alt="Highlight"
-                      loading="lazy"
-                      className="w-full h-full object-cover grayscale group-hover/card:grayscale-0 transition-all duration-700"
-                    />
-                  </div>
-                ) : (
-                  // Full 3D flip for desktop
+        {/* Desktop: Animated carousel with 3D flip cards */}
+        {/* Mobile: Simple horizontal scroll gallery - no animations */}
+        {isMobile ? (
+          <div className="relative h-[350px] overflow-x-auto overflow-y-hidden px-4">
+            <div className="flex gap-4 pb-4" style={{ width: 'max-content' }}>
+              {carouselImages.map((img, idx) => (
+                <div
+                  key={idx}
+                  className="relative w-56 h-[320px] flex-shrink-0 rounded-xl overflow-hidden border border-red-900/30"
+                  onClick={() => setSelectedIndex(idx % carouselImages.length)}
+                >
+                  <img
+                    src={img}
+                    alt="Gallery"
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="relative h-[500px] overflow-hidden cursor-pointer perspective-[1500px]">
+            <div className="flex gap-10 absolute animate-[carousel_60s_linear_infinite] hover:[animation-play-state:paused] py-12 px-4">
+              {highlightImages.map((img, idx) => (
+                <div
+                  key={idx}
+                  className="relative w-64 md:w-80 h-[400px] flex-shrink-0 group/card preserve-3d cursor-pointer"
+                  onClick={() => setSelectedIndex(idx % carouselImages.length)}
+                >
                   <div className="relative w-full h-full transition-transform duration-[800ms] preserve-3d group-hover/card:[transform:rotateY(180deg)]">
                     <div className="absolute inset-0 backface-hidden bg-[#0a0a0a] rounded-2xl flex flex-col items-center justify-center border border-red-900/30 shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden">
                       <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none" />
@@ -139,11 +149,11 @@ const GalleryFull: React.FC = () => {
                       />
                     </div>
                   </div>
-                )}
-              </div>
-            ))}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
