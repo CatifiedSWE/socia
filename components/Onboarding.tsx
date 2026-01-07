@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useOnboardingContent } from '../hooks/useSupabaseData';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface Props {
   onEnter: () => void;
@@ -8,6 +9,7 @@ interface Props {
 
 const Onboarding: React.FC<Props> = ({ onEnter }) => {
   const { data: onboardingContent, loading } = useOnboardingContent();
+  const isMobile = useIsMobile();
 
   // Use fallback content immediately to prevent blocking on mobile
   const content = onboardingContent || {
