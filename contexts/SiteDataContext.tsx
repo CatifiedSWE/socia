@@ -415,41 +415,55 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
     }
   }, [fetchWithDeduplication]);
 
-  // Fallback: Fetch all data with Promise.all (still optimized - parallel) with timeout
-  const fetchWithParallelQueries = async () => {
-    try {
-      // Add timeout for mobile - max 6 seconds for parallel queries
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Parallel queries timeout')), 6000);
-      });
+  // Fallback: Fetch all data with batched parallel queries to reduce connection pressure
+  const fetchWithParallelQueries = async (signal?: AbortSignal): Promise<RawSiteData> => {
+    // Check abort before starting
+    if (signal?.aborted) {
+      throw new Error('Request aborted');
+    }
 
-      const fetchPromise = Promise.all([
+    try {
+      // Batch 1: Critical content (smaller queries first)
+      const batch1Promise = Promise.all([
         supabase.from('hero_content').select('*').single(),
         supabase.from('about_content').select('*').single(),
         supabase.from('onboarding_content').select('*').single(),
         supabase.from('footer_content').select('*').single(),
+      ]);
+
+      // Batch 2: Lists
+      const batch2Promise = Promise.all([
         supabase.from('statistics').select('*').order('order', { ascending: true }),
         supabase.from('team_members').select('*').order('order', { ascending: true }),
-        supabase.from('events').select('*').order('day', { ascending: true }),
-        supabase.from('gallery_images').select('*').order('order', { ascending: true }),
         supabase.from('section_content').select('*'),
         supabase.from('button_labels').select('*'),
       ]);
 
-      const results = await Promise.race([fetchPromise, timeoutPromise]) as any[];
+      // Execute batch 1 first
+      const batch1Results = await batch1Promise;
+      
+      // Check abort between batches
+      if (signal?.aborted) {
+        throw new Error('Request aborted');
+      }
 
-      const [
-        heroRes,
-        aboutRes,
-        onboardingRes,
-        footerRes,
-        statsRes,
-        teamRes,
-        eventsRes,
-        galleryRes,
-        sectionsRes,
-        buttonsRes,
-      ] = results;
+      // Execute batch 2
+      const batch2Results = await batch2Promise;
+
+      // Check abort before batch 3
+      if (signal?.aborted) {
+        throw new Error('Request aborted');
+      }
+
+      // Batch 3: Heavier queries (images and events)
+      const batch3Results = await Promise.all([
+        supabase.from('events').select('*').order('day', { ascending: true }),
+        supabase.from('gallery_images').select('*').order('order', { ascending: true }),
+      ]);
+
+      const [heroRes, aboutRes, onboardingRes, footerRes] = batch1Results;
+      const [statsRes, teamRes, sectionsRes, buttonsRes] = batch2Results;
+      const [eventsRes, galleryRes] = batch3Results;
 
       const rawData: RawSiteData = {
         hero_content: heroRes.data,
@@ -464,12 +478,10 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
         button_labels: buttonsRes.data || [],
       };
 
-      setData(transformRawData(rawData));
-      setError(null);
+      return rawData;
     } catch (err: any) {
-      console.error('Fallback fetch failed:', err);
-      setError(err.message);
-      throw err; // Re-throw to trigger fallback data in parent
+      console.error('Parallel fetch failed:', err);
+      throw err;
     }
   };
 
