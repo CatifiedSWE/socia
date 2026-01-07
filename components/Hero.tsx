@@ -222,16 +222,6 @@ const Hero: React.FC = () => {
       </div>
 
       <style>{`
-        @keyframes mobileGradientPulse {
-          0%, 100% { 
-            transform: scale(1);
-            opacity: 0.12;
-          }
-          50% { 
-            transform: scale(1.1);
-            opacity: 0.18;
-          }
-        }
         @keyframes fogDrift {
           0% { transform: translate(-10%, -10%) rotate(0deg); }
           50% { transform: translate(10%, 10%) rotate(2deg); }
