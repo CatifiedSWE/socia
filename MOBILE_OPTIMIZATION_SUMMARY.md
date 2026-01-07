@@ -24,10 +24,11 @@ This document outlines all the mobile-specific optimizations implemented for the
 - ✅ **Desktop**: Retains all original effects (SVG liquid simulation, monster graphics, fog drift)
 - ✅ **Mobile**: Major graphics removal
   - **Fog Layers**: Replaced animated fog with simple static gradient overlay
-  - **Monster Graphics**: Replaced complex SVG monster with simple radial gradient with subtle pulse
+  - **Monster Graphics**: Replaced complex SVG monster with simple static radial gradient (no animation)
   - **Liquid Simulation**: Completely removed SVG liquid simulation (5 animated paths with turbulence filters)
   - **Blur Effects**: Simplified gradient calculations
-- ✅ **Performance Gain**: Removed ~10 SVG paths with complex filters and animations
+  - **All Animations**: Removed for maximum mobile performance
+- ✅ **Performance Gain**: Removed ~10 SVG paths with complex filters and all background animations
 
 ### 4. **Corner Strings** (`/app/components/ui/CornerStrings.tsx`)
 - ✅ **Desktop**: Keeps all animated string SVGs
