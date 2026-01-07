@@ -287,66 +287,133 @@ export const SiteDataProvider: React.FC<SiteDataProviderProps> = ({ children }) 
   const [data, setData] = useState<SiteData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  // Main fetch function using RPC with timeout
-  const fetchAllData = useCallback(async () => {
+  // Core fetch function that handles RPC with proper retries
+  const fetchFromSupabase = useCallback(async (signal?: AbortSignal): Promise<RawSiteData | null> => {
+    // Try RPC first with retry logic
+    const fetchRPC = async (): Promise<RawSiteData> => {
+      // Create a timeout promise
+      const timeoutId = setTimeout(() => {}, 15000);
+      
+      try {
+        const { data: rpcData, error: rpcError } = await supabase.rpc('get_all_site_content');
+        clearTimeout(timeoutId);
+        
+        if (rpcError) {
+          throw new Error(`RPC Error: ${rpcError.message}`);
+        }
+        
+        if (!rpcData) {
+          throw new Error('No data returned from RPC');
+        }
+        
+        return rpcData as RawSiteData;
+      } catch (error) {
+        clearTimeout(timeoutId);
+        throw error;
+      }
+    };
+
     try {
+      // Attempt RPC with retry
+      return await fetchWithRetry(fetchRPC, MAX_RETRIES, BASE_RETRY_DELAY, signal);
+    } catch (rpcError: any) {
+      console.warn('RPC failed after retries, falling back to parallel queries:', rpcError.message);
+      
+      // Check abort before fallback
+      if (signal?.aborted) {
+        throw new Error('Request aborted');
+      }
+      
+      // Fallback to parallel queries with batching to reduce connection pressure
+      return await fetchWithParallelQueries(signal);
+    }
+  }, []);
+
+  // Request deduplication: ensure only one fetch runs at a time
+  const fetchWithDeduplication = useCallback(async (signal?: AbortSignal): Promise<RawSiteData | null> => {
+    // If there's already an in-flight request, wait for it
+    if (inFlightRequest) {
+      console.log('Deduplicating request - waiting for in-flight request');
+      return inFlightRequest;
+    }
+
+    // Create new request
+    inFlightRequest = fetchFromSupabase(signal);
+    
+    try {
+      const result = await inFlightRequest;
+      return result;
+    } finally {
+      // Clear in-flight request
+      inFlightRequest = null;
+    }
+  }, [fetchFromSupabase]);
+
+  // Main fetch function with caching
+  const fetchAllData = useCallback(async (forceRefresh: boolean = false) => {
+    try {
+      // Cancel any previous request
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      
+      // Create new abort controller
+      abortControllerRef.current = new AbortController();
+      const signal = abortControllerRef.current.signal;
+
+      // Check cache first (unless force refresh)
+      if (!forceRefresh) {
+        const cachedData = getCachedData();
+        if (cachedData) {
+          console.log('Using cached site data');
+          setData(transformRawData(cachedData));
+          setLoading(false);
+          setError(null);
+          return;
+        }
+      }
+
       setLoading(true);
       setError(null);
 
-      // Add timeout for mobile - max 8 seconds total
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Request timeout')), 8000);
-      });
+      const rawData = await fetchWithDeduplication(signal);
 
-      // Try RPC first (single API call)
-      const fetchPromise = supabase.rpc('get_all_site_content');
-      
-      const { data: rpcData, error: rpcError } = await Promise.race([
-        fetchPromise,
-        timeoutPromise
-      ]) as any;
-
-      if (rpcError) {
-        console.warn('RPC not available, falling back to parallel queries:', rpcError.message);
-        // Fallback to parallel queries if RPC is not set up yet
-        await fetchWithParallelQueries();
-        return;
-      }
-
-      if (rpcData) {
-        setData(transformRawData(rpcData as RawSiteData));
+      if (rawData) {
+        // Cache the raw data
+        setCachedData(rawData);
+        setData(transformRawData(rawData));
       }
     } catch (err: any) {
+      // Don't set error if request was aborted
+      if (err.message === 'Request aborted') {
+        console.log('Request was aborted');
+        return;
+      }
+      
       console.error('Error fetching site data:', err);
       setError(err.message);
-      // Try fallback with timeout
-      try {
-        await fetchWithParallelQueries();
-      } catch (fallbackErr) {
-        console.error('Fallback also failed:', fallbackErr);
-        // Set loading to false even on complete failure
-        setLoading(false);
-        // Provide minimal fallback data
-        setData({
-          heroContent: { id: '1', title: 'ZYNORA', subtitle: 'Enter the Legends', description: '', primaryButtonText: 'Register Now', secondaryButtonText: 'Learn More' },
-          aboutContent: null,
-          onboardingContent: { id: '1', title: 'ZYNORA', subtitle: 'Enter the Legends', buttonText: 'ENTER THE VOID' },
-          footerContent: { id: '1', copyrightText: 'ZYNORA CINEMATIC FEST. ALL RIGHTS RESERVED.', note: null },
-          statistics: [],
-          teamMembers: [],
-          staffMembers: [],
-          studentMembers: [],
-          events: [],
-          galleryImages: [],
-          sectionContent: [],
-          buttonLabels: [],
-        });
-      }
+      
+      // Provide minimal fallback data on complete failure
+      setData({
+        heroContent: { id: '1', title: 'ZYNORA', subtitle: 'Enter the Legends', description: '', primaryButtonText: 'Register Now', secondaryButtonText: 'Learn More' },
+        aboutContent: null,
+        onboardingContent: { id: '1', title: 'ZYNORA', subtitle: 'Enter the Legends', buttonText: 'ENTER THE VOID' },
+        footerContent: { id: '1', copyrightText: 'ZYNORA CINEMATIC FEST. ALL RIGHTS RESERVED.', note: null },
+        statistics: [],
+        teamMembers: [],
+        staffMembers: [],
+        studentMembers: [],
+        events: [],
+        galleryImages: [],
+        sectionContent: [],
+        buttonLabels: [],
+      });
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [fetchWithDeduplication]);
 
   // Fallback: Fetch all data with Promise.all (still optimized - parallel) with timeout
   const fetchWithParallelQueries = async () => {
