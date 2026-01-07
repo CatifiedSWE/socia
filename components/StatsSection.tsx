@@ -72,7 +72,7 @@ const StatsSection: React.FC = () => {
         {/* Dragon Fire Embers Overlay */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(185,28,28,0.15)_0%,transparent_70%)]" />
         <div className="absolute inset-0">
-          {Array.from({ length: 30 }).map((_, i) => (
+          {Array.from({ length: isMobile ? 5 : 30 }).map((_, i) => (
             <div
               key={i}
               className="absolute w-1 h-1 bg-red-500 rounded-full animate-pulse blur-[1px]"
