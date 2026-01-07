@@ -23,22 +23,8 @@ const Onboarding: React.FC<Props> = ({ onEnter }) => {
       {/* Light Grain Overlay - Desktop only */}
       {!isMobile && <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />}
       
-      {/* Mobile: Simple 2D Circle Animation */}
-      {isMobile ? (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Animated circles */}
-          {[...Array(3)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-gray-300/30 animate-[circleExpand_3s_ease-out_infinite]"
-              style={{
-                animationDelay: `${i * 1}s`,
-              }}
-            />
-          ))}
-        </div>
-      ) : (
-        /* Desktop: Original Particles */
+      {/* Desktop only: Particle animations */}
+      {!isMobile && (
         <div className="absolute inset-0 pointer-events-none opacity-20">
           {Array.from({ length: 20 }).map((_, i) => (
             <div 
@@ -76,18 +62,6 @@ const Onboarding: React.FC<Props> = ({ onEnter }) => {
       </div>
 
       <style>{`
-        @keyframes circleExpand {
-          0% {
-            width: 50px;
-            height: 50px;
-            opacity: 1;
-          }
-          100% {
-            width: 800px;
-            height: 800px;
-            opacity: 0;
-          }
-        }
         @keyframes float {
           0% { transform: translate(0, 0); }
           100% { transform: translate(20px, -20px); }
