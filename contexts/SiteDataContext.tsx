@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import type {
   EventCard,
@@ -9,6 +9,114 @@ import type {
   FooterContent,
   GalleryImage,
 } from '../types';
+
+// =============================================
+// CACHE CONFIGURATION
+// =============================================
+const CACHE_KEY = 'zynora_site_data_cache';
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes TTL
+const MAX_RETRIES = 3;
+const BASE_RETRY_DELAY = 1000; // 1 second
+
+interface CacheEntry {
+  data: RawSiteData;
+  timestamp: number;
+}
+
+// =============================================
+// REQUEST DEDUPLICATION
+// In-flight request tracker to prevent duplicate fetches
+// =============================================
+let inFlightRequest: Promise<RawSiteData | null> | null = null;
+
+// =============================================
+// CACHE HELPERS
+// =============================================
+const getCachedData = (): RawSiteData | null => {
+  try {
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    if (!cached) return null;
+    
+    const entry: CacheEntry = JSON.parse(cached);
+    const now = Date.now();
+    
+    // Check if cache is still valid
+    if (now - entry.timestamp < CACHE_TTL) {
+      return entry.data;
+    }
+    
+    // Cache expired, remove it
+    sessionStorage.removeItem(CACHE_KEY);
+    return null;
+  } catch {
+    return null;
+  }
+};
+
+const setCachedData = (data: RawSiteData): void => {
+  try {
+    const entry: CacheEntry = {
+      data,
+      timestamp: Date.now(),
+    };
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify(entry));
+  } catch (error) {
+    console.warn('Failed to cache site data:', error);
+  }
+};
+
+const clearCache = (): void => {
+  try {
+    sessionStorage.removeItem(CACHE_KEY);
+  } catch {
+    // Ignore errors
+  }
+};
+
+// =============================================
+// RETRY WITH EXPONENTIAL BACKOFF
+// =============================================
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+const fetchWithRetry = async <T,>(
+  fetchFn: () => Promise<T>,
+  retries: number = MAX_RETRIES,
+  delay: number = BASE_RETRY_DELAY,
+  signal?: AbortSignal
+): Promise<T> => {
+  let lastError: Error | null = null;
+  
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      // Check if request was aborted
+      if (signal?.aborted) {
+        throw new Error('Request aborted');
+      }
+      
+      return await fetchFn();
+    } catch (error: any) {
+      lastError = error;
+      
+      // Don't retry on abort
+      if (signal?.aborted || error.message === 'Request aborted') {
+        throw error;
+      }
+      
+      // Last attempt, don't wait
+      if (attempt === retries - 1) {
+        break;
+      }
+      
+      // Exponential backoff with jitter
+      const jitter = Math.random() * 500;
+      const waitTime = delay * Math.pow(2, attempt) + jitter;
+      console.log(`Retry attempt ${attempt + 1}/${retries} after ${Math.round(waitTime)}ms`);
+      await sleep(waitTime);
+    }
+  }
+  
+  throw lastError || new Error('Max retries exceeded');
+};
 
 // =============================================
 // TYPE DEFINITIONS
