@@ -85,16 +85,7 @@ Creates gentle ripple effect with 3 staggered circles.
 ```
 Full-screen circle wipe transition effect.
 
-### 3. Mobile Gradient Pulse (Hero Background)
-```css
-@keyframes mobileGradientPulse {
-  0%, 100% { transform: scale(1); opacity: 0.12; }
-  50% { transform: scale(1.1); opacity: 0.18; }
-}
-```
-Subtle breathing effect for background.
-
-### 4. Mobile Fade to Black
+### 3. Mobile Fade to Black
 ```css
 @keyframes mobileFadeToBlack {
   0% { opacity: 0; }
@@ -102,6 +93,8 @@ Subtle breathing effect for background.
 }
 ```
 Smooth fade overlay for transitions.
+
+**Note:** Hero section background on mobile has NO animations - completely static for maximum performance.
 
 ---
 
