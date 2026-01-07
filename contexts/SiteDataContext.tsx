@@ -204,8 +204,9 @@ interface SiteDataContextValue {
   data: SiteData | null;
   loading: boolean;
   error: string | null;
-  refetch: () => Promise<void>;
+  refetch: (forceRefresh?: boolean) => Promise<void>;
   refetchSection: (section: keyof SiteData) => Promise<void>;
+  clearCache: () => void;
 }
 
 // =============================================
