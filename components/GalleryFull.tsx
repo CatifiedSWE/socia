@@ -101,31 +101,45 @@ const GalleryFull: React.FC = () => {
             {highlightImages.map((img, idx) => (
               <div
                 key={idx}
-                className="relative w-64 md:w-80 h-[400px] flex-shrink-0 group/card preserve-3d cursor-pointer"
+                className={`relative w-64 md:w-80 h-[400px] flex-shrink-0 group/card ${!isMobile ? 'preserve-3d' : ''} cursor-pointer`}
                 onClick={() => setSelectedIndex(idx % carouselImages.length)}
               >
-                <div className="relative w-full h-full transition-transform duration-[800ms] preserve-3d group-hover/card:[transform:rotateY(180deg)]">
-                  <div className="absolute inset-0 backface-hidden bg-[#0a0a0a] rounded-2xl flex flex-col items-center justify-center border border-red-900/30 shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden">
-                    <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none" />
-                    <div className="absolute top-4 left-4 border-l-2 border-t-2 border-red-600/40 w-8 h-8" />
-                    <div className="absolute bottom-4 right-4 border-r-2 border-b-2 border-red-600/40 w-8 h-8" />
-                    <div className="text-center z-10 p-6 border border-red-900/20 rounded-lg bg-black/40 backdrop-blur-sm">
-                      <span className="font-cinzel text-6xl text-red-600 opacity-20 block mb-2">
-                        Z
-                      </span>
-                      <p className="font-oswald text-[11px] text-red-700 uppercase tracking-[0.6em] font-bold">
-                        Classified
-                      </p>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 backface-hidden [transform:rotateY(180deg)] rounded-2xl overflow-hidden border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,1)]">
+                {isMobile ? (
+                  // Simple 2D version for mobile
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden border border-red-900/30 shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
                     <img
                       src={img}
                       alt="Highlight"
+                      loading="lazy"
                       className="w-full h-full object-cover grayscale group-hover/card:grayscale-0 transition-all duration-700"
                     />
                   </div>
-                </div>
+                ) : (
+                  // Full 3D flip for desktop
+                  <div className="relative w-full h-full transition-transform duration-[800ms] preserve-3d group-hover/card:[transform:rotateY(180deg)]">
+                    <div className="absolute inset-0 backface-hidden bg-[#0a0a0a] rounded-2xl flex flex-col items-center justify-center border border-red-900/30 shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden">
+                      <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none" />
+                      <div className="absolute top-4 left-4 border-l-2 border-t-2 border-red-600/40 w-8 h-8" />
+                      <div className="absolute bottom-4 right-4 border-r-2 border-b-2 border-red-600/40 w-8 h-8" />
+                      <div className="text-center z-10 p-6 border border-red-900/20 rounded-lg bg-black/40 backdrop-blur-sm">
+                        <span className="font-cinzel text-6xl text-red-600 opacity-20 block mb-2">
+                          Z
+                        </span>
+                        <p className="font-oswald text-[11px] text-red-700 uppercase tracking-[0.6em] font-bold">
+                          Classified
+                        </p>
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 backface-hidden [transform:rotateY(180deg)] rounded-2xl overflow-hidden border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,1)]">
+                      <img
+                        src={img}
+                        alt="Highlight"
+                        loading="lazy"
+                        className="w-full h-full object-cover grayscale group-hover/card:grayscale-0 transition-all duration-700"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
