@@ -46,12 +46,16 @@ const App: React.FC = () => {
 
   const handleEnterVoid = () => {
     setIsTransitioning(true);
+    // Faster transition on mobile to prevent black screen
+    const transitionDelay = isMobile ? 800 : 1500;
+    const transitionEnd = isMobile ? 1800 : 3500;
+    
     setTimeout(() => {
       setHasEntered(true);
-    }, 1500);
+    }, transitionDelay);
     setTimeout(() => {
       setIsTransitioning(false);
-    }, 3500);
+    }, transitionEnd);
   };
 
   if (isLoading && !isAdminPage) {
