@@ -202,7 +202,23 @@ const App: React.FC = () => {
             opacity: 1;
           }
         }
+        @keyframes mobileCircleExpandFast {
+          0% {
+            width: 80px;
+            height: 80px;
+            opacity: 1;
+          }
+          100% {
+            width: 200vmax;
+            height: 200vmax;
+            opacity: 1;
+          }
+        }
         @keyframes mobileFadeToBlack {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @keyframes mobileFadeToBlackFast {
           0% { opacity: 0; }
           100% { opacity: 1; }
         }
