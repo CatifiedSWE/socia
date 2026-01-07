@@ -11,6 +11,7 @@ const Hero: React.FC = () => {
   const [isGlitching, setIsGlitching] = useState(false);
   const [taglineIndex, setTaglineIndex] = useState(0);
   const [fadeStatus, setFadeStatus] = useState(true);
+  const [heavyContentLoaded, setHeavyContentLoaded] = useState(false);
   const { data: heroContent, loading, error } = useHeroContent();
   const isMobile = useIsMobile();
   const prefersReducedMotion = useReducedMotion();
@@ -23,6 +24,14 @@ const Hero: React.FC = () => {
     primaryButtonText: 'Register Now',
     secondaryButtonText: 'Learn More'
   };
+
+  // Defer heavy content loading for better initial paint
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHeavyContentLoaded(true);
+    }, 100); // Load heavy animations after initial render
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
