@@ -27,9 +27,9 @@ All mobile optimizations have been successfully implemented for the ZYNORA cinem
 #### 3. **Hero Section Graphics** ✅
 **File:** `/app/components/Hero.tsx`
 - Removed SVG liquid simulation (5 animated paths with turbulence filters)
-- Replaced complex SVG monster with simple gradient pulse
+- Replaced complex SVG monster with simple static gradient (no animation)
 - Simplified fog animations to static gradients
-- Added `mobileGradientPulse` animation for subtle movement
+- Removed all background animations on mobile for maximum performance
 - Added `data-testid` attributes to buttons
 - **Desktop:** Unchanged (full SVG liquid + monster animations)
 
