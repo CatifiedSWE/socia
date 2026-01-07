@@ -178,6 +178,10 @@ const App: React.FC = () => {
       )} 
 
       <style>{`
+        @keyframes simpleFadeOut {
+          0% { opacity: 1; }
+          100% { opacity: 0; }
+        }
         @keyframes accretionSpin {
           from { transform: rotate(0deg) scale(0.5); opacity: 0; }
           20% { opacity: 1; }
